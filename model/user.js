@@ -70,22 +70,3 @@ userSchema.methods.generateToken = function(){
     .catch(err => reject(err));
   });
 };
-
-User.method.findByIdAndProfile = function(id, profile){
-  debug('User:findByIdAndProfile');
-  return User.findById(id)
-  .catch(err => Promise.reject(createError(404, err.message)))
-  .then(user => {
-    profile.userID = user._id;
-    this.tempUser = user;
-    return new Profile(user).save();
-  })
-  .then(profile => {
-    profile.userID = user._id;
-    this.tempUser = profile;
-    return new Profile(profile).save();
-  })
-  .then( () => {
-    return this.tempUser;
-  });
-};
