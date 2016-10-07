@@ -8,7 +8,11 @@ const mongoose = require('mongoose');
 const createError = require('http-errors');
 const debug = require('debug')('ht:user');
 
-const Schema = mongoose.Schena;
+const Profile = require('./projfile.js');
+const User = module.exports = mongoose.model('user', userSchema);
+
+
+const Schema = mongoose.Schema;
 
 const userSchema = Schema({
   username: {type: String, required: true, unique: true},
@@ -32,7 +36,7 @@ userSchema.methods.comparePasswordHash = function(password){
   debug('comparePasswordHash');
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, this.password, (err, valid) => {
-      if (err) return reject(err); 
+      if (err) return reject(err);
       if (!valid) return reject(createError(401, 'wrong password'));
       resolve(this);
     });
@@ -66,5 +70,3 @@ userSchema.methods.generateToken = function(){
     .catch(err => reject(err));
   });
 };
-
-module.exports = mongoose.model('user', userSchema);
