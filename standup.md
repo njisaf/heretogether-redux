@@ -2,15 +2,14 @@
 
 ##Day 1 - 10/10/16
 
-**Completed:
-**built out all models:**
+**Completed:**
+built out all models:
 * userSchema
 * picSchema
 * profileSchema
 * fileSchema
 * statusSchema
-
-**setup Travis/deployed to Heroku**
+*setup Travis/deployed to Heroku*
 
 
 **Added the following files:**
