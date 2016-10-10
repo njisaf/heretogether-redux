@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const serverCtrl = require('./lib/server-ctrl');
 const cleanDB = require('./lib/clean-db');
 const mockUser = require('./lib/user-mock');
-const mockHospital = require('./lib/hospital-mock')
+const mockHospital = require('./lib/hospital-mock');
 
 mongoose.Promise = Promise;
 
@@ -81,9 +81,10 @@ describe('testing hospital-router', function(){
     describe('testing valid DELETE request', function(){
 
       before(done => mockUser.call(this, done));
+      before(done => mockHospital.call(this, done));
 
       it('should return a status code of 204', (done) => {
-        request.delete(`${url}/api/hospital/:hospitalID`)
+        request.delete(`${url}/api/hospital/${this.tempHospital._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res)=> {
           if(err) return done(err);
