@@ -32,12 +32,15 @@ built out all models:
 * create profile routes
   * POST /api/profile (create a profile)
   * GET, UPDATE, DELETE /api/profile/:profileid (show/update/delete a profile)
-* Create new hospital model (Duncan advised 'name')
+* Create new hospital model (Duncan advised use a 'name' field only) - DONE
 * Create hospital routes
 * Add hospitalID field to the following schemas - DONE
- * status
- * user
+ * status - DONE
+ * user - DONE
 * Status schema also needs username field - DONE
+* Hospital - DONE
+ * POST /api/hospital - DONE
+ * DEL /api/hospital/:hospitalID (stretch goal) - DONE
 
 
 **Standup Meeting with Duncan at 1:15 p.m.**
@@ -58,5 +61,5 @@ built out all models:
     * GET /api/login (basic)
   * Hospital
    * POST /api/hospital
-   * DEL /api/hospital/:hospitalID
-* We also learned the hard way to wait for Travis to pass before merging changes. Lesson learned. 
+   * DEL /api/hospital/:hospitalID (stretch goal)
+* We also learned the hard way to wait for Travis to pass before merging changes. Lesson learned.
