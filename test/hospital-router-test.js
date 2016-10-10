@@ -6,9 +6,10 @@ const expect = require('chai').expect;
 const request = require('superagent');
 const Promise = require('bluebird');
 const mongoose = require('mongoose');
-const serverCtrl = require('./lib/server-ctrl.js');
-const cleanDB = require('./lib/clean-db.js');
-const mockUser = require('./lib/user-mock.js');
+const serverCtrl = require('./lib/server-ctrl');
+const cleanDB = require('./lib/clean-db');
+const mockUser = require('./lib/user-mock');
+const mockHospital = require('./lib/hospital-mock')
 
 mongoose.Promise = Promise;
 
