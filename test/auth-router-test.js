@@ -17,7 +17,7 @@ const url = `http://localhost:${process.env.PORT}`;
 
 const exampleUser = {
   username: 'exampleName',
-  password: '12345',
+  password: '1234567890',
   email: 'exampleName@exampleEmail.com',
 };
 
