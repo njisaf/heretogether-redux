@@ -9,7 +9,10 @@ module.exports = function(done){
   let exampleHospital = {
     name: lorem({count: 2, units:'word'}).split(' ').join('-'),
   };
-  new Hospital(exampleHospital)
+
+  console.log('hospital:', new Hospital(exampleHospital));
+
+  new Hospital(exampleHospital).save()
   .then( hospital => {
     this.tempHospital = hospital;
     done();
