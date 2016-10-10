@@ -7,7 +7,7 @@ const Promise = require('bluebird');
 const mongoose = require('mongoose');
 const debug = require('debug')('ht:server');
 
-// const authRouter = require('./route/auth-router.js');
+const authRouter = require('./route/auth-router.js');
 const errorMiddleware = require('./lib/error-middleware.js');
 
 dotenv.load();
@@ -20,7 +20,7 @@ const app = express();
 
 app.use(morgan('dev'));
 
-// app.use(authRouter);
+app.use(authRouter);
 app.use(errorMiddleware);
 
 const server = module.exports = app.listen(PORT, () => {
