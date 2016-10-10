@@ -8,7 +8,7 @@ const Promise = require('bluebird');
 const mongoose = require('mongoose');
 const serverCtrl = require('./lib/server-ctrl.js');
 const cleanDB = require('./lib/clean-db.js');
-const mockUser = require('./lib/user-mock.js');
+// const mockUser = require('./lib/user-mock.js');
 
 mongoose.Promise = Promise;
 
@@ -56,5 +56,22 @@ describe('testing auth-router', function(){
         });
       });
     });
+
+    describe('with invalid password length (less than 10)', function(){
+      it('should return a status of 400', (done) => {
+        request.post(`${url}/api/signup`)
+        .send({
+          username: 'exampleName',
+          password: '12345',
+          email: 'exampleName@exampleEmail.com',
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+      });
+    });
+
   });
 });
