@@ -19,11 +19,16 @@
 * **alt**
 * **date**
 
-##profileSchema 0.1
+##hospitalSchema 0.1
+* **name**
+* **date**
+
+##profileSchema 0.3
 * **profileName**
 * **userID**
 * **picID** (populate) <optional>
 * **bio**
+* **hospitalID**
 * **date**
 
 ##fileSchema 0.1
@@ -33,8 +38,9 @@
 * **date**
 * **type**
 
-##statusSchema 0.1
+##statusSchema 0.2
 * **userID**
+* **hospitalID**
 * **text** <optional>
 * **fileIDs** (populate) <optional>
 * **picIDs** (populate) <optional>
