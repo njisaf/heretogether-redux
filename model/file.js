@@ -11,3 +11,5 @@ const fileSchema = Schema({
   fileType: {type: String, required: true},
   created: {type: Date, default: Date.now},
 });
+
+module.exports = mongoose.model('file', fileSchema);
