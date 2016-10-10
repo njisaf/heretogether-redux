@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const createError = require('http-errors');
 const debug = require('debug')('ht:user');
 
-const Profile = require('./profile.js');
+// const Profile = require('./profile.js');
 
 const Schema = mongoose.Schema;
 
