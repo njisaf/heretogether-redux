@@ -8,8 +8,8 @@ const mongoose = require('mongoose');
 const createError = require('http-errors');
 const debug = require('debug')('ht:user');
 
-const Profile = require('./projfile.js');
-const User = module.exports = mongoose.model('user', userSchema);
+// const Profile = require('./profile.js');
+// const User = module.exports = mongoose.model('user', userSchema);
 
 
 const Schema = mongoose.Schema;
@@ -19,6 +19,7 @@ const userSchema = Schema({
   email: {type: String, required: true, unique: true},
   password: {type: String, required: true},
   findHash: {type: String, unique:true},
+  created: {type: Date, default: Date.now},
 });
 
 userSchema.methods.generatePasswordHash = function(password){
