@@ -73,6 +73,23 @@ describe('testing hospital-router', function(){
         });
       });
     });
+  });
 
+  describe('testing DELETE /api/hospital', function(){
+
+    describe('testing valid DELETE request', function(){
+
+      before(done => mockUser.call(this, done));
+
+      it('should return a status code of 204', (done) => {
+        request.delete(`${url}/api/hospital/:hospitalID`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res)=> {
+          if(err) return done(err);
+          expect(res.status).to.equal(204);
+          done();
+        });
+      });
+    });
   });
 });
