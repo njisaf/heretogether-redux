@@ -59,3 +59,4 @@ built out all models:
   * Hospital
    * POST /api/hospital
    * DEL /api/hospital/:hospitalID
+* We also learned the hard way to wait for Travis to pass before merging changes. Lesson learned. 
