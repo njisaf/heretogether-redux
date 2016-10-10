@@ -18,6 +18,7 @@ const userSchema = Schema({
   password: {type: String, required: true},
   // hospitalID: {type: mongoose.Schema.Types.ObjectId, required: true},
   findHash: {type: String, unique: true},
+  hospitalID: {type: String},
   created: {type: Date, default: Date.now},
 });
 
