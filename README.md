@@ -20,6 +20,8 @@ Updated Monday October 10th 2016
 
 # Routes
 
+### Signup and Login
+
 `/api/signup`
 
 POST to create a new user account.
@@ -28,22 +30,40 @@ POST to create a new user account.
 
 GET to login to a user account.
 
-`/api/profile`
+### Hospitals
 
-GET to see all user profiles.
+`/api/hospital`
 
-`/api/profile/:profileID`
+POST to create a new hospital.
 
-GET, POST, PUT, DELETE for a single user profile.
+`/api/hospital/:hospitalID`
 
-`/api/profile/:profileID/status`
+DELETE to delete a hospital.
 
-GET all status posts for a single user profile.
+### Profiles
 
-`/api/profile/:profileID/status/:statusID`
+`/api/hospital/:hospitalID/profile`
 
-GET, POST, PUT, DELETE for a single user status post.
+POST to create a new profile.
 
-`/api/feed`
+`/api/hospital/:hospitalID/profile`
 
-GET all status posts from all users.
+GET to fetch a list of all profiles associated with a hospital.
+
+`/api/hospital/:hospitalID/profile/:profileID`
+
+GET, PUT, DELETE to fetch or modify an individual profile.
+
+### Status
+
+`/api/hospital/:hospitalID/status`
+
+POST to create a new status post.
+
+`/api/hospital/:hospitalID/status`
+
+GET to fetch a feed of all status posts for an individual hospital.
+
+`/api/hospital/:hospitalID/status/:statusID`
+
+GET, PUT, DELETE to fetch or modify an individual status post.
