@@ -3,12 +3,14 @@
 ##Day 1 - 10/10/16
 
 **Completed:**
+
 built out all models:
 * userSchema
 * picSchema
 * profileSchema
 * fileSchema
 * statusSchema
+
 *setup Travis/deployed to Heroku*
 
 
@@ -24,6 +26,7 @@ built out all models:
 * auth-router-test
 
 **ToDo:**
-* create routes
-* create tests for routes
+* create auth routes
+* test auth routes
 * get users
+* create profile routes 
