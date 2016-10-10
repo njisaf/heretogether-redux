@@ -2,15 +2,13 @@
 
 const crypto = require('crypto');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtokens');
+const jwt = require('jsonwebtoken');
 const Promise = require('bluebird');
 const mongoose = require('mongoose');
 const createError = require('http-errors');
 const debug = require('debug')('ht:user');
 
 // const Profile = require('./profile.js');
-// const User = module.exports = mongoose.model('user', userSchema);
-
 
 const Schema = mongoose.Schema;
 
@@ -71,3 +69,5 @@ userSchema.methods.generateToken = function(){
     .catch(err => reject(err));
   });
 };
+
+module.exports = mongoose.model('user', userSchema);
