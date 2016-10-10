@@ -8,7 +8,7 @@ const Promise = require('bluebird');
 const mongoose = require('mongoose');
 const serverCtrl = require('./lib/server-ctrl.js');
 const cleanDB = require('./lib/clean-db.js');
-const mockUser = require('./lib/user-mock.js');
+// const mockUser = require('./lib/user-mock.js');
 
 mongoose.Promise = Promise;
 
