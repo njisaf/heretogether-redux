@@ -56,5 +56,22 @@ describe('testing auth-router', function(){
         });
       });
     });
+
+    describe('with invalid password length (less than 10)', function(){
+      it('should return a status of 400', (done) => {
+        request.post(`${url}/api/signup`)
+        .send({
+          username: 'exampleName',
+          password: '12345',
+          email: 'exampleName@exampleEmail.com',
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+      });
+    });
+
   });
 });

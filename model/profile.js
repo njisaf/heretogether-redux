@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-// const debug = require('debug')('ht:user');
+const debug = require('debug')('ht:profile');
 
 const Schema = mongoose.Schema;
 
