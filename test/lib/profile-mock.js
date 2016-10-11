@@ -23,7 +23,7 @@ module.exports = function(done){
 
   hospitalMock.call(this, err => {
     if (err) return done (err);
-    exampleProfile.hospitalID = this.tempProfile._id.toString();
+    exampleProfile.hospitalID = this.tempHospital._id;
 
     new Profile(exampleProfile).save()
     .then( profile => {
