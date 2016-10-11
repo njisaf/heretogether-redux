@@ -8,6 +8,8 @@ const picSchema = Schema({
   username: {type: String, required: true, unique: true},
   userID: {type: mongoose.Schema.Types.ObjectId, required: true},
   picID: {type: mongoose.Schema.Types.ObjectId, required: true},
+  imageURI: {type: String, required: true, unique: true},
+  objectKey: {type: String, required: true, unique: true},
   created: {type: Date, default: Date.now},
 });
 
