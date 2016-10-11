@@ -3,7 +3,7 @@
 
 # \<heretogether\>
 
-\<heretogether\> is a social media platform for young patients in hospitals.
+\<heretogether\> is a social media platform for pediatric patients in hospitals. 
 
 ## Readme Version 0.1
 
@@ -22,48 +22,59 @@ Updated Monday October 10th 2016
 
 ### Signup and Login
 
-`/api/signup`
-
 POST to create a new user account.
-
-`/api/login`
+```
+/api/signup
+```
 
 GET to login to a user account.
+```
+/api/login
+```
 
 ### Hospitals
 
-`/api/hospital`
-
 POST to create a new hospital.
-
-`/api/hospital/:hospitalID`
+```
+/api/hospital
+```
 
 DELETE to delete a hospital.
+```
+/api/hospital/:hospitalID
+```
+
 
 ### Profiles
 
-`/api/hospital/:hospitalID/profile`
-
 POST to create a new profile.
-
-`/api/hospital/:hospitalID/profile`
+```
+/api/hospital/:hospitalID/profile
+```
 
 GET to fetch a list of all profiles associated with a hospital.
-
-`/api/hospital/:hospitalID/profile/:profileID`
+```
+/api/hospital/:hospitalID/profile
+```
 
 GET, PUT, DELETE to fetch or modify an individual profile.
+```
+/api/hospital/:hospitalID/profile/:profileID
+```
 
 ### Status
 
-`/api/hospital/:hospitalID/status`
-
 POST to create a new status post.
-
-`/api/hospital/:hospitalID/status`
+```
+/api/hospital/:hospitalID/status
+```
 
 GET to fetch a feed of all status posts for an individual hospital.
-
-`/api/hospital/:hospitalID/status/:statusID`
+```
+/api/hospital/:hospitalID/status
+```
 
 GET, PUT, DELETE to fetch or modify an individual status post.
+```
+/api/hospital/:hospitalID/status/:statusID
+```
