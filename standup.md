@@ -43,14 +43,14 @@ built out all models:
  * DEL /api/hospital/:hospitalID (stretch goal) - DONE
 
 
-**Standup Meeting with Duncan at 1:15 p.m.**
+**Standup @ 1:15 p.m.**
 * Code is deployed to Heroku
 * Travis is working
 * Discussed with Duncan that all models are built out and relevant files added (see above)
 * Duncan advised get full CRUD routes on profile route
 * Group decided that we need to include hospital model
 
-**Standup Meeting with Duncan at 2:15 p.m.**
+**Standup @ 2:15 p.m.**
 * Duncan advised we need hospital routes
  * POST /api/hospital
  * DEL /api/hospital/:hospitalID
@@ -63,3 +63,39 @@ built out all models:
    * POST /api/hospital
    * DEL /api/hospital/:hospitalID (stretch goal)
 * We also learned the hard way to wait for Travis to pass before merging changes. Lesson learned.
+
+## Day 2 10/11/16
+
+**Completed:**
+
+* built out user routes
+* built out hospital routes
+* built out profile routes
+* tests for user routes
+* tests for hospital routes
+* tests for profile routes
+
+**Added the following:**
+
+* profile-router
+* profile-router-test
+* hospital-router
+* hospital-router-test
+* hospitalSchema
+* profile-mock
+* pic-mock
+* pic-router
+
+**ToDo:**
+* write more profile-router tests
+* create pic-mock
+* write pic routes
+* write pic-router tests
+* aws mock
+
+**Standup @ 11:30am**
+* hospital routes/tests - DONE
+* auth routes/tests - DONE
+* profile-mock - DONE
+* profile-routes - DONE
+* profile-router-tests - DONE

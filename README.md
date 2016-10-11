@@ -3,7 +3,7 @@
 
 # \<heretogether\>
 
-\<heretogether\> is a social media platform for pediatric patients in hospitals. 
+\<heretogether\> is a social media platform for pediatric patients in hospitals.  
 
 ## Readme Version 0.1
 
