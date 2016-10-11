@@ -18,6 +18,8 @@ hospitalRouter.post('/api/hospital', bearerAuth, jsonParser, function(req, res, 
 
 hospitalRouter.delete('/api/hospital/:hospitalID', bearerAuth, function(req, res, next) {
   debug('Hit DELETE /api/hospital/:hospitalID');
+  if(!req.params.hospitalID)
+    return next(createError(404, 'expected hospitalID'));
   Hospital.findByIdAndRemove(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
   .then(() => res.sendStatus(204))
