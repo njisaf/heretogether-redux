@@ -3,6 +3,7 @@
 const Router = require('express').Router;
 const debug = require('debug')('ht:hospital-router');
 const jsonParser = require('body-parser').json();
+const createError = require('http-errors');
 const bearerAuth = require('../lib/bearer-auth-middleware');
 const Hospital = require('../model/hospital');
 
@@ -17,8 +18,10 @@ hospitalRouter.post('/api/hospital', bearerAuth, jsonParser, function(req, res, 
 
 hospitalRouter.delete('/api/hospital/:hospitalID', bearerAuth, function(req, res, next) {
   debug('Hit DELETE /api/hospital/:hospitalID');
+  if(!req.params.hospitalID)
+    return next(createError(404, 'expected hospitalID'));
   Hospital.findByIdAndRemove(req.params.hospitalID)
-  .catch(err => Promise.reject(404, err.message))
+  .catch(err => Promise.reject(createError(404, err.message)))
   .then(() => res.sendStatus(204))
   .catch(next);
 });
