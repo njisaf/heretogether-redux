@@ -28,3 +28,33 @@ profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, fu
   })
   .catch(next);
 });
+
+profileRouter.delete('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, function(req, res, next) {
+  debug('Hit DELETE /api/hospital/:hospitalID/profile/:profileID');
+  Profile.findById(req.params.profileID)
+  .then(profile => {
+    if(profile.userID.toString() === req.user._id.toString()) {
+      Profile.findByIdAndRemove(req.params.profileID)
+      .then(() => res.sendStatus(204))
+      .catch(next);
+    } else {
+      return Promise.reject(createError(401, 'Invalid user ID'));
+    }
+  })
+.catch(err => err.status ? next(err) : next(createError(404, err.message)));
+});
+
+profileRouter.put('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, jsonParser, function(req, res, next) {
+  debug('Hit PUT /api/hospital/:hospitalID/profile/:profileID');
+  Profile.findById(req.params.profileID)
+  .then(profile => {
+    if(profile.userID.toString() === req.user._id.toString()) {
+      Profile.findByIdAndUpdate(req.params.profileID, req.body, {new:true})
+      .then(profile => res.json(profile))
+      .catch(next);
+    } else {
+      return Promise.reject(createError(401, 'Invalid user ID'));
+    }
+  })
+.catch(err => err.status ? next(err) : next(createError(404, err.message)));
+});

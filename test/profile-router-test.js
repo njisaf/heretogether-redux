@@ -56,14 +56,9 @@ describe('Testing Profile routes', function() {
 
     describe('Testing GET with VALID hospitalID and VALID profileID', function() {
 
-      // before(done => mockUser.call(this, done));
       before(done => mockProfile.call(this, done));
 
       it('Should return a status of 200 and a profile', done => {
-        console.log('tempToken', this.tempToken);
-        console.log('tempProfile', this.tempProfile);
-        console.log('tempUser', this.tempUser);
-        console.log('tempHospital', this.tempHospital);
         request.get(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
@@ -78,5 +73,97 @@ describe('Testing Profile routes', function() {
       });
     });
   });
+
+  describe('Testing DELETE /api/hospital/:hospitalID/profile/:profileID', function() {
+
+    describe('Testing DELETE with VALID hospitalID and VALID profileID', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a status of 204', done => {
+        request.delete(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(204);
+          done();
+        });
+      });
+    });
+
+    describe('Testing DELETE with VALID hospitalID and INVALID profileID', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a status of 404 and an error message', done => {
+        request.delete(`${url}/api/hospital/${this.tempHospital._id}/profile/1234`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+    });
+
+  });
+
+
+  describe('Testing PUT /api/hospital/:hospitalID/profile/:profileID', function() {
+
+    describe('Testing PUT with VALID hospitalID and VALID profileID', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a status of 200 and a profile', done => {
+        request.put(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .send({
+          profileName: 'Alice Issick',
+          userID: `${this.tempUser._id}`,
+          bio: 'My name is Alice and I love being sick!',
+          hospitalID: `${this.tempHospital._id}`,
+        })
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.profileName).to.equal('Alice Issick');
+          expect(res.body.bio).to.equal('My name is Alice and I love being sick!');
+          expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
+          expect(res.body.userID).to.equal(this.tempUser._id.toString());
+          done();
+        });
+      });
+    });
+
+
+    describe('Testing PUT with VALID hospitalID and INVALID profileID', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a status of 401 and an error message', done => {
+        // console.log('tempToken', this.tempToken);
+        // console.log('tempProfile', this.tempProfile);
+        // console.log('tempUser', this.tempUser);
+        // console.log('tempHospital', this.tempHospital);
+        request.put(`${url}/api/hospital/${this.tempHospital._id}/profile/1234`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .send({
+          profileName: 'Alice Issick',
+          userID: `${this.tempUser._id}`,
+          bio: 'My name is Alice and I love being sick!',
+          hospitalID: `${this.tempHospital._id}`,
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+    });
+
+  });
+
+
 
 });
