@@ -63,3 +63,18 @@ built out all models:
    * POST /api/hospital
    * DEL /api/hospital/:hospitalID (stretch goal)
 * We also learned the hard way to wait for Travis to pass before merging changes. Lesson learned.
+
+
+
+**Standup Meeting at 3:20pm**
+
+* Reviewed morning progress
+* Discussed endpoints for files and pic models
+  * Separate endpoints for pic and file models on profile and status routes
+  * Uploads will need to be PUT and not POST actions
+    * Discussed process of doing this
+* Decided to split up to work on separate tasks
+  * Judy continues on Pic routes
+  * Kaylyn begins File route
+  * Nassir finishes Profile routes and tests
+* MVP for afternoon is get AWS-associated routes working.

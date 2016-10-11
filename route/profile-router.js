@@ -6,15 +6,20 @@ const jsonParser = require('body-parser').json();
 const createError = require('http-errors');
 const bearerAuth = require('../lib/bearer-auth-middleware');
 const Profile = require('../model/profile');
+const Hospital = require('../model/hospital');
 
 const profileRouter = module.exports = Router();
 
 profileRouter.post('/api/hospital/:hospitalID/profile', bearerAuth, jsonParser, function(req, res, next){
   debug('hit POST route /api/hospital/:hospitalID/profile');
-  new Profile(req.body).save()
-  .then( profile => {
-    console.log('HEHREHRHEHREHRHEHRE  ', profile);
-    res.json(profile);
+  if(req.body.hospitalID !== req.params.hospitalID) return next(createError(404, 'Hospital not found.'));
+  Hospital.findById(req.params.hospitalID)
+  .catch(err => Promise.reject(createError(404, err.message)))
+  .then(() => {
+    new Profile(req.body).save()
+    .then( profile => {
+      res.json(profile);
+    });
   })
   .catch(next);
 });
