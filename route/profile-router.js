@@ -5,7 +5,6 @@ const debug = require('debug')('ht:hospital-router');
 const jsonParser = require('body-parser').json();
 const createError = require('http-errors');
 const bearerAuth = require('../lib/bearer-auth-middleware');
-const basicAuth = require('../lib/basic-auth-middleware');
 const Profile = require('../model/profile');
 
 const profileRouter = module.exports = Router();
