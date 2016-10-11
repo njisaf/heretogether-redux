@@ -2,17 +2,35 @@
 
 const fs = require('fs');
 const path = require('path');
-const Router = require('express').Router;
+
+const del = require('del');
+const AWS = require('aws-sdk');
+const multer = require('multer');
 const debug = require('debug')('ht:hospital-router');
-const jsonParser = require('body-parser').json();
 const createError = require('http-errors');
+
+const File = require('../model/file');
+const Status = require('../model/status');
 const bearerAuth = require('../lib/bearer-auth-middleware');
 
-const Status = require('../model/status');
+AWS.config.setPromisesDependency(require('bluebird'));
 
-const fileRouter = module.exports = Router();
+const s3 = new AWS.S3();
+const dataDir =`${__dirname}/../data`;
+const upload = multer({dest: dataDir });
+const fileRouter = module.exports = require('express').Router();
 
-fileRouter.post('/api/status/:statusID/file', bearerAuth, jsonParser, function(req, res, next){
+function s3UploadPromise(params){
+  return new Promise((resolve, reject) => {
+    s3.upload(params, (err, s3data) => {
+      if (err) return reject(err);
+      resolve(s3data);
+    });
+  });
+}
+
+//'file' should be added to example file in file-router-test-js
+fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'), function(req, res, next){
   debug('hit POST /api/status/:statusID/file');
   if(!req.file)
     return next(createError(400, 'no file found'));
@@ -30,5 +48,47 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, jsonParser, function(r
 
   Status.findById(req.params.statusID)
   .catch(err => Promise.reject(createError(404, err.message)))
-  .then(() => )
+  .then(() => s3UploadPromise(params))
+  .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
+  .then(s3data => {
+    del([`${dataDir}/*`]);
+    let fileData = {
+      name: req.body.name,
+      desc: req.body.desc,
+      objectKey: s3data.Key,
+      imageURI: s3data.Location,
+      userID: req.user._id,
+      galleryID: req.params.galleryID,
+    };
+    return new File(fileData).save();
+  })
+  .then(file => res.json(file))
+  .catch(err => {
+    del([`${dataDir}/*`]);
+    next(err);
+  });
+});
+
+fileRouter.delete('/api/status/:statusID/file/:fileID', bearerAuth, function(req, res, next){
+  debug('DELETE /api/status/:statusID/file/:fileID');
+
+  File.findById(req.params.fileID)
+  .catch(err => Promise.reject(createError(404, err.message)))
+  .then( file => {
+    if(file.statusID.toString() !== req.params.statusID)
+      return Promise.reject(createError(400, 'bad request wrong gallery'));
+    if(file.userID.toString() !== req.user._id.toString())
+      return Promise.reject(createError(401, 'user not authtorized to delete this file'));
+    let params = {
+      Bucket: 'heretogether-assets',
+      Key: file.objectKey,
+    };
+    return s3.deleteObject(params).promise();
+  })
+  .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
+  .then( s3data => {
+    return File.findByIdAndRemove(req.params.fileID);
+  })
+  .then(() => res.sendStatus(204))
+  .catch(next);
 });
