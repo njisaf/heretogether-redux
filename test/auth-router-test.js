@@ -47,7 +47,38 @@ describe('testing auth-router', function(){
         request.post(`${url}/api/signup`)
         .send({
           password: '12345',
-          email: 'exampleName@exampleEmail.com',
+          email: exampleUser.email,
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+      });
+    });
+
+    describe('with no password', function(){
+      it('should return a status of 400', (done) => {
+        request.post(`${url}/api/signup`)
+        .send({
+          username: exampleUser.name,
+          email: exampleUser.email,
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+      });
+    });
+
+    describe('with no email', function(){
+      before( done => mockUser.call(this, done));
+      it('should return a status code of 400', (done) => {
+        request.post(`${url}/api/signup`)
+        .send({
+          username: exampleUser.username,
+          password: exampleUser.password,
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
