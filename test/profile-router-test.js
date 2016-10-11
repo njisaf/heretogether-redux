@@ -18,13 +18,6 @@ mongoose.Promise = Promise;
 const server = require('../server');
 const url = `http://localhost:${process.env.PORT}`;
 
-// const exampleProfile = {
-//   profileName: 'Werner Poorlyboy',
-//   userID: `${this.tempUser._id}`,
-//   bio: 'My name is Werner and I am a sick child in a hospital!',
-//   hospitalID: `${this.tempHospital._id}`,
-// };
-
 describe('Testing Profile routes', function() {
 
   before(done => serverCtrl.serverUp(server, done));
