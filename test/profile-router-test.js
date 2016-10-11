@@ -67,15 +67,19 @@ describe('Testing Profile routes', function() {
       before(done => mockProfile.call(this, done));
 
       it('Should return a status of 200 and a profile', done => {
-        request.post(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
+        console.log('tempToken', this.tempToken);
+        console.log('tempProfile', this.tempProfile);
+        console.log('tempUser', this.tempUser);
+        console.log('tempHospital', this.tempHospital);
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body.profileName).to.equal(this.tempProfile.profileName);
           expect(res.body.bio).to.equal(this.tempProfile.bio);
-          expect(res.body.hospitalID).to.equal(this.tempHospital._id);
-          expect(res.body.userID).to.equal(this.tempUser._id);
+          expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
+          expect(res.body.userID).to.equal(this.tempUser._id.toString());
           done();
         });
       });
