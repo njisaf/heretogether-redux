@@ -60,6 +60,20 @@ describe('testing hospital-router', function(){
       });
     });
 
+    describe('testing POST request with no body', function(){
+
+      before(done => mockUser.call(this, done));
+
+      it('should return a status code of 400', (done) => {
+        request.post(`${url}/api/hospital`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          done();
+        });
+      });
+    });
+
     describe('testing POST request with invalid token', function(){
 
       before(done => mockUser.call(this, done));
