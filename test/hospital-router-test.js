@@ -88,6 +88,21 @@ describe('testing hospital-router', function(){
         });
       });
     });
+
+    // describe('testing POST request with no token', function(){
+    //
+    //   before(done => mockUser.call(this, done));
+    //
+    //   it('should return a status code of 401', (done) => {
+    //     request.post(`${url}/api/hospital`)
+    //     .send(exampleHospital)
+    //     .set()
+    //     .end((err, res) => {
+    //       expect(res.status).to.equal(401);
+    //       done();
+    //     });
+    //   });
+    // });
   });
 
   describe('testing DELETE /api/hospital', function(){
@@ -107,5 +122,21 @@ describe('testing hospital-router', function(){
         });
       });
     });
+
+    describe('testing DELETE request with invalid id', function(){
+
+      before(done => mockUser.call(this, done));
+      before(done => mockHospital.call(this, done));
+
+      it('should return a status code of 404', (done) => {
+        request.delete(`${url}/api/hospital/123`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res)=> {
+          expect(res.status).to.equal(404);
+          done();
+        });
+      });
+    });
+
   });
 });
