@@ -18,10 +18,12 @@ mongoose.Promise = Promise;
 const server = require('../server');
 const url = `http://localhost:${process.env.PORT}`;
 
-const exampleProfile = {
-  profileName: 'Werner Poorlyboy',
-  bio: 'My name is Werner and I am a sick child in a hospital!',
-};
+// const exampleProfile = {
+//   profileName: 'Werner Poorlyboy',
+//   userID: `${this.tempUser._id}`,
+//   bio: 'My name is Werner and I am a sick child in a hospital!',
+//   hospitalID: `${this.tempHospital._id}`,
+// };
 
 describe('Testing Profile routes', function() {
 
@@ -38,13 +40,18 @@ describe('Testing Profile routes', function() {
 
       it('Should return a status of 200 and a profile', done => {
         request.post(`${url}/api/hospital/${this.tempHospital._id}/profile`)
-        .send(exampleProfile)
+        .send({
+          profileName: 'Werner Poorlyboy',
+          userID: `${this.tempUser._id}`,
+          bio: 'My name is Werner and I am a sick child in a hospital!',
+          hospitalID: `${this.tempHospital._id}`,
+        })
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
           expect(res.status).to.equal(200);
-          expect(res.body.profileName).to.equal(exampleProfile.profileName);
-          expect(res.body.bio).to.equal(exampleProfile.bio);
+          expect(res.body.profileName).to.equal('Werner Poorlyboy');
+          expect(res.body.bio).to.equal('My name is Werner and I am a sick child in a hospital!');
           done();
         });
       });
@@ -56,11 +63,12 @@ describe('Testing Profile routes', function() {
 
     describe('Testing GET with VALID hospitalID and VALID profileID', function() {
 
-      before(done => mockUser.call(this, done));
+      // before(done => mockUser.call(this, done));
       before(done => mockProfile.call(this, done));
 
       it('Should return a status of 200 and a profile', done => {
         request.post(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
           expect(res.status).to.equal(200);
