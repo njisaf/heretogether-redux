@@ -13,4 +13,4 @@ profileRouter.post('/api/hospital/hospitalID/profile', bearerAuth, jsonParser, f
   new Profile(req.body).save()
   .then( profile => res.json(profile))
   .catch(next);
-});
+}); 
