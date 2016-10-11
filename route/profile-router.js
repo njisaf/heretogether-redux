@@ -12,7 +12,10 @@ const profileRouter = module.exports = Router();
 profileRouter.post('/api/hospital/:hospitalID/profile', bearerAuth, jsonParser, function(req, res, next){
   debug('hit POST route /api/hospital/:hospitalID/profile');
   new Profile(req.body).save()
-  .then( profile => res.json(profile))
+  .then( profile => {
+    console.log('HEHREHRHEHREHRHEHRE  ', profile);
+    res.json(profile);
+  })
   .catch(next);
 });
 
@@ -27,4 +30,36 @@ profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, fu
     res.json(profile);
   })
   .catch(next);
+});
+
+profileRouter.delete('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, function(req, res, next) {
+  debug('Hit DELETE /api/hospital/:hospitalID/profile/:profileID');
+  Profile.findById(req.params.profileID)
+  .then(profile => {
+    if(profile.hospitalID.toString() !== req.params.hospitalID) return Promise.reject(createError(404, 'Profile not found.'));
+    if(profile.userID.toString() === req.user._id.toString()) {
+      Profile.findByIdAndRemove(req.params.profileID)
+      .then(() => res.sendStatus(204))
+      .catch(next);
+    } else {
+      return Promise.reject(createError(401, 'Invalid user ID'));
+    }
+  })
+.catch(err => err.status ? next(err) : next(createError(404, err.message)));
+});
+
+profileRouter.put('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, jsonParser, function(req, res, next) {
+  debug('Hit PUT /api/hospital/:hospitalID/profile/:profileID');
+  Profile.findById(req.params.profileID)
+  .then(profile => {
+    if(profile.hospitalID.toString() !== req.params.hospitalID) return Promise.reject(createError(404, 'Profile not found.'));
+    if(profile.userID.toString() === req.user._id.toString()) {
+      Profile.findByIdAndUpdate(req.params.profileID, req.body, {new:true})
+      .then(profile => res.json(profile))
+      .catch(next);
+    } else {
+      return Promise.reject(createError(401, 'Invalid user ID'));
+    }
+  })
+.catch(err => err.status ? next(err) : next(createError(404, err.message)));
 });
