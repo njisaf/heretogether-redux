@@ -30,4 +30,5 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, jsonParser, function(r
 
   Status.findById(req.params.statusID)
   .catch(err => Promise.reject(createError(404, err.message)))
+  .then(() => )
 });
