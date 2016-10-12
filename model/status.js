@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const statusSchema = Schema({
-  userID: {type: String, required:true},
+  userID: {type: mongoose.Schema.Types.ObjectId, required:true},
   text: {type: String},
   fileID: {type: mongoose.Schema.Types.ObjectId},
   picID: {type: mongoose.Schema.Types.ObjectId},
