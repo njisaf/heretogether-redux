@@ -53,12 +53,11 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'),
   .then(s3data => {
     del([`${dataDir}/*`]);
     let fileData = {
-      name: req.body.name,
-      desc: req.body.desc,
       objectKey: s3data.Key,
-      imageURI: s3data.Location,
+      fileURI: s3data.Location,
       userID: req.user._id,
-      galleryID: req.params.galleryID,
+      fileType: req.file.mimetype,
+      statusID: req.params.statusID,
     };
     return new File(fileData).save();
   })
