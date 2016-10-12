@@ -5,7 +5,7 @@ const debug = require('debug')('ht: pic-mock');
 
 //app modules
 const Pic = require('../../model/pic.js');
-const awsMocks = require('./aws-mocks.js')
+const awsMocks = require('./aws-mocks.js');
 const profileMock = require('./profile-mock.js');
 
 module.exports = function(done){
@@ -14,16 +14,15 @@ module.exports = function(done){
     name: 'picture',
     desc: 'its a picture',
     alt: 'this is hover text',
-    imagePath: `${__dirname}/data/shield.png`,
-    // username: 'fake',
-    imageURI: 'fakeURI',
-    objectKey: 'fakeKey',
+    username: ' ',
+    imageURI: awsMocks.uploadMock.Location,
+    objectKey: awsMocks.uploadMock.Key,
     created: new Date(),
   };
+
   profileMock.call(this, err => {
     if (err) return done(err);
-    examplePicData.picID = this.tempProfile.picID.toString();
-    examplePicData.username = this.tempUser.username.toString();
+    examplePicData.username = this.tempUser.username;
     new Pic(examplePicData).save()
     .then( pic => {
       this.tempPic = pic;
