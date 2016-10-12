@@ -78,7 +78,6 @@ describe('Testing Status routes', function() {
         request.get(`${url}/api/hospital/${this.tempHospital._id}/status/`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
-          console.log('HGDJNGJDNGJDNGJDNG   ', res.body);
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body[0].text).to.equal(this.tempStatus.text);

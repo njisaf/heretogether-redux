@@ -37,6 +37,18 @@ profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, fu
   .catch(next);
 });
 
+profileRouter.get('/api/hospital/:hospitalID/profile/', bearerAuth, function(req, res, next) {
+  debug('Hit GET ALL /api/hospital/:hospitalID/profile/');
+  Hospital.findById(req.params.hospitalID)
+  .catch(err => Promise.reject(createError(404, err.message)))
+  .then(() => {
+    return Profile.find({hospitalID: req.params.hospitalID});
+  })
+  .then(profArr => res.json(profArr))
+  .catch(next);
+});
+
+
 profileRouter.delete('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, function(req, res, next) {
   debug('Hit DELETE /api/hospital/:hospitalID/profile/:profileID');
   Profile.findById(req.params.profileID)
