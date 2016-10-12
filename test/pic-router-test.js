@@ -83,6 +83,23 @@ describe('testing PIC routes', function() {
     });
   });
 
+  describe('no username given', function(){
+    before(done => mockProfile.call(this, done));
+
+    it('should response with status 400', done => {
+      request.post(`${url}/api/profile/${this.tempProfile._id}/pic`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .field('desc', examplePic.desc)
+        .field('alt', examplePic.alt)
+        .attach('image', examplePic.image)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+    });
+  });
+
   describe('no desc given', function(){
     before(done => mockProfile.call(this, done));
 
@@ -104,7 +121,7 @@ describe('testing PIC routes', function() {
   describe('no image attached', function(){
     before(done => mockProfile.call(this, done));
 
-    it('should respode with status 400', done => {
+    it('should respond with status 400', done => {
       request.post(`${url}/api/profile/${this.tempProfile._id}/pic`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .field('name', examplePic.name)
