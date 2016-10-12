@@ -8,9 +8,6 @@ const statusMock = require('./status-mock');
 module.exports = function(done){
   debug('creating mock file');
   let exampleFileData = {
-    name: 'Tom',
-    desc: 'heir of slytherin',
-    created: new Date(),
     imageURI: awsMocks.uploadMock.Location,
     objectKey: awsMocks.uploadMock.Key,
   };

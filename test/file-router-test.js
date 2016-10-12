@@ -2,13 +2,13 @@
 
 require('./lib/test-env.js');
 
+const awsMocks = require('./lib/aws-mocks');
 const expect = require('chai').expect;
 const request = require('superagent');
 // const debug = require('debug')('heretogether:file-router-test');
 
 const fileMock = require('./lib/file-mock');
 const cleanDB = require('./lib/clean-db');
-const awsMocks = require('./lib/aws-mocks');
 const statusMock = require('./lib/status-mock');
 const serverCtrl = require('./lib/server-ctrl');
 

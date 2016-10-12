@@ -11,7 +11,6 @@ const statusSchema = Schema({
   fileID: {type: mongoose.Schema.Types.ObjectId},
   picID: {type: mongoose.Schema.Types.ObjectId},
   replyTo: {type: String},
-  profileName: {type: String, required: true},
   hospitalID: {type: mongoose.Schema.Types.ObjectId, required: true},
   created: {type: Date, default: Date.now},
 });

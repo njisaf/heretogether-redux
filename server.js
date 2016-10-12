@@ -24,11 +24,11 @@ const app = express();
 
 app.use(morgan('dev'));
 
+app.use(fileRouter);
+app.use(picRouter);
 app.use(authRouter);
 app.use(hospitalRouter);
-app.use(picRouter);
 app.use(profileRouter);
-app.use(fileRouter);
 app.use(errorMiddleware);
 
 const server = module.exports = app.listen(PORT, () => {
