@@ -11,11 +11,9 @@ module.exports = function(done){
   debug('create mock status');
 
   let text = lorem({count: 3, unit:'sentences'}).split(' ').join('-');
-  let replyTo = lorem({count: 3, unit:'sentences'}).split(' ').join('-');
 
   let exampleStatus = {
     text,
-    replyTo,
   };
 
   userMock.call(this, err => {
