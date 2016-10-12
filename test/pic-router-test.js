@@ -14,7 +14,7 @@ const debug = require('debug')('ht: pic-router-test');
 const serverCtrl = require('./lib/server-ctrl');
 const cleanDB = require('./lib/clean-db');
 const mockProfile = require('./lib/profile-mock');
-const mockPic = require('./lib/pic-mock');
+// const mockPic = require('./lib/pic-mock');
 
 mongoose.Promise = Promise;
 

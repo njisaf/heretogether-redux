@@ -95,6 +95,49 @@ describe('Testing Profile routes', function() {
       });
     });
 
+    describe('Testing POST with NON-MATCHING hospitalID and VALID BODY', function() {
+
+      before(done => mockUser.call(this, done));
+      before(done => mockHospital.call(this, done));
+
+      it('Should return a status of 404 and an error message', done => {
+        request.post(`${url}/api/hospital/1234/profile`)
+        .send({
+          profileName: exampleProfile.profileName,
+          userID: `${this.tempUser._id}`,
+          bio: exampleProfile.bio,
+          hospitalID: `${this.tempHospital._id}`,
+        })
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+    });
+
+    describe('Testing POST with MISSING hospitalID and VALID BODY', function() {
+
+      before(done => mockUser.call(this, done));
+      before(done => mockHospital.call(this, done));
+
+      it('Should return a status of 404 and an error message', done => {
+        request.post(`${url}/api/hospital/1234/profile`)
+        .send({
+          profileName: exampleProfile.profileName,
+          userID: `${this.tempUser._id}`,
+          bio: exampleProfile.bio,
+          hospitalID: '1234',
+        })
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+    });
 
   });
 
