@@ -35,7 +35,6 @@ describe('testing file-router', function(){
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(200);
-          expect(res.body.statusID).to.equal(this.tempStatus._id.toString());
           expect(res.body.fileURI).to.equal(awsMocks.uploadMock.Location);
           expect(res.body.objectKey).to.equal(awsMocks.uploadMock.Key);
           done();

@@ -57,7 +57,6 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'),
       fileURI: s3data.Location,
       userID: req.user._id,
       fileType: req.file.mimetype,
-      statusID: req.params.statusID,
     };
     return new File(fileData).save();
   })
@@ -71,11 +70,13 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'),
 fileRouter.delete('/api/status/:statusID/file/:fileID', bearerAuth, function(req, res, next){
   debug('DELETE /api/status/:statusID/file/:fileID');
 
-  File.findById(req.params.fileID)
-  .catch(err => Promise.reject(createError(404, err.message)))
+  Status.findById(req.params.statusID)
+  .catch(err => Promise.reject(createError(400, err.message)))
+  .then(() => {
+    return File.findById(req.params.fileID);
+  })
+  .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(404, err.message)))
   .then( file => {
-    if(file.statusID.toString() !== req.params.statusID)
-      return Promise.reject(createError(400, 'bad request wrong gallery'));
     if(file.userID.toString() !== req.user._id.toString())
       return Promise.reject(createError(401, 'user not authtorized to delete this file'));
     let params = {

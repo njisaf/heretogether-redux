@@ -17,7 +17,6 @@ module.exports = function(done){
   statusMock.call(this, err => {
     if (err) return done(err);
     exampleFileData.userID = this.tempUser._id.toString();
-    exampleFileData.statusID = this.tempStatus._id.toString();
     new File(exampleFileData).save()
     .then( file => {
       this.tempFile = file;
