@@ -41,12 +41,6 @@ function s3UploadPromise(params){
   });
 }
 
-//find profile, if !, 404
-//upload pic to AWS, err 500 if not uploaded
-//instantiate pic object
-//take photo id and add it to profile
-//save profile
-//respond to user
 
 picRouter.post('/api/profile/:profileID/pic', bearerAuth, upload.single('image'), function(req, res, next){
   debug('hit POST route /api/profile/:profileID/pic');
