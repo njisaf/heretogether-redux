@@ -76,12 +76,13 @@ picRouter.post('/api/profile/:profileID/pic', bearerAuth, upload.single('image')
     return new Pic(picData).save();
   })
   .then(pic => {
+    //TODO: How do I set our pic mongoose ID# to the profile schema's picID?
     // Profile.call(this, err => {
       // if (err) next(err);
       // pic.picID = this.tempProfile.picID.toString();
       // console.log('line 88', this.tempProfile.picID.toString());
-    res.json(pic);
     // });
+    res.json(pic);
   })
   .catch(err => {
     del([`${dataDir}/*`]);
@@ -96,6 +97,8 @@ picRouter.delete('/api/profile/:profileID/pic/:picID', bearerAuth, function(req,
   .catch(err => Promise.reject(createError(404, err.message)))
   .then( pic => {
     console.log('did delete get hit?');
+
+    //TODO: pic schema has no profileID field, but when I add one in all places (pic model, pic-mock, and in the picData of above POST route), then the previously succcessful POST route breaks.
     if(pic.profileID.toString() !== req.params.profileID)
       return Promise.reject(createError(400, 'bad request wrong profile'));
 
@@ -110,6 +113,7 @@ picRouter.delete('/api/profile/:profileID/pic/:picID', bearerAuth, function(req,
   })
   .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
   .then( (s3data) => {
+    //TODO: Sometimes I get 204, but I receive back empty object instead of data
     console.log(s3data);
     return Pic.findByIdAndRemove(req.params.picID);
   })
