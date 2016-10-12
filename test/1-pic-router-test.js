@@ -180,6 +180,7 @@ describe('testing PIC routes', function() {
        .set({Authorization: `Bearer ${this.tempToken}`})
        .end((err, res) => {
          if (err) return done(err);
+         console.log('HBHFBDHGBHDHBDFHBFD ', res.body);
          expect(res.status).to.equal(204);
          done();
        });

@@ -98,10 +98,6 @@ picRouter.delete('/api/profile/:profileID/pic/:picID', bearerAuth, function(req,
   .then( pic => {
     console.log('did delete get hit?');
 
-    //TODO: pic schema has no profileID field, but when I add one in all places (pic model, pic-mock, and in the picData of above POST route), then the previously succcessful POST route breaks.
-    if(pic.profileID.toString() !== req.params.profileID)
-      return Promise.reject(createError(400, 'bad request wrong profile'));
-
     if(pic.userID.toString() !== req.user._id.toString())
       return Promise.reject(createError(401, 'user not authorized to delete picture'));
 
@@ -112,9 +108,9 @@ picRouter.delete('/api/profile/:profileID/pic/:picID', bearerAuth, function(req,
     return s3.deleteObject(params).promise();
   })
   .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
-  .then( (s3data) => {
+  .then( s3data => {
     //TODO: Sometimes I get 204, but I receive back empty object instead of data
-    console.log(s3data);
+    console.log('s3data returned?', s3data);
     return Pic.findByIdAndRemove(req.params.picID);
   })
   .then(() => res.sendStatus(204))
