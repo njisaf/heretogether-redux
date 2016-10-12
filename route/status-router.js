@@ -36,6 +36,17 @@ statusRouter.get('/api/hospital/:hospitalID/status/:statusID', bearerAuth, funct
   .catch(next);
 });
 
+statusRouter.get('/api/hospital/:hospitalID/status/', bearerAuth, function(req, res, next) {
+  debug('Hit GET ALL /api/hospital/:hospitalID/status/');
+  Hospital.findById(req.params.hospitalID)
+  .catch(err => Promise.reject(createError(404, err.message)))
+  .then(() => {
+    return Status.find({hospitalID: req.params.hospitalID});
+  })
+  .then(statArr => res.json(statArr))
+  .catch(next);
+});
+
 statusRouter.delete('/api/hospital/:hospitalID/status/:statusID', bearerAuth, function(req, res, next) {
   debug('Hit DELETE /api/hospital/:hospitalID/status/:statusID');
 
