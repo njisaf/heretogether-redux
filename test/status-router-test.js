@@ -69,6 +69,26 @@ describe('Testing Status routes', function() {
         });
       });
     });
+
+    describe('Testing GET ALL with NO STATUS ID', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 200 and an array of statuses', done => {
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          console.log('HGDJNGJDNGJDNGJDNG   ', res.body);
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body[0].text).to.equal(this.tempStatus.text);
+          expect(!!res.body.length).to.equal(true);
+          done();
+        });
+      });
+    });
+
+
   });
 
   describe('Testing Status DELETE routes', function() {
