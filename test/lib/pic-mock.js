@@ -1,16 +1,34 @@
 'use strict';
 
+//npm modules
+const debug = require('debug')('ht: pic-mock');
 
-//Only here for reference
-//const picSchema = Schema({
-//   username: {type: String, required: true, unique: true},
-//   userID: {type: mongoose.Schema.Types.ObjectId, required: true},
-//   picID: {type: mongoose.Schema.Types.ObjectId, required: true},
-//   imageURI: {type: String, required: true, unique: true},
-//   objectKey: {type: String, required: true, unique: true},
-//   created: {type: Date, default: Date.now},
+//app modules
+const Pic = require('../../model/pic.js');
+const awsMocks = require('./aws-mocks.js')
+const profileMock = require('./profile-mock.js');
 
-//1. Require in User-mock and userMock.call so pic can be associated w/ user...
-//2. Also needs AWS mocks
-//3. Which means we'll need to upload at least one pic to AWS for real
-//4.Which means we'll need to finish and test at least one POST route for pic and test it to make sure it's OK
+module.exports = function(done){
+  debug('creating mock pic');
+  let examplePicData = {
+    name: 'picture',
+    desc: 'its a picture',
+    alt: 'this is hover text',
+    imagePath: `${__dirname}/data/shield.png`,
+    // username: 'fake',
+    imageURI: 'fakeURI',
+    objectKey: 'fakeKey',
+    created: new Date(),
+  };
+  profileMock.call(this, err => {
+    if (err) return done(err);
+    examplePicData.picID = this.tempProfile.picID.toString();
+    examplePicData.username = this.tempUser.username.toString();
+    new Pic(examplePicData).save()
+    .then( pic => {
+      this.tempPic = pic;
+      done();
+    })
+    .catch(done);
+  });
+};
