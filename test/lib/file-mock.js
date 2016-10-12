@@ -2,7 +2,6 @@
 
 const debug = require('debug')('ht:file-mock');
 const File = require('../../model/file');
-const awsMocks = require('./aws-mocks');
 const statusMock = require('./status-mock');
 const lorem = require('lorem-ipsum');
 
