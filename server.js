@@ -12,6 +12,7 @@ const hospitalRouter = require('./route/hospital-router');
 const picRouter = require('./route/pic-router');
 const profileRouter = require('./route/profile-router');
 const fileRouter = require('./route/file-router');
+const statusRouter = require('./route/status-router');
 const errorMiddleware = require('./lib/error-middleware');
 
 dotenv.load();
@@ -29,6 +30,7 @@ app.use(picRouter);
 app.use(fileRouter);
 app.use(hospitalRouter);
 app.use(profileRouter);
+app.use(statusRouter);
 app.use(errorMiddleware);
 
 const server = module.exports = app.listen(PORT, () => {
