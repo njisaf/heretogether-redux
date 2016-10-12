@@ -113,3 +113,16 @@ built out all models:
   * Kaylyn begins File route
   * Nassir finishes Profile routes and tests
 * MVP for afternoon is get AWS-associated routes working.
+
+## Day 3 10/12/16
+
+**Standup Meeting @ 11:30 a.m.
+*Duncan needed to debug us a lot. Resolved merge conflicts and we are back on track with all tests passing. Group to review all routes and discuss what more routes we need, if any.
+
+**ToDo:**
+*Profile: GET all route
+ *In Profile mock, we include mocking logic for pic and file router, and make a test that updates the pic and status IDs
+*Status: GET all route
+*Pic: PUT route, plus update schema to take out extraneous fields
+*File: GET all route
+*Plus test these new routes accordingly
