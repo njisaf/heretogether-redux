@@ -92,3 +92,7 @@ fileRouter.delete('/api/status/:statusID/file/:fileID', bearerAuth, function(req
   .then(() => res.sendStatus(204))
   .catch(next);
 });
+
+// fileRouter.get('/api/status/:statusID/file/', bearerAuth, function(req, res, next){
+//   debug('Hit GET ALL /appi/status/:statusID')
+// });

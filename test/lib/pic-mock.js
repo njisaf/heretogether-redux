@@ -1,5 +1,6 @@
 'use strict';
 
+require('./aws-mocks.js');
 //npm modules
 const debug = require('debug')('ht: pic-mock');
 const lorem = require('lorem-ipsum');

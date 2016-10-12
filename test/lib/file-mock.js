@@ -1,5 +1,7 @@
 'use strict';
 
+require('./aws-mocks.js');
+
 const debug = require('debug')('ht:file-mock');
 const File = require('../../model/file');
 const statusMock = require('./status-mock');
