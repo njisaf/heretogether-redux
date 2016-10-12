@@ -16,9 +16,9 @@ const server = require('../server');
 const url = `http://localhost:${process.env.PORT}`;
 
 const exampleFile = {
-  name: 'Harry Potter',
-  desc: 'the boy who lived',
-  image: `${__dirname}/data/shield.png`,
+  // name: 'Harry Potter',
+  // desc: 'the boy who lived',
+  file: `${__dirname}/data/shield.png`,
 };
 
 describe('testing file-router', function(){
@@ -33,16 +33,12 @@ describe('testing file-router', function(){
       it('should return a file', done => {
         request.post(`${url}/api/status/${this.tempStatus._id}/file`)
         .set({Authorization: `Bearer ${this.tempToken}`})
-        .field('name', exampleFile.name)
-        .field('desc', exampleFile.desc)
-        .attach('image', exampleFile.image)
+        .attach('file', exampleFile.file)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(200);
-          expect(res.body.name).to.equal(exampleFile.name);
-          expect(res.body.desc).to.equal(exampleFile.desc);
           expect(res.body.statusID).to.equal(this.tempStatus._id.toString());
-          expect(res.body.imageURI).to.equal(awsMocks.uploadMock.Location);
+          expect(res.body.fileURI).to.equal(awsMocks.uploadMock.Location);
           expect(res.body.objectKey).to.equal(awsMocks.uploadMock.Key);
           done();
         });
@@ -54,8 +50,7 @@ describe('testing file-router', function(){
       it('should respond with status 400', done => {
         request.post(`${url}/api/status/${this.tempStatus._id}/file`)
         .set({Authorization: `Bearer ${this.tempToken}`})
-        .field('desc', exampleFile.desc)
-        .attach('image', exampleFile.image)
+        .attach('file', exampleFile.file)
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.text).to.equal('BadRequestError');
@@ -69,8 +64,7 @@ describe('testing file-router', function(){
       it('should respond with status 400', done => {
         request.post(`${url}/api/status/${this.tempStatus._id}/file`)
         .set({Authorization: `Bearer ${this.tempToken}`})
-        .field('name', exampleFile.name)
-        .attach('image', exampleFile.image)
+        .attach('file', exampleFile.file)
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.text).to.equal('BadRequestError');
@@ -79,13 +73,11 @@ describe('testing file-router', function(){
       });
     });
 
-    describe('with no image', function(){
+    describe('with no file', function(){
       before(done => statusMock.call(this, done));
       it('should respond with status 400', done => {
         request.post(`${url}/api/status/${this.tempStatus._id}/file`)
         .set({Authorization: `Bearer ${this.tempToken}`})
-        .field('desc', exampleFile.desc)
-        .field('name', exampleFile.name)
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(res.text).to.equal('BadRequestError');
@@ -99,9 +91,7 @@ describe('testing file-router', function(){
       it('should respond with status 401', done => {
         request.post(`${url}/api/status/${this.tempStatus._id}/file`)
         .set({Authorization: `Bearer ${this.tempToken}bad`})
-        .field('desc', exampleFile.desc)
-        .field('name', exampleFile.name)
-        .attach('image', exampleFile.image)
+        .attach('file', exampleFile.file)
         .end((err, res) => {
           expect(res.status).to.equal(401);
           expect(res.text).to.equal('UnauthorizedError');
@@ -115,9 +105,7 @@ describe('testing file-router', function(){
       it('should respond with status 404', done => {
         request.post(`${url}/api/status/${this.tempStatus._id}bad/file`)
         .set({Authorization: `Bearer ${this.tempToken}`})
-        .field('desc', exampleFile.desc)
-        .field('name', exampleFile.name)
-        .attach('image', exampleFile.image)
+        .attach('file', exampleFile.file)
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.text).to.equal('NotFoundError');

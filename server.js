@@ -24,9 +24,9 @@ const app = express();
 
 app.use(morgan('dev'));
 
-app.use(fileRouter);
-app.use(picRouter);
 app.use(authRouter);
+app.use(picRouter);
+app.use(fileRouter);
 app.use(hospitalRouter);
 app.use(profileRouter);
 app.use(errorMiddleware);
