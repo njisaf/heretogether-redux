@@ -22,7 +22,7 @@ const exampleFile = {
 describe('testing file-router', function(){
 
   before( done => serverCtrl.serverUp(server, done));
-  before( done => serverCtrl.serverDown(server, done));
+  after( done => serverCtrl.serverDown(server, done));
   afterEach( done => cleanDB(done));
 
   describe('testing post /api/status/:id/file', function(){
@@ -43,33 +43,6 @@ describe('testing file-router', function(){
       });
     });
 
-    describe('with no name', function(){
-      before(done => statusMock.call(this, done));
-      it('should respond with status 400', done => {
-        request.post(`${url}/api/status/${this.tempStatus._id}/file`)
-        .set({Authorization: `Bearer ${this.tempToken}`})
-        .attach('file', exampleFile.file)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.text).to.equal('BadRequestError');
-          done();
-        });
-      });
-    });
-
-    describe('with no desc', function(){
-      before(done => statusMock.call(this, done));
-      it('should respond with status 400', done => {
-        request.post(`${url}/api/status/${this.tempStatus._id}/file`)
-        .set({Authorization: `Bearer ${this.tempToken}`})
-        .attach('file', exampleFile.file)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.text).to.equal('BadRequestError');
-          done();
-        });
-      });
-    });
 
     describe('with no file', function(){
       before(done => statusMock.call(this, done));

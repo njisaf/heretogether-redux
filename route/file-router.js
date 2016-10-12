@@ -56,6 +56,7 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'),
       objectKey: s3data.Key,
       fileURI: s3data.Location,
       userID: req.user._id,
+      fileType: req.file.mimetype,
       statusID: req.params.statusID,
     };
     return new File(fileData).save();
