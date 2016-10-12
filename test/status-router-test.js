@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const serverCtrl = require('./lib/server-ctrl');
 const cleanDB = require('./lib/clean-db');
 const mockProfile = require('./lib/profile-mock');
-// const mockStatus = require('./lib/status-mock');
+const mockStatus = require('./lib/status-mock');
 
 mongoose.Promise = Promise;
 
@@ -52,4 +52,21 @@ describe('Testing Status routes', function() {
     });
   });
 
+  describe('Testing GET with VALID IDs', function() {
+
+    before(done => mockStatus.call(this, done));
+
+    it('Should return a status of 200 and a status post', done => {
+      request.get(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+      .set({Authorization: `Bearer ${this.tempToken}`})
+      .end((err, res) => {
+        if(err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.body.userID).to.equal(this.tempUser._id.toString());
+        expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
+        done();
+      });
+    });
+  });
+  
 });
