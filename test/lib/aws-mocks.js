@@ -14,7 +14,6 @@ exports.uploadMock = {
 };
 
 
-
 AWSMock.mock('S3', 'upload', function(params, callback){
   if(params.ACL !== 'public-read')
     return callback(new Error('ACL must be public read'));
@@ -30,4 +29,17 @@ AWSMock.mock('S3', 'upload', function(params, callback){
 
   callback(null, exports.uploadMock);
 
+});
+
+exports.deleteMock = {
+  DeleteMarker: 'true',
+  VersionId: 'lv9XPH0r.UfGZERuv3u7WwxkIzwPKP2d',
+};
+
+AWSMock.mock('S3', 'deleteObject', function(params, callback){
+  if(params.Bucket !== 'heretogether-assets')
+    return callback(new Error('Bucket must be heretogether-assets'));
+  if(!params.Key)
+    return callback(new Error('requres Key'));
+  callback(null, exports.deleteMock);
 });
