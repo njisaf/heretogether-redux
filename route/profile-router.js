@@ -30,8 +30,8 @@ profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, fu
   Profile.findById(req.params.profileID)
   .catch(err => Promise.reject(createError(400, err.message)))
   .then( profile => {
-    if(profile.userID.toString() !== req.user._id.toString())
-      return Promise.reject(createError(401, 'invalid userid'));
+    if(profile.userID.toString() !== req.user._id.toString()) return Promise.reject(createError(401, 'invalid userid'));
+    if(profile.hospitalID.toString() !== req.params.hospitalID.toString()) return Promise.reject(createError(404, 'Hospital mismatch'));
     res.json(profile);
   })
   .catch(next);
@@ -41,8 +41,8 @@ profileRouter.delete('/api/hospital/:hospitalID/profile/:profileID', bearerAuth,
   debug('Hit DELETE /api/hospital/:hospitalID/profile/:profileID');
   Profile.findById(req.params.profileID)
   .then(profile => {
-    if(profile.hospitalID.toString() !== req.params.hospitalID) return Promise.reject(createError(404, 'Profile not found.'));
     if(profile.userID.toString() === req.user._id.toString()) {
+      if(profile.hospitalID.toString() !== req.params.hospitalID) return Promise.reject(createError(404, 'Hospital mismatch'));
       Profile.findByIdAndRemove(req.params.profileID)
       .then(() => res.sendStatus(204))
       .catch(next);

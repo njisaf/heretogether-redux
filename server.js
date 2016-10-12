@@ -11,6 +11,7 @@ const authRouter = require('./route/auth-router');
 const hospitalRouter = require('./route/hospital-router');
 const picRouter = require('./route/pic-router');
 const profileRouter = require('./route/profile-router');
+const fileRouter = require('./route/file-router');
 const errorMiddleware = require('./lib/error-middleware');
 
 dotenv.load();
@@ -24,8 +25,9 @@ const app = express();
 app.use(morgan('dev'));
 
 app.use(authRouter);
-app.use(hospitalRouter);
 app.use(picRouter);
+app.use(fileRouter);
+app.use(hospitalRouter);
 app.use(profileRouter);
 app.use(errorMiddleware);
 
