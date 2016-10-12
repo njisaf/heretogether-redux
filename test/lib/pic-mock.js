@@ -2,10 +2,11 @@
 
 //npm modules
 const debug = require('debug')('ht: pic-mock');
+const lorem = require('lorem-ipsum');
 
 //app modules
 const Pic = require('../../model/pic.js');
-const awsMocks = require('./aws-mocks.js');
+// const awsMocks = require('./aws-mocks.js');
 const profileMock = require('./profile-mock.js');
 
 module.exports = function(done){
@@ -15,9 +16,8 @@ module.exports = function(done){
     desc: 'its a picture',
     alt: 'this is hover text',
     username: ' ',
-    imageURI: awsMocks.uploadMock.Location,
-    objectKey: awsMocks.uploadMock.Key,
-    created: new Date(),
+    // imageURI: awsMocks.uploadMock.Location,
+    // objectKey: awsMocks.uploadMock.Key,
   };
 
   profileMock.call(this, err => {
