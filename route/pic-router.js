@@ -95,6 +95,7 @@ picRouter.delete('/api/profile/:profileID/pic/:picID', bearerAuth, function(req,
   Pic.findById(req.params.picID)
   .catch(err => Promise.reject(createError(404, err.message)))
   .then( pic => {
+    console.log('did delete get hit?');
     if(pic.profileID.toString() !== req.params.profileID)
       return Promise.reject(createError(400, 'bad request wrong profile'));
 
@@ -108,7 +109,8 @@ picRouter.delete('/api/profile/:profileID/pic/:picID', bearerAuth, function(req,
     return s3.deleteObject(params).promise();
   })
   .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
-  .then( () => {
+  .then( (s3data) => {
+    console.log(s3data);
     return Pic.findByIdAndRemove(req.params.picID);
   })
   .then(() => res.sendStatus(204))

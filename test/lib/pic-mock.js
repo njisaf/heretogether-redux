@@ -23,6 +23,7 @@ module.exports = function(done){
   profileMock.call(this, err => {
     if (err) return done(err);
     examplePicData.username = this.tempUser.username;
+    examplePicData.userID = this.tempUser._id;
     new Pic(examplePicData).save()
     .then( pic => {
       this.tempPic = pic;

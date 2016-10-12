@@ -14,7 +14,7 @@ const debug = require('debug')('ht: pic-router-test');
 const serverCtrl = require('./lib/server-ctrl');
 const cleanDB = require('./lib/clean-db');
 const mockProfile = require('./lib/profile-mock');
-// const mockPic = require('./lib/pic-mock');
+const mockPic = require('./lib/pic-mock');
 
 mongoose.Promise = Promise;
 
@@ -151,6 +151,22 @@ describe('testing PIC routes', function() {
           expect(res.text).to.equal('NotFoundError');
           done();
         });
+    });
+  });
+
+  //DELETE routes
+  describe('testing DELETE routes to /api/profile/:profileID/pic/:picID', function(){
+    describe('with successful deletion', function(){
+      before(done => mockPic.call(this, done));
+      it('should return status 204', (done) => {
+        request.delete(`${url}/api/profile/${this.tempProfile._id}/pic/${this.tempPic._id}`)
+       .set({Authorization: `Bearer ${this.tempToken}`})
+       .end((err, res) => {
+         if (err) return done(err);
+         expect(res.status).to.equal(204);
+         done();
+       });
+      });
     });
   });
 
