@@ -88,3 +88,29 @@ picRouter.post('/api/profile/:profileID/pic', bearerAuth, upload.single('image')
     next(err);
   });
 });
+
+picRouter.delete('/api/profile/:profileID/pic/:picID', bearerAuth, function(req, res, next){
+  debug('DELETE /api/profile/:profileID/pic/:picID');
+
+  Pic.findById(req.params.picID)
+  .catch(err => Promise.reject(createError(404, err.message)))
+  .then( pic => {
+    if(pic.profileID.toString() !== req.params.profileID)
+      return Promise.reject(createError(400, 'bad request wrong profile'));
+
+    if(pic.userID.toString() !== req.user._id.toString())
+      return Promise.reject(createError(401, 'user not authorized to delete picture'));
+
+    let params = {
+      Bucket: 'heretogether-assets',
+      Key: pic.objectKey,
+    };
+    return s3.deleteObject(params).promise();
+  })
+  .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
+  .then( () => {
+    return Pic.findByIdAndRemove(req.params.picID);
+  })
+  .then(() => res.sendStatus(204))
+  .catch(next);
+});
