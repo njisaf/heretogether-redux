@@ -11,12 +11,11 @@
 * **findHash:** type: String, unique: true
 * **date**
 
-##picSchema 0.1
+##picSchema 0.2
 * **userID**
+* **username**
 * **imageURI**
 * **objectKey**
-* **date**
-* **alt**
 * **date**
 
 ##hospitalSchema 0.1

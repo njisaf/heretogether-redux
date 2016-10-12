@@ -65,9 +65,6 @@ picRouter.post('/api/profile/:profileID/pic', bearerAuth, upload.single('image')
 
     del([`${dataDir}/*`]);
     let picData = {
-      name: req.body.name,
-      desc: req.body.desc,
-      alt: req.body.alt,
       username: req.user.username,
       userID: req.user._id,
       imageURI: s3data.Location,

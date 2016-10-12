@@ -22,9 +22,6 @@ const server = require('../server');
 const url = `http://localhost:${process.env.PORT}`;
 
 const examplePic = {
-  name: 'picture',
-  desc: 'its a picture',
-  alt: 'this is hover text',
   image: `${__dirname}/data/shield.png`,
 };
 
@@ -45,17 +42,11 @@ describe('testing PIC routes', function() {
         request.post(`${url}/api/profile/${this.tempProfile._id}/pic`)
 
         .set({Authorization: `Bearer ${this.tempToken}`})
-        .field('name', examplePic.name)
-        .field('desc', examplePic.desc)
-        .field('alt', examplePic.alt)
         .attach('image', examplePic.image)
         .field('username', this.tempUser.username)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(200);
-          expect(res.body.name).to.equal(examplePic.name);
-          expect(res.body.desc).to.equal(examplePic.desc);
-          expect(res.body.alt).to.equal(examplePic.alt);
           //TODO: AWS mocks comparisons here
           expect(res.body.imageURI).to.equal(awsMocks.uploadMock.Location);
           expect(res.body.objectKey).to.equal(awsMocks.uploadMock.Key);
@@ -65,58 +56,6 @@ describe('testing PIC routes', function() {
     });
   });
 
-  describe('no name given', function(){
-    before(done => mockProfile.call(this, done));
-
-    it('should response with status 400', done => {
-      request.post(`${url}/api/profile/${this.tempProfile._id}/pic`)
-        .set({Authorization: `Bearer ${this.tempToken}`})
-        .field('desc', examplePic.desc)
-        .field('alt', examplePic.alt)
-        .field('username', this.tempUser.username)
-        .attach('image', examplePic.image)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.text).to.equal('BadRequestError');
-          done();
-        });
-    });
-  });
-
-  describe('no username given', function(){
-    before(done => mockProfile.call(this, done));
-
-    it('should response with status 400', done => {
-      request.post(`${url}/api/profile/${this.tempProfile._id}/pic`)
-        .set({Authorization: `Bearer ${this.tempToken}`})
-        .field('desc', examplePic.desc)
-        .field('alt', examplePic.alt)
-        .attach('image', examplePic.image)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.text).to.equal('BadRequestError');
-          done();
-        });
-    });
-  });
-
-  describe('no desc given', function(){
-    before(done => mockProfile.call(this, done));
-
-    it('should response with status 400', done => {
-      request.post(`${url}/api/profile/${this.tempProfile._id}/pic`)
-        .set({Authorization: `Bearer ${this.tempToken}`})
-        .field('name', examplePic.name)
-        .field('alt', examplePic.alt)
-        .attach('image', examplePic.image)
-        .field('username', this.tempUser.username)
-        .end((err, res) => {
-          expect(res.status).to.equal(400);
-          expect(res.text).to.equal('BadRequestError');
-          done();
-        });
-    });
-  });
 
   describe('no image attached', function(){
     before(done => mockProfile.call(this, done));
@@ -124,8 +63,6 @@ describe('testing PIC routes', function() {
     it('should respond with status 400', done => {
       request.post(`${url}/api/profile/${this.tempProfile._id}/pic`)
         .set({Authorization: `Bearer ${this.tempToken}`})
-        .field('name', examplePic.name)
-        .field('alt', examplePic.alt)
         .field('username', this.tempUser.username)
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -141,8 +78,6 @@ describe('testing PIC routes', function() {
     it('should response with status 401', done => {
       request.post(`${url}/api/profile/${this.tempProfile._id}/pic`)
         .set({Authorization: `Bearer ${this.tempToken}badtoken`})
-        .field('name', examplePic.name)
-        .field('alt', examplePic.alt)
         .field('username', this.tempUser.username)
         .attach('image', examplePic.image)
         .end((err, res) => {
@@ -159,8 +94,6 @@ describe('testing PIC routes', function() {
     it('should response with status 404', done => {
       request.post(`${url}/api/profile/${this.tempProfile._id}badID/pic`)
         .set({Authorization: `Bearer ${this.tempToken}`})
-        .field('name', examplePic.name)
-        .field('alt', examplePic.alt)
         .field('username', this.tempUser.username)
         .attach('image', examplePic.image)
         .end((err, res) => {

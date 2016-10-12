@@ -9,7 +9,6 @@ const fileSchema = Schema({
   fileURI: {type: String, required: true, unique: true},
   objectKey: {type: String, required: true, unique: true},
   fileType: {type: String, required: true},
-  statusID: {type: mongoose.Schema.Types.ObjectId, required: true},
   created: {type: Date, default: Date.now},
 });
 
