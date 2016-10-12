@@ -8,7 +8,7 @@ const statusMock = require('./status-mock');
 module.exports = function(done){
   debug('creating mock file');
   let exampleFileData = {
-    imageURI: awsMocks.uploadMock.Location,
+    fileURI: awsMocks.uploadMock.Location,
     objectKey: awsMocks.uploadMock.Key,
   };
   statusMock.call(this, err => {

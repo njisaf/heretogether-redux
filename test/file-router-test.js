@@ -1,23 +1,21 @@
 'use strict';
 
 require('./lib/test-env.js');
-
 const awsMocks = require('./lib/aws-mocks');
+
 const expect = require('chai').expect;
 const request = require('superagent');
 // const debug = require('debug')('heretogether:file-router-test');
 
 const fileMock = require('./lib/file-mock');
-const cleanDB = require('./lib/clean-db');
 const statusMock = require('./lib/status-mock');
+const cleanDB = require('./lib/clean-db');
 const serverCtrl = require('./lib/server-ctrl');
 
 const server = require('../server');
 const url = `http://localhost:${process.env.PORT}`;
 
 const exampleFile = {
-  // name: 'Harry Potter',
-  // desc: 'the boy who lived',
   file: `${__dirname}/data/shield.png`,
 };
 

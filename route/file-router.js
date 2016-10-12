@@ -54,7 +54,7 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'),
     del([`${dataDir}/*`]);
     let fileData = {
       objectKey: s3data.Key,
-      imageURI: s3data.Location,
+      fileURI: s3data.Location,
       userID: req.user._id,
       statusID: req.params.statusID,
     };
