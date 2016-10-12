@@ -10,6 +10,8 @@ const mongoose = require('mongoose');
 const serverCtrl = require('./lib/server-ctrl');
 const cleanDB = require('./lib/clean-db');
 const mockProfile = require('./lib/profile-mock');
+const mockUser = require('./lib/user-mock');
+const mockHospital = require('./lib/hospital-mock');
 const mockStatus = require('./lib/status-mock');
 
 mongoose.Promise = Promise;
@@ -86,6 +88,24 @@ describe('Testing Status routes', function() {
         });
       });
     });
+
+    describe('Testing GET ALL with VALID HOSPITAL but NO STATUS POSTS', function() {
+
+      before(done => mockUser.call(this, done));
+      before(done => mockHospital.call(this, done));
+
+      it('Should return a status of 200 and an empty array', done => {
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.length).to.equal(0);
+          done();
+        });
+      });
+    });
+
 
 
   });

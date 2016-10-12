@@ -13,11 +13,11 @@ module.exports = function(done){
   debug('clean up db running');
   Promise.all([
     User.remove({}),
-    Hospital.remove({}),
-    Profile.remove({}),
-    Pic.remove({}),
-    Status.remove({}),
     File.remove({}),
+    Hospital.remove({}),
+    Pic.remove({}),
+    Profile.remove({}),
+    Status.remove({}),
   ])
   .then( () => done())
   .catch(done);
