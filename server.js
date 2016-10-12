@@ -10,6 +10,7 @@ const debug = require('debug')('ht:server');
 const authRouter = require('./route/auth-router');
 const hospitalRouter = require('./route/hospital-router');
 const profileRouter = require('./route/profile-router');
+const fileRouter = require('./route/file-router');
 const errorMiddleware = require('./lib/error-middleware');
 
 dotenv.load();
@@ -25,6 +26,7 @@ app.use(morgan('dev'));
 app.use(authRouter);
 app.use(hospitalRouter);
 app.use(profileRouter);
+app.use(fileRouter);
 app.use(errorMiddleware);
 
 const server = module.exports = app.listen(PORT, () => {
