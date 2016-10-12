@@ -86,7 +86,7 @@ fileRouter.delete('/api/status/:statusID/file/:fileID', bearerAuth, function(req
     return s3.deleteObject(params).promise();
   })
   .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
-  .then( s3data => {
+  .then(() => {
     return File.findByIdAndRemove(req.params.fileID);
   })
   .then(() => res.sendStatus(204))
