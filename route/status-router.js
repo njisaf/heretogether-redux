@@ -53,14 +53,14 @@ statusRouter.delete('/api/hospital/:hospitalID/status/:statusID', bearerAuth, fu
 .catch(err => err.status ? next(err) : next(createError(404, err.message)));
 });
 
-statusRouter.put('/api/hospital/:hospitalID/status/:statusID', bearerAuth, function(req, res, next) {
+statusRouter.put('/api/hospital/:hospitalID/status/:statusID', bearerAuth, jsonParser, function(req, res, next) {
   debug('Hit PUT /api/hospital/:hospitalID/status/:statusID');
 
   Status.findById(req.params.statusID)
   .then(status => {
     if(status.userID.toString() === req.user._id.toString()) {
       if(status.hospitalID.toString() !== req.params.hospitalID) return Promise.reject(createError(404, 'Hospital mismatch'));
-      Status.findByIdAndUpdate(req.params.profileID, req.body, {new:true})
+      Status.findByIdAndUpdate(req.params.statusID, req.body, {new: true})
       .then(status => res.json(status))
       .catch(next);
     } else {

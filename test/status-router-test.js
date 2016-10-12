@@ -88,6 +88,28 @@ describe('Testing Status routes', function() {
     });
   });
 
+  describe('Testing Status PUT routes', function() {
+    describe('Testing PUT with VALID IDs and VALID BODY', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 200 and an updated status post', done => {
+        request.put(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        .send({
+          userID: this.tempUser._id,
+          text: 'This is updated text',
+          hospitalID: this.tempHospital._id,
+        })
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.text).to.equal('This is updated text');
+          done();
+        });
+      });
+    });
+  });
 
 
 });
