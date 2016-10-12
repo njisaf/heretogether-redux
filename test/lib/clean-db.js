@@ -6,6 +6,8 @@ const User = require('../../model/user');
 const Hospital = require('../../model/hospital');
 const Profile = require('../../model/profile');
 const Pic = require('../../model/pic');
+const Status = require('../../model/status');
+const File = require('../../model/file');
 
 module.exports = function(done){
   debug('clean up db running');
@@ -14,6 +16,8 @@ module.exports = function(done){
     Hospital.remove({}),
     Profile.remove({}),
     Pic.remove({}),
+    Status.remove({}),
+    File.remove({}),
   ])
   .then( () => done())
   .catch(done);
