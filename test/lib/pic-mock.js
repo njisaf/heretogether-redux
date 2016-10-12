@@ -11,13 +11,15 @@ const profileMock = require('./profile-mock.js');
 
 module.exports = function(done){
   debug('creating mock pic');
+  const tempObjKey = `${lorem({count: 2, unit:'word'}).split(' ').join('-')}.mp3`;
+  const tempImageURI = `http://${lorem({count: 2, unit:'words'}).split(' ').join('-')}.com/{tempObjKey}`;
   let examplePicData = {
     name: 'picture',
     desc: 'its a picture',
     alt: 'this is hover text',
     username: ' ',
-    // imageURI: awsMocks.uploadMock.Location,
-    // objectKey: awsMocks.uploadMock.Key,
+    imageURI: tempImageURI,
+    objectKey: tempObjKey,
   };
 
   profileMock.call(this, err => {
