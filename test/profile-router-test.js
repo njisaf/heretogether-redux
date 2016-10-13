@@ -1,6 +1,7 @@
 'use strict';
 
 require('./lib/test-env.js');
+// require('./lib/aws-mocks');
 
 const expect = require('chai').expect;
 const request = require('superagent');
@@ -12,6 +13,8 @@ const cleanDB = require('./lib/clean-db');
 const mockProfile = require('./lib/profile-mock');
 const mockUser = require('./lib/user-mock');
 const mockHospital = require('./lib/hospital-mock');
+const mockProfilePic = require('./lib/profile-pic-mock');
+const Pic = require('../model/pic');
 
 mongoose.Promise = Promise;
 
@@ -204,6 +207,25 @@ describe('Testing Profile routes', function() {
     describe('Testing DELETE with VALID hospitalID and VALID profileID', function() {
 
       before(done => mockProfile.call(this, done));
+
+      it('Should return a status of 204', done => {
+        request.delete(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(204);
+          done();
+        });
+      });
+    });
+  });
+
+
+  describe('Testing DELETE /api/hospital/:hospitalID/profile/:profileID', function() {
+
+    describe('Testing DELETE with VALID hospitalID, VALID profileID and a valid PICID', function() {
+
+      before(done => mockProfilePic.call(this, done));
 
       it('Should return a status of 204', done => {
         request.delete(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
