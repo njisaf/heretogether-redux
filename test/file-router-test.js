@@ -26,6 +26,7 @@ describe('testing file-router', function(){
   afterEach( done => cleanDB(done));
 
   describe('testing post /api/status/:id/file', function(){
+
     describe('with valid token and data', function(){
       before(done => statusMock.call(this, done));
       it('should return a file', done => {
@@ -41,7 +42,6 @@ describe('testing file-router', function(){
         });
       });
     });
-
 
     describe('with no file', function(){
       before(done => statusMock.call(this, done));
@@ -65,6 +65,19 @@ describe('testing file-router', function(){
         .end((err, res) => {
           expect(res.status).to.equal(401);
           expect(res.text).to.equal('UnauthorizedError');
+          done();
+        });
+      });
+    });
+
+    describe('with no token', function(){
+      before(done => statusMock.call(this, done));
+      it('should respond with status 400', done => {
+        request.post(`${url}/api/status/${this.tempStatus._id}/file`)
+        .attach('file', exampleFile.file)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
           done();
         });
       });
