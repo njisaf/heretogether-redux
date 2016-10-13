@@ -96,6 +96,20 @@ describe('testing file-router', function(){
         });
       });
     });
+
+    describe('with no statusID', function(){
+      before(done => statusMock.call(this, done));
+      it('should respond with status 404', done => {
+        request.post(`${url}/api/status/${this.tempStatus}bad/file`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .attach('file', exampleFile.file)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+    });
   });
 
   describe('testing DELETE /api/status/:statusID/file/:fileID', function(){
