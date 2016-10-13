@@ -278,6 +278,23 @@ describe('Testing Profile routes', function() {
         });
       });
     });
+
+    describe('Testing DELETE with VALID IDS but USER NOT AUTHORIZED', function() {
+
+      before(done => mockProfile.call(this, done));
+      before(done => mockUser.call(this, done));
+
+      it('Should return a status of 401 and an error message', done => {
+        request.delete(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.text).to.equal('UnauthorizedError');
+          done();
+        });
+      });
+    });
+
   });
 
 
