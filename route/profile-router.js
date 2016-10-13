@@ -2,12 +2,18 @@
 
 const Router = require('express').Router;
 const debug = require('debug')('ht:hospital-router');
+const AWS = require('aws-sdk');
 const jsonParser = require('body-parser').json();
+
+AWS.config.setPromisesDependency(require('bluebird'));
+
 const createError = require('http-errors');
 const bearerAuth = require('../lib/bearer-auth-middleware');
 const Profile = require('../model/profile');
 const Hospital = require('../model/hospital');
+const Pic = require('../model/pic');
 
+const s3 = new AWS.S3();
 const profileRouter = module.exports = Router();
 
 profileRouter.post('/api/hospital/:hospitalID/profile', bearerAuth, jsonParser, function(req, res, next){
@@ -51,8 +57,10 @@ profileRouter.get('/api/hospital/:hospitalID/profile/', bearerAuth, function(req
 
 profileRouter.delete('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, function(req, res, next) {
   debug('Hit DELETE /api/hospital/:hospitalID/profile/:profileID');
+  let tempProfile = null;
   Profile.findById(req.params.profileID)
   .then(profile => {
+    tempProfile = profile;
     if(profile.userID.toString() === req.user._id.toString()) {
       if(profile.hospitalID.toString() !== req.params.hospitalID) return Promise.reject(createError(404, 'Hospital mismatch'));
       Profile.findByIdAndRemove(req.params.profileID)
@@ -61,7 +69,18 @@ profileRouter.delete('/api/hospital/:hospitalID/profile/:profileID', bearerAuth,
     } else {
       return Promise.reject(createError(401, 'Invalid user ID'));
     }
+    if (profile.picID) return Pic.findById(profile.picID);
   })
+  .then(pic => {
+
+    let params = {
+      Bucket: 'heretogether-assets',
+      Key: pic.objectKey,
+    };
+    return s3.deleteObject(params).promise();
+  })
+  .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
+  .then(() => Pic.findByIdAndRemove(tempProfile.picID))
 .catch(err => err.status ? next(err) : next(createError(404, err.message)));
 });
 

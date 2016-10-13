@@ -96,9 +96,7 @@ picRouter.delete('/api/profile/:profileID/pic/:picID', bearerAuth, function(req,
 
   Pic.findById(req.params.picID)
   .catch(err => Promise.reject(createError(404, err.message)))
-  .then( pic => {
-    console.log('did delete get hit?');
-
+  .then(pic => {
     if(pic.userID.toString() !== req.user._id.toString())
       return Promise.reject(createError(401, 'user not authorized to delete picture'));
 
@@ -109,9 +107,7 @@ picRouter.delete('/api/profile/:profileID/pic/:picID', bearerAuth, function(req,
     return s3.deleteObject(params).promise();
   })
   .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
-  .then( s3data => {
-    //TODO: Sometimes I get 204, but I receive back empty object instead of data
-    console.log('s3data returned?', s3data);
+  .then(() => {
     return Pic.findByIdAndRemove(req.params.picID);
   })
   .then(() => res.sendStatus(204))
