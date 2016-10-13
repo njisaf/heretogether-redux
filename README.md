@@ -122,16 +122,14 @@ POST to create a new hospital.
 
 ```
 
-<<<<<<< HEAD
+
 ```
-=======
 * **responses:**
 
   * 200 for valid request
   * 400 BadRequestError for request with invalid body
   * 400 BadRequestError for request with no body
   * 401 UnauthorizedError for request with invalid token
->>>>>>> af152f959e54a6e57837b74630d94be213f755cd
 
 
 DELETE to delete a hospital.
