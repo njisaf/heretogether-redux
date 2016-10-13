@@ -34,6 +34,7 @@ profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, fu
   debug('hit GET route /api/hospital/:hospitalID/profile/:profileID');
 
   Profile.findById(req.params.profileID)
+  .populate('picID')
   .catch(err => Promise.reject(createError(400, err.message)))
   .then( profile => {
     if(profile.userID.toString() !== req.user._id.toString()) return Promise.reject(createError(401, 'invalid userid'));
