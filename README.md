@@ -58,11 +58,41 @@ POST to create a new user account.
 ```
 /api/signup
 ```
+* **description:** a new user is authenticated by signing up with a valid username, password, and email. The password is hashed and then stored in the database so that no password is saved as plain text. Upon success, they are returned a token in JSON that grants the user authorization to use the program.
+
+* **expected headers:** username, password, email
+```
+username: {type: String, required: true, unique: true},
+email: {type: String, required: true, unique: true},
+password: {type: String, required: true},
+```
+
+* **response:**
+
+  * 200 upon successful signup
+  * 400 BadRequestError if no username provided
+  * 400 BadRequestError if no password provided
+  * 400 BadRequestError if no email provided
+  * 400 BadRequestError if invalid password length *password must be at least 10 characters*
+  * 400 BadRequestError if no username provided
+  * 409 ConflictError for duplicate username
 
 GET to login to a user account.
 ```
 /api/login
 ```
+
+* **description:** when a returning user logs in their username is sent through basic auth which gets the username off of the request header and checks to see if that username matches the username that the user signed up with. A returning user password is hashed and then compared to the hashed value of the password they used upon signup that is stored in the database, and if it matches, they are sent back a token that authorizes them to use the program.
+
+* **expected headers:** username, password, email
+```
+username: {type: String, required: true, unique: true},
+email: {type: String, required: true, unique: true},
+password: {type: String, required: true},
+```
+
+* **response:** *responses for login will be the same as already specified upon signup*
+
 
 ### Hospitals
 
@@ -70,6 +100,9 @@ POST to create a new hospital.
 ```
 /api/hospital
 ```
+
+* **description:** 
+
 
 DELETE to delete a hospital.
 ```
@@ -124,7 +157,7 @@ GET, PUT, DELETE to fetch or modify an individual status post.
 
 # Mocks **test/lib/*
 
-*There is one mock per model. The following mocks are used for testing purposes*
+*There is one mock per model. The following mocks are used for testing purposes**
 
 **user-mock:** takes a username, password, & email attributes
 
