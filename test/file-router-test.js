@@ -222,5 +222,23 @@ describe('testing file-router', function(){
         });
       });
     });
+
+    describe('testing DELETE for invalid user ID', function(){
+
+      before(done => fileMock.call(this, done));
+      before(done => userMock.call(this, done));
+
+      it('should response with status 401 for unauthorized user', done => {
+        request.delete(`${url}/api/status/${this.tempStatus._id}/file/${this.tempFile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .attach('file', exampleFile.file)
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(err.message).to.equal('Unauthorized');
+          done();
+        });
+      });
+
+    });
   });
 });
