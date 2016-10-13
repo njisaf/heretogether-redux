@@ -52,6 +52,7 @@ describe('Testing Profile routes', function() {
           expect(res.status).to.equal(200);
           expect(res.body.profileName).to.equal(exampleProfile.profileName);
           expect(res.body.bio).to.equal(exampleProfile.bio);
+          console.log(res.body);
           done();
         });
       });
