@@ -1,10 +1,8 @@
 'use strict';
 
-//npm modules
 const debug = require('debug')('ht: profile-mock');
 const lorem = require('lorem-ipsum');
 
-//module constants
 const Profile = require('../../model/profile');
 const hospitalMock = require('./hospital-mock');
 const userMock = require('./user-mock');

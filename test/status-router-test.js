@@ -245,6 +245,22 @@ describe('Testing Status routes', function() {
       });
     });
 
+    describe('Testing GET ALL with INVALID HOSPITALID', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 404 and an error message', done => {
+        request.get(`${url}/api/hospital/1234/status/`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+    });
+
+
     describe('Testing GET with INVALID STATUS ID', function() {
 
       before(done => mockStatus.call(this, done));

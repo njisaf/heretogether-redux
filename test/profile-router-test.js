@@ -14,6 +14,7 @@ const mockProfile = require('./lib/profile-mock');
 const mockUser = require('./lib/user-mock');
 const mockHospital = require('./lib/hospital-mock');
 const mockProfilePic = require('./lib/profile-pic-mock');
+// const mockTwoUserProfile = require('./lib/two-user-profile-mock');
 
 mongoose.Promise = Promise;
 
@@ -241,6 +242,24 @@ describe('Testing Profile routes', function() {
         });
       });
     });
+
+    describe('Testing GET ALL with INVALID HOSPITALID', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a status of 404 and an error message', done => {
+        request.get(`${url}/api/hospital/1243/profile/`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+    });
+
+
+
   });
 
   describe('Testing DELETE /api/hospital/:hospitalID/profile/:profileID', function() {
@@ -338,6 +357,29 @@ describe('Testing Profile routes', function() {
         });
       });
     });
+
+    describe('Testing PUT with VALID EVERYTHING but USER NOT AUTHORIZED to put this profile', function() {
+
+      before(done => mockProfile.call(this, done));
+      before(done => mockUser.call(this, done));
+
+      it('Should return a status of 401 and an error message', done => {
+        request.put(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .send({
+          profileName: 'Alice Islittle',
+          userID: `${this.tempUser._id}`,
+          bio: 'My name is Alice and I love being little!',
+          hospitalID: `${this.tempHospital._id}`,
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.text).to.equal('UnauthorizedError');
+          done();
+        });
+      });
+    });
+
 
 
     describe('Testing PUT with VALID hospitalID, INVALID profileID and VALID BODY', function() {
