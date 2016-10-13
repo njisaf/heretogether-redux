@@ -4,10 +4,10 @@ const Router = require('express').Router;
 const debug = require('debug')('ht:hospital-router');
 const AWS = require('aws-sdk');
 const jsonParser = require('body-parser').json();
+const createError = require('http-errors');
 
 AWS.config.setPromisesDependency(require('bluebird'));
 
-const createError = require('http-errors');
 const bearerAuth = require('../lib/bearer-auth-middleware');
 const Profile = require('../model/profile');
 const Hospital = require('../model/hospital');
@@ -60,7 +60,6 @@ profileRouter.delete('/api/hospital/:hospitalID/profile/:profileID', bearerAuth,
   let tempProfile = null;
   Profile.findById(req.params.profileID)
   .then(profile => {
-    console.log('DJBFHDBGHDGHBDGHBDG ', profile);
     tempProfile = profile;
     if(profile.userID.toString() === req.user._id.toString()) {
       if(profile.hospitalID.toString() !== req.params.hospitalID) return Promise.reject(createError(404, 'Hospital mismatch'));

@@ -34,8 +34,6 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'),
   debug('hit POST /api/status/:statusID/file');
   if(!req.file)
     return next(createError(400, 'no file found'));
-  if(!req.file)
-    return next(createError(500, 'file was saved'));
 
   let ext = path.extname(req.file.originalname);
 

@@ -3,11 +3,17 @@
 const Router = require('express').Router;
 const debug = require('debug')('ht:status-router');
 const jsonParser = require('body-parser').json();
+const AWS = require('aws-sdk');
 const createError = require('http-errors');
+
+AWS.config.setPromisesDependency(require('bluebird'));
+
 const bearerAuth = require('../lib/bearer-auth-middleware');
 const Status = require('../model/status');
 const Hospital = require('../model/hospital');
+const File = require('../model/file');
 
+const s3 = new AWS.S3();
 const statusRouter = module.exports = Router();
 
 statusRouter.post('/api/hospital/:hospitalID/status', bearerAuth, jsonParser, function(req, res, next) {
@@ -50,8 +56,10 @@ statusRouter.get('/api/hospital/:hospitalID/status/', bearerAuth, function(req, 
 statusRouter.delete('/api/hospital/:hospitalID/status/:statusID', bearerAuth, function(req, res, next) {
   debug('Hit DELETE /api/hospital/:hospitalID/status/:statusID');
 
+  let tempStatus = null;
   Status.findById(req.params.statusID)
   .then(status => {
+    tempStatus = status;
     if(status.userID.toString() === req.user._id.toString()) {
       if(status.hospitalID.toString() !== req.params.hospitalID) return Promise.reject(createError(404, 'Hospital mismatch'));
       Status.findByIdAndRemove(req.params.statusID)
@@ -59,6 +67,21 @@ statusRouter.delete('/api/hospital/:hospitalID/status/:statusID', bearerAuth, fu
       .catch(next);
     } else {
       return Promise.reject(createError(401, 'Invalid user ID'));
+    }
+    if (status.fileID) {
+      console.log('I HIT IT!!!!!!!!!!');
+      return File.findById(status.fileID)
+      .then(file => {
+
+        let params = {
+          Bucket: 'heretogether-assets',
+          Key: file.objectKey,
+        };
+        return s3.deleteObject(params).promise();
+      })
+      .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
+      .then(() => File.findByIdAndRemove(tempStatus.fileID))
+      .catch(next);
     }
   })
 .catch(err => err.status ? next(err) : next(createError(404, err.message)));
