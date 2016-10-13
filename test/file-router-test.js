@@ -5,7 +5,6 @@ const awsMocks = require('./lib/aws-mocks');
 
 const expect = require('chai').expect;
 const request = require('superagent');
-// const debug = require('debug')('heretogether:file-router-test');
 
 const fileMock = require('./lib/file-mock');
 const statusMock = require('./lib/status-mock');
@@ -26,6 +25,7 @@ describe('testing file-router', function(){
   afterEach( done => cleanDB(done));
 
   describe('testing post /api/status/:id/file', function(){
+
     describe('with valid token and data', function(){
       before(done => statusMock.call(this, done));
       it('should return a file', done => {
@@ -41,7 +41,6 @@ describe('testing file-router', function(){
         });
       });
     });
-
 
     describe('with no file', function(){
       before(done => statusMock.call(this, done));
@@ -70,10 +69,37 @@ describe('testing file-router', function(){
       });
     });
 
+    describe('with no token', function(){
+      before(done => statusMock.call(this, done));
+      it('should respond with status 400', done => {
+        request.post(`${url}/api/status/${this.tempStatus._id}/file`)
+        .attach('file', exampleFile.file)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+      });
+    });
+
     describe('with invalid statusID', function(){
       before(done => statusMock.call(this, done));
       it('should respond with status 404', done => {
         request.post(`${url}/api/status/${this.tempStatus._id}bad/file`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .attach('file', exampleFile.file)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+    });
+
+    describe('with no statusID', function(){
+      before(done => statusMock.call(this, done));
+      it('should respond with status 404', done => {
+        request.post(`${url}/api/status/${this.tempStatus}bad/file`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .attach('file', exampleFile.file)
         .end((err, res) => {
@@ -114,7 +140,7 @@ describe('testing file-router', function(){
       });
     });
 
-    describe('no auth header', function(){
+    describe('with no token', function(){
       before(done => fileMock.call(this, done));
       it('should respond with status 400', done => {
         request.delete(`${url}/api/status/${this.tempStatus._id}/file/${this.tempFile._id}`)
@@ -143,6 +169,19 @@ describe('testing file-router', function(){
       before(done => fileMock.call(this, done));
       it('should respond with status 400', done => {
         request.delete(`${url}/api/status/${this.tempStatus._id}bad/file/${this.tempFile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+      });
+    });
+
+    describe('with no statusID', function(){
+      before(done => fileMock.call(this, done));
+      it('should respond with status 400', done => {
+        request.delete(`${url}/api/status/${this.tempStatus}bad/file/${this.tempFile._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           expect(res.status).to.equal(400);

@@ -55,6 +55,7 @@ describe('testing hospital-router', function(){
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
           done();
         });
       });
@@ -69,6 +70,7 @@ describe('testing hospital-router', function(){
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
           done();
         });
       });
@@ -84,6 +86,7 @@ describe('testing hospital-router', function(){
         .set({Authorization: 'Bearer badtoken'})
         .end((err, res) => {
           expect(res.status).to.equal(401);
+          expect(res.text).to.equal('UnauthorizedError');
           done();
         });
       });
@@ -118,26 +121,12 @@ describe('testing hospital-router', function(){
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res)=> {
           expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
           done();
         });
       });
     });
 
-
-    describe('testing DELETE request with invalid id', function(){
-
-      before(done => mockUser.call(this, done));
-      before(done => mockHospital.call(this, done));
-
-      it('should return a status code of 404', (done) => {
-        request.delete(`${url}/api/hospital/123`)
-        .set({Authorization: `Bearer ${this.tempToken}`})
-        .end((err, res)=> {
-          expect(res.status).to.equal(404);
-          done();
-        });
-      });
-    });
 
     describe('testing DELETE request with no id', function(){
 
@@ -145,7 +134,7 @@ describe('testing hospital-router', function(){
       before(done => mockHospital.call(this, done));
 
       it('should return a status code of 404', (done) => {
-        request.delete(`${url}/api/hospital`)
+        request.delete(`${url}/api/hospital/`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res)=> {
           expect(res.status).to.equal(404);
@@ -154,6 +143,37 @@ describe('testing hospital-router', function(){
       });
     });
 
-    
+    describe('testing DELETE request with no auth', function(){
+
+      before(done => mockUser.call(this, done));
+      before(done => mockHospital.call(this, done));
+
+      it('should return a status code of 400', (done) => {
+        request.delete(`${url}/api/hospital/${this.tempHospital._id}`)
+        .end((err, res)=> {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+      });
+    });
+
+    describe('testing DELETE request with invalid auth', function(){
+
+      before(done => mockUser.call(this, done));
+      before(done => mockHospital.call(this, done));
+
+      it('should return a status code of 400', (done) => {
+        request.delete(`${url}/api/hospital/${this.tempHospital._id}`)
+        .set({Authorization: `${this.tempToken}`})
+        .end((err, res)=> {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+      });
+    });
+
+
   });
 });
