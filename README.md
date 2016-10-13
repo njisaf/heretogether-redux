@@ -122,8 +122,6 @@ The program uses it's own Express API that authorizes new and returning users gr
 
 ```
 
-
-```
 * **responses:**
 
   * 200 for valid request
@@ -166,9 +164,9 @@ The program uses it's own Express API that authorizes new and returning users gr
 /api/hospital/:hospitalID/profile
 ```
 
-**description:** an authorized user can create a profile. This profile is associated with a specific hospital through a hospitalID. Once a user has been passed through bearer-auth, their request is parsed by JSON and the hospitalID in that request is checked against the hospitalID that's stored in the database.
+* **description:** an authorized user can create a profile. This profile is associated with a specific hospital through a hospitalID. Once a user has been passed through bearer-auth, their request is parsed by JSON and the hospitalID in that request is checked against the hospitalID that's stored in the database.
 
-**expected headers:**
+* **expected headers:**
 ```
 { 'x-powered-by': 'Express',
   'content-type': 'application/json; charset=utf-8',
@@ -245,7 +243,7 @@ The program uses it's own Express API that authorizes new and returning users gr
 * **description:** This feature is a model for a user's status post, similar to a Facebook user's status post. The user also has an option to include a file of any type to their post, along with normal text.
 
 
-POST to create a new status post.
+**POST** to create a new status post.
 ```
 /api/hospital/:hospitalID/status
 ```
@@ -272,7 +270,8 @@ POST to create a new status post.
   created: '<date>' }
 
 ```
-GET to fetch a feed of all status posts for an individual hospital.
+
+**GET** to fetch a feed of all status posts for an individual hospital.
 ```
 /api/hospital/:hospitalID/status
 ```
@@ -299,7 +298,7 @@ GET to fetch a feed of all status posts for an individual hospital.
 ```
 
 
-GET, PUT, DELETE to fetch or modify an individual status post.
+**GET, PUT, DELETE** to fetch or modify an individual status post.
 ```
 /api/hospital/:hospitalID/status/:statusID
 ```
@@ -362,11 +361,11 @@ A null object {}
 
 **file-mock:** takes a fileURI, objectKey, & fileType
 
-*The fileURI & objectKey mock the AWS URI and objectKey*
+  * *The fileURI & objectKey mock the AWS URI and objectKey*
 
 **pic-mock:** takes a username, imageURI, & objectKey
 
-*The imageURI & objectKey mock the AWS URI and objectKey*
+  * *The imageURI & objectKey mock the AWS URI and objectKey*
 
 **status-mock:** takes text
 
