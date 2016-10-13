@@ -200,7 +200,6 @@ describe('Testing Status routes', function() {
         request.get(`${url}/api/hospital/${this.tempHospital._id}/status/`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
-          console.log('line 204', res.body);
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body[0].text).to.equal(this.tempStatus.text);
@@ -316,7 +315,6 @@ describe('Testing Status routes', function() {
         request.delete(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
-          console.log('line 300', res.headers);
           if(err) return done(err);
           expect(res.status).to.equal(204);
           done();
