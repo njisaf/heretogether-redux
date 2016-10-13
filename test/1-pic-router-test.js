@@ -14,6 +14,7 @@ const serverCtrl = require('./lib/server-ctrl');
 const cleanDB = require('./lib/clean-db');
 const mockProfile = require('./lib/profile-mock');
 const mockPic = require('./lib/pic-mock');
+const mockUser = require('./lib/user-mock');
 
 mongoose.Promise = Promise;
 
@@ -132,6 +133,23 @@ describe('testing PIC routes', function() {
        });
       });
     });
+
+    describe('with mismatched userIDs', function(){
+
+      before(done => mockPic.call(this, done));
+      before(done => mockUser.call(this, done));
+
+      it('should return status 401', (done) => {
+        request.delete(`${url}/api/profile/${this.tempProfile._id}/pic/${this.tempPic._id}`)
+       .set({Authorization: `Bearer ${this.tempToken}`})
+       .end((err, res) => {
+         expect(res.status).to.equal(401);
+         expect(err.message).to.equal('Unauthorized');
+         done();
+       });
+      });
+    });
+
   });
 
 });
