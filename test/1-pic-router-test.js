@@ -121,14 +121,14 @@ describe('testing PIC routes', function() {
       });
     });
 
-    describe('with invalid picID', function(){
+    describe('Testing DELETE with VALID PROFILEID and INVALID PICID', function(){
       before(done => mockPic.call(this, done));
-      it('should return status 404', (done) => {
-        request.delete(`${url}/api/profile/${this.tempProfile._id}/pic/${this.tempPic._id}badPicId#`)
+      it('Should return status 404 and an error message', (done) => {
+        request.delete(`${url}/api/profile/${this.tempProfile._id}/pic/1234`)
        .set({Authorization: `Bearer ${this.tempToken}`})
        .end((err, res) => {
          expect(res.status).to.equal(404);
-         expect(err.message).to.equal('Not Found');
+         expect(res.text).to.equal('NotFoundError');
          done();
        });
       });
