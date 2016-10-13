@@ -185,12 +185,36 @@ POST to create a new profile.
   created: '<date>' }
 ```
 
+**responses:**
 
 
 GET to fetch a list of all profiles associated with a hospital.
 ```
 /api/hospital/:hospitalID/profile
 ```
+
+**description:** allows an authorized user to get all profiles.
+
+**expected headers:**
+```
+{ 'x-powered-by': 'Express',
+  'content-type': 'application/json; charset=utf-8',
+  'content-length': '<units in length',
+  etag: 'W/"<etag>"',
+  date: '<date>',
+  connection: 'close' }
+  ```
+
+**expected body:**
+```
+{ _id: '_id',
+  profileName: '<lorem-ipsum>',
+  bio: '<lorem-ipsum text>',
+  userID: 'userID',
+  hospitalID: 'hospitalID',
+  __v: 0,
+  created: '<date>' }
+  ```
 
 
 
