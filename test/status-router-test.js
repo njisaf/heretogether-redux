@@ -57,7 +57,7 @@ describe('Testing Status routes', function() {
 
       before(done => mockProfile.call(this, done));
 
-      it('Should return a status of 404 ', done => {
+      it('Should return a status of 404 for bad hospital ID ', done => {
         request.post(`${url}/api/hospital/${this.tempHospital._id}BADID/status`)
         .send({
           userID: this.tempUser._id,
@@ -121,6 +121,21 @@ describe('Testing Status routes', function() {
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body.length).to.equal(0);
+          done();
+        });
+      });
+    });
+
+    describe('Testing GET with INVALID STATUS ID', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 400 and a status post', done => {
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}BADID/`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(err.message).to.equal('Bad Request');
           done();
         });
       });
