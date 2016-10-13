@@ -149,7 +149,7 @@ POST to create a new status post.
 ```
 { 'x-powered-by': 'Express',
   'content-type': '<content-type> ',
-  'content-length': '<content-length>',
+  'content-length': '<units in length>',
   etag: '<etag>',
   date: '<date>',
   connection: 'close' }
@@ -174,7 +174,7 @@ GET to fetch a feed of all status posts for an individual hospital.
 ```
 { 'x-powered-by': 'Express',
   'content-type': '<content-type> ',
-  'content-length': '<content-length>',
+  'content-length': '<units in length>',
   etag: '<etag>',
   date: '<date>',
   connection: 'close' }
@@ -201,7 +201,7 @@ GET, PUT, DELETE to fetch or modify an individual status post.
 ```
 { 'x-powered-by': 'Express',
   'content-type': '<content-type> ',
-  'content-length': '<content-length>',
+  'content-length': '<units in length>',
   etag: '<etag>',
   date: '<date>',
   connection: 'close' }
