@@ -124,13 +124,13 @@ describe('testing hospital-router', function(){
     });
 
 
-    describe('testing DELETE request with invalid id', function(){
+    describe('testing DELETE request with no id', function(){
 
       before(done => mockUser.call(this, done));
       before(done => mockHospital.call(this, done));
 
       it('should return a status code of 404', (done) => {
-        request.delete(`${url}/api/hospital/123`)
+        request.delete(`${url}/api/hospital/`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res)=> {
           expect(res.status).to.equal(404);
@@ -154,6 +154,6 @@ describe('testing hospital-router', function(){
       });
     });
 
-    
+
   });
 });
