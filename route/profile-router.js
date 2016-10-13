@@ -100,7 +100,7 @@ profileRouter.put('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, js
       .then(profile => res.json(profile))
       .catch(next);
     } else {
-      return Promise.reject(createError(401, 'Invalid user ID'));
+      return Promise.reject(createError(401, 'Invalid user'));
     }
   })
 .catch(err => err.status ? next(err) : next(createError(404, err.message)));
