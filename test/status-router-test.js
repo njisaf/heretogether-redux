@@ -157,6 +157,21 @@ describe('Testing Status routes', function() {
       });
     });
 
+    describe('Testing GET with userID not matching', function() {
+
+      before(done => mockStatus.call(this, done));
+      before(done => mockUser.call(this, done));
+
+      it('Should return a status of 401', done => {
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          done();
+        });
+      });
+    });
+
     describe('Testing GET ALL with NO STATUS ID', function() {
 
       before(done => mockStatus.call(this, done));
