@@ -186,7 +186,7 @@ describe('Testing Profile routes', function() {
     });
 
 
-    describe('Testing GET ALL with NO STATUS ID', function() {
+    describe('Testing GET ALL (NO STATUS ID)', function() {
 
       before(done => mockProfile.call(this, done));
 
@@ -203,6 +203,26 @@ describe('Testing Profile routes', function() {
         });
       });
     });
+
+    describe('Testing GET ALL (NO STATUS ID) with POPULATE PICID', function() {
+
+      before(done => mockProfilePic.call(this, done));
+
+      it('Should return a status of 200 and an array of statuses w/ pic populated in picID', done => {
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/profile/`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body[0].profileName).to.equal(this.tempProfile.profileName);
+          expect(res.body[0].bio).to.equal(this.tempProfile.bio);
+          expect(res.body[0].picID._id).to.equal(this.tempPic._id.toString());
+          expect(!!res.body.length).to.equal(true);
+          done();
+        });
+      });
+    });
+
 
     describe('Testing GET ALL with VALID HOSPITAL but NO PROFILE POSTS', function() {
 

@@ -49,7 +49,8 @@ profileRouter.get('/api/hospital/:hospitalID/profile/', bearerAuth, function(req
   Hospital.findById(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
   .then(() => {
-    return Profile.find({hospitalID: req.params.hospitalID});
+    return Profile.find({hospitalID: req.params.hospitalID})
+    .populate('picID');
   })
   .then(profArr => res.json(profArr))
   .catch(next);
