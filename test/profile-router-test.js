@@ -165,6 +165,27 @@ describe('Testing Profile routes', function() {
       });
     });
 
+    describe('Testing GET with VALID hospitalID, VALID profileID and POPULATE PIC', function() {
+
+      before(done => mockProfilePic.call(this, done));
+
+      it('Should return a status of 200 and a profile w/ a pic populated into picID', done => {
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.profileName).to.equal(this.tempProfile.profileName);
+          expect(res.body.bio).to.equal(this.tempProfile.bio);
+          expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
+          expect(res.body.userID).to.equal(this.tempUser._id.toString());
+          expect(res.body.picID.imageURI).to.equal(this.tempPic.imageURI);
+          done();
+        });
+      });
+    });
+
+
     describe('Testing GET ALL with NO STATUS ID', function() {
 
       before(done => mockProfile.call(this, done));

@@ -158,6 +158,25 @@ describe('Testing Status routes', function() {
       });
     });
 
+    describe('Testing GET with VALID IDs and POPULATE FILE', function() {
+
+      before(done => mockStatusFile.call(this, done));
+
+      it('Should return a status of 200 and a status post w/ a file populated into fileID', done => {
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.userID).to.equal(this.tempUser._id.toString());
+          expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
+          expect(res.body.fileID.fileURI).to.equal(this.tempFile.fileURI);
+          done();
+        });
+      });
+    });
+
+
     describe('Testing GET with userID not matching', function() {
 
       before(done => mockStatus.call(this, done));

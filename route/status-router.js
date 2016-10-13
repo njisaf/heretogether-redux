@@ -33,8 +33,10 @@ statusRouter.get('/api/hospital/:hospitalID/status/:statusID', bearerAuth, funct
   debug('Hit GET /api/hospital/:hospitalID/status/:statusID');
 
   Status.findById(req.params.statusID)
+  .populate('fileID')
   .catch(err => Promise.reject(createError(400, err.message)))
   .then(status => {
+    console.log('HDBHBDFHBHDBFHBDF    ', status);
     if(status.userID.toString() !== req.user._id.toString()) return Promise.reject(createError(401, 'invalid userid'));
     if(status.hospitalID.toString() !== req.params.hospitalID.toString()) return Promise.reject(createError(404, 'Hospital mismatch'));
     res.json(status);
@@ -69,7 +71,6 @@ statusRouter.delete('/api/hospital/:hospitalID/status/:statusID', bearerAuth, fu
       return Promise.reject(createError(401, 'Invalid user ID'));
     }
     if (status.fileID) {
-      console.log('I HIT IT!!!!!!!!!!');
       return File.findById(status.fileID)
       .then(file => {
 
