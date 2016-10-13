@@ -2,11 +2,11 @@
 
 ## Team
 
-[Kaylyn Yuh](https://github.com/kaylynyuh)
+Kaylyn Yuh https://github.com/kaylynyuh
 
-[Judy Vue](https://github.com/JudyVue)
+Judy Vue https://github.com/JudyVue
 
-[Nassir Isaf](https://github.com/njisaf)
+Nassir Isaf https://github.com/njisaf
 
 # \<heretogether\>
 
@@ -111,6 +111,7 @@ GET, PUT, DELETE to fetch or modify an individual status post.
 /api/hospital/:hospitalID/status/:statusID
 ```
 
+
 # Middleware
 
 **basic-auth-middleware**
@@ -118,6 +119,7 @@ GET, PUT, DELETE to fetch or modify an individual status post.
 **bearer-auth-middleware**
 
 **error-middleware**
+
 
 
 # Mocks **test/lib/*
@@ -142,7 +144,9 @@ GET, PUT, DELETE to fetch or modify an individual status post.
 
 **aws-mock:** takes an ETag, Location, Key, key, & bucket
 
-# Helper Files **test/lib**
+
+
+# Helper Files **test/lib*
 
 **clean-db:** removes each mock generated after each test
 
