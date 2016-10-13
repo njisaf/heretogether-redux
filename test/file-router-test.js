@@ -8,6 +8,7 @@ const request = require('superagent');
 
 const fileMock = require('./lib/file-mock');
 const statusMock = require('./lib/status-mock');
+const userMock = require('./lib/user-mock');
 const cleanDB = require('./lib/clean-db');
 const serverCtrl = require('./lib/server-ctrl');
 
@@ -24,7 +25,7 @@ describe('testing file-router', function(){
   after( done => serverCtrl.serverDown(server, done));
   afterEach( done => cleanDB(done));
 
-  describe('testing post /api/status/:id/file', function(){
+  describe('testing POST /api/status/:id/file', function(){
 
     describe('with valid token and data', function(){
       before(done => statusMock.call(this, done));
@@ -108,6 +109,24 @@ describe('testing file-router', function(){
           done();
         });
       });
+    });
+
+    describe('testing POST for invalid user ID', function(){
+
+      before(done => statusMock.call(this, done));
+      before(done => userMock.call(this, done));
+
+      it('should response with status 401 for unauthorized user', done => {
+        request.post(`${url}/api/status/${this.tempStatus._id}/file`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .attach('file', exampleFile.file)
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(err.message).to.equal('Unauthorized');
+          done();
+        });
+      });
+
     });
   });
 
@@ -202,6 +221,24 @@ describe('testing file-router', function(){
           done();
         });
       });
+    });
+
+    describe('testing DELETE for invalid user ID', function(){
+
+      before(done => fileMock.call(this, done));
+      before(done => userMock.call(this, done));
+
+      it('should response with status 401 for unauthorized user', done => {
+        request.delete(`${url}/api/status/${this.tempStatus._id}/file/${this.tempFile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .attach('file', exampleFile.file)
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(err.message).to.equal('Unauthorized');
+          done();
+        });
+      });
+
     });
   });
 });
