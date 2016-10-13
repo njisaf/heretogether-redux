@@ -305,6 +305,20 @@ describe('Testing Status routes', function() {
         });
       });
     });
+
+    describe('Testing PUT with NO TOKEN', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 400 for no token', done => {
+        request.put(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(err.message).to.equal('Bad Request');
+          done();
+        });
+      });
+    });
   });
 
 
