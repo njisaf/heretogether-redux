@@ -154,6 +154,22 @@ describe('testing hospital-router', function(){
       });
     });
 
+    describe('testing DELETE request with invalid auth', function(){
+
+      before(done => mockUser.call(this, done));
+      before(done => mockHospital.call(this, done));
+
+      it('should return a status code of 400', (done) => {
+        request.delete(`${url}/api/hospital/${this.tempHospital._id}`)
+        .set({Authorization: `${this.tempToken}`})
+        .end((err, res)=> {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+      });
+    });
+
 
   });
 });
