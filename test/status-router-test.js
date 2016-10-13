@@ -174,7 +174,7 @@ describe('Testing Status routes', function() {
 
       before(done => mockStatus.call(this, done));
 
-      it('Should return a status of 404 for no token', done => {
+      it('Should return a status of 404 for hospital ID mismatch', done => {
         request.get(`${url}/api/hospital/${this.tempHospital._id}misMatchedID/status/${this.tempStatus._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
@@ -198,6 +198,21 @@ describe('Testing Status routes', function() {
         .end((err, res) => {
           if(err) return done(err);
           expect(res.status).to.equal(204);
+          done();
+        });
+      });
+    });
+
+    describe('Testing DELETE with HOSPITAL ID MISMATCH', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 404 for hospital ID mismatch', done => {
+        request.get(`${url}/api/hospital/${this.tempHospital._id}misMatchedID/status/${this.tempStatus._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(err.message).to.equal('Not Found');
           done();
         });
       });
