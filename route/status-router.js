@@ -49,9 +49,13 @@ statusRouter.get('/api/hospital/:hospitalID/status/', bearerAuth, function(req, 
   Hospital.findById(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
   .then(() => {
-    return Status.find({hospitalID: req.params.hospitalID});
+    return Status.find({hospitalID: req.params.hospitalID})
+    .populate('fileID');
   })
-  .then(statArr => res.json(statArr))
+  .then(statArr => {
+    console.log('HNDHFBHDFHDBFHBDHF  ', statArr);
+    res.json(statArr);
+  })
   .catch(next);
 });
 

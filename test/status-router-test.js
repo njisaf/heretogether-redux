@@ -192,7 +192,7 @@ describe('Testing Status routes', function() {
       });
     });
 
-    describe('Testing GET ALL with NO STATUS ID', function() {
+    describe('Testing GET ALL (NO STATUS ID)', function() {
 
       before(done => mockStatus.call(this, done));
 
@@ -209,6 +209,25 @@ describe('Testing Status routes', function() {
         });
       });
     });
+
+    describe('Testing GET ALL (NO STATUS ID) and POPULATED FILES', function() {
+
+      before(done => mockStatusFile.call(this, done));
+
+      it('Should return a status of 200 and an array of statuses', done => {
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body[0].text).to.equal(this.tempStatus.text);
+          expect(!!res.body.length).to.equal(true);
+          expect(res.body[0].fileID._id).to.equal(this.tempFile._id.toString());
+          done();
+        });
+      });
+    });
+
 
     describe('Testing GET ALL with VALID HOSPITAL but NO STATUS POSTS', function() {
 
