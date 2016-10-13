@@ -119,10 +119,14 @@ built out all models:
 **Standup Meeting @ 11:30 a.m.
 *Duncan needed to debug us a lot. Resolved merge conflicts and we are back on track with all tests passing. Group to review all routes and discuss what more routes we need, if any.
 
+**Did not have second standup
+
 **ToDo:**
 *Profile: GET all route
- *In Profile mock, we include mocking logic for pic and file router, and make a test that updates the pic and status IDs
-*Status: GET all route
-*Pic: PUT route, plus update schema to take out extraneous fields
+ *In Profile mock, we include mocking logic for pic and file router, and make a test that updates the pic and file IDs
+*Status: modify status model to include an array of files ? Will discuss w/ Duncan
+*Status: GET all route - DONE
+*Pic: PUT route, plus update schema to take out extraneous fields - DONE
 *File: GET all route
 *Plus test these new routes accordingly
+*Discuss w/ Duncan about file-router endpoints
