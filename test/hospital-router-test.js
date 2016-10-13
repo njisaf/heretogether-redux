@@ -139,16 +139,16 @@ describe('testing hospital-router', function(){
       });
     });
 
-    describe('testing DELETE request with no id', function(){
+    describe('testing DELETE request with no auth', function(){
 
       before(done => mockUser.call(this, done));
       before(done => mockHospital.call(this, done));
 
-      it('should return a status code of 404', (done) => {
-        request.delete(`${url}/api/hospital`)
-        .set({Authorization: `Bearer ${this.tempToken}`})
+      it('should return a status code of 400', (done) => {
+        request.delete(`${url}/api/hospital/${this.tempHospital._id}`)
         .end((err, res)=> {
-          expect(res.status).to.equal(404);
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
           done();
         });
       });
