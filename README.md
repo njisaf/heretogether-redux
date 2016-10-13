@@ -101,7 +101,13 @@ POST to create a new hospital.
 /api/hospital
 ```
 
-* **description:** 
+* **description:** this feature associates users to hospitals so they can connect to patients staying in the same hospital or reach out to other patients staying at different hospitals that also have the app. Only a valid user is can add a new hospital. This authentication is taken care of through the bearer-auth-middleware.
+
+* **expected headers:** name
+```
+name: {type: String, required: true},
+
+``` 
 
 
 DELETE to delete a hospital.
