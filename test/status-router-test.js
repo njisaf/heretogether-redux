@@ -141,6 +141,21 @@ describe('Testing Status routes', function() {
       });
     });
 
+    describe('Testing GET with INVALID TOKEN', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 401 for invalid token', done => {
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}badTOKEN`})
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(err.message).to.equal('Unauthorized');
+          done();
+        });
+      });
+    });
+
 
 
   });
