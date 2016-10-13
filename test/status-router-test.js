@@ -270,6 +270,26 @@ describe('Testing Status routes', function() {
         });
       });
     });
+
+    describe('Testing PUT with HOSPITAL ID MISMATCH', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 404 for hospital ID mismatch', done => {
+        request.put(`${url}/api/hospital/${this.tempHospital._id}misMatchedID/status/${this.tempStatus._id}`)
+        .send({
+          userID: this.tempUser._id,
+          text: 'This is updated text',
+          hospitalID: this.tempHospital._id,
+        })
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(err.message).to.equal('Not Found');
+          done();
+        });
+      });
+    });
   });
 
 
