@@ -291,6 +291,26 @@ describe('Testing Status routes', function() {
       });
     });
 
+    describe('Testing PUT with INVALID STATUS ID', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 404 for status ID mismatch', done => {
+        request.put(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}badID`)
+        .send({
+          userID: this.tempUser._id,
+          text: 'This is updated text',
+          hospitalID: this.tempHospital._id,
+        })
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(err.message).to.equal('Not Found');
+          done();
+        });
+      });
+    });
+
     describe('Testing PUT with INVALID TOKEN', function() {
 
       before(done => mockStatus.call(this, done));
