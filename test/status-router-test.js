@@ -128,7 +128,6 @@ describe('Testing Status routes', function() {
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
-          console.log('line 131', res.headers);
           expect(res.status).to.equal(200);
           expect(res.body.userID).to.equal(this.tempUser._id.toString());
           expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
@@ -201,6 +200,7 @@ describe('Testing Status routes', function() {
         request.get(`${url}/api/hospital/${this.tempHospital._id}/status/`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
+          console.log('line 204', res.body);
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body[0].text).to.equal(this.tempStatus.text);
@@ -297,6 +297,7 @@ describe('Testing Status routes', function() {
         request.delete(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
+          console.log('line 300', res.headers);
           if(err) return done(err);
           expect(res.status).to.equal(204);
           done();
