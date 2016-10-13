@@ -55,7 +55,7 @@ The program uses it's own Express API that authorizes new and returning users gr
 
 ### Signup and Login
 
-POST to create a new user account.
+**POST** to create a new user account.
 ```
 /api/signup
 ```
@@ -81,7 +81,7 @@ POST to create a new user account.
   * 400 BadRequestError if no username provided
   * 409 ConflictError for duplicate username
 
-GET to login to a user account.
+**GET** to login to a user account.
 ```
 /api/login
 ```
@@ -104,7 +104,7 @@ GET to login to a user account.
 
 ### Hospitals
 
-POST to create a new hospital.
+**POST** to create a new hospital.
 ```
 /api/hospital
 ```
@@ -130,7 +130,7 @@ POST to create a new hospital.
   * 401 UnauthorizedError for request with invalid token
 
 
-DELETE to delete a hospital.
+**DELETE** to delete a hospital.
 ```
 /api/hospital/:hospitalID
 ```
@@ -159,7 +159,7 @@ DELETE to delete a hospital.
 
 ### Profiles
 
-POST to create a new profile.
+**POST** to create a new profile.
 ```
 /api/hospital/:hospitalID/profile
 ```
@@ -197,7 +197,7 @@ POST to create a new profile.
 
 
 
-GET to fetch a list of all profiles associated with a hospital.
+**GET** to fetch a list of all profiles associated with a hospital.
 ```
 /api/hospital/:hospitalID/profile
 ```
@@ -231,7 +231,7 @@ GET to fetch a list of all profiles associated with a hospital.
   * <more responses to come: TODO>
 
 
-GET, PUT, DELETE to fetch or modify an individual profile.
+**GET, PUT, DELETE** to fetch or modify an individual profile.
 ```
 /api/hospital/:hospitalID/profile/:profileID
 ```
