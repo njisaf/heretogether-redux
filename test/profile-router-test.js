@@ -159,7 +159,6 @@ describe('Testing Profile routes', function() {
           expect(res.body.bio).to.equal(this.tempProfile.bio);
           expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
           expect(res.body.userID).to.equal(this.tempUser._id.toString());
-          console.log(res.body);
           done();
         });
       });

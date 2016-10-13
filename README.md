@@ -50,7 +50,8 @@ The program uses it's own Express API that authorizes new and returning users gr
 * superagent
 
 
-# Routes **routes/**
+# Routes
+
 
 ### Signup and Login
 
@@ -100,6 +101,7 @@ GET to login to a user account.
 * **responses:** *responses for login will be the same as already specified upon signup*
 
 
+
 ### Hospitals
 
 POST to create a new hospital.
@@ -122,10 +124,10 @@ POST to create a new hospital.
 
 * **responses:**
 
-* 200 for valid request
-* 400 BadRequestError for request with invalid body
-* 400 BadRequestError for request with no body
-* 401 UnauthorizedError for request with invalid token
+  * 200 for valid request
+  * 400 BadRequestError for request with invalid body
+  * 400 BadRequestError for request with no body
+  * 401 UnauthorizedError for request with invalid token
 
 
 DELETE to delete a hospital.
@@ -147,11 +149,11 @@ DELETE to delete a hospital.
 
 * **responses:**
 
-* 204 for valid DELETE request
-* 404 NotFoundError for invalid ID
-* 404 NotFoundError for no ID provided
-* 400 BadRequestError for no auth
-* 400 BadRequestError for invalid auth
+  * 204 for valid DELETE request
+  * 404 NotFoundError for invalid ID
+  * 404 NotFoundError for no ID provided
+  * 400 BadRequestError for no auth
+  * 400 BadRequestError for invalid auth
 
 
 
@@ -187,6 +189,13 @@ POST to create a new profile.
 
 **responses:**
 
+  * 200 for valid profile request
+  * 400 BadRequestError for valid hospitalID, & body, but *no* auth
+  * 400 BadRequestError for valid hospitalID, & auth, but *invalid* body
+  * 404 NotFoundError for invalid hospitalID with valid body
+  * 404 NotFoundError for missing hospitalID with valid body
+
+
 
 GET to fetch a list of all profiles associated with a hospital.
 ```
@@ -216,6 +225,10 @@ GET to fetch a list of all profiles associated with a hospital.
   created: '<date>' }
   ```
 
+**responses:**
+
+  * 200 for valid GET request
+  * <more responses to come: TODO>
 
 
 GET, PUT, DELETE to fetch or modify an individual profile.
