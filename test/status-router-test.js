@@ -298,6 +298,21 @@ describe('Testing Status routes', function() {
       });
     });
 
+    describe('Testing DELETE with userID not matching', function() {
+
+      before(done => mockStatus.call(this, done));
+      before(done => mockUser.call(this, done));
+
+      it('Should return a status of 401', done => {
+        request.delete(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          done();
+        });
+      });
+    });
+
     describe('Testing DELETE with NO TOKEN', function() {
 
       before(done => mockStatus.call(this, done));
@@ -415,6 +430,26 @@ describe('Testing Status routes', function() {
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(err.message).to.equal('Bad Request');
+          done();
+        });
+      });
+    });
+
+    describe('Testing PUT with userID not matching', function() {
+
+      before(done => mockStatus.call(this, done));
+      before(done => mockUser.call(this, done));
+
+      it('Should return a status of 401', done => {
+        request.put(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        .send({
+          userID: this.tempUser._id,
+          text: 'This is updated text',
+          hospitalID: this.tempHospital._id,
+        })
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
           done();
         });
       });
