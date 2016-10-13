@@ -107,7 +107,7 @@ POST to create a new hospital.
 ```
 name: {type: String, required: true},
 
-``` 
+```
 
 
 DELETE to delete a hospital.
@@ -134,6 +134,19 @@ GET, PUT, DELETE to fetch or modify an individual profile.
 ```
 
 ### Status
+
+* **description:** This feature is a model for a user's status post, similar to a Facebook user's status post. The user also has an option to include a file of any type to their post, along with normal text.
+
+* **expected headers:**
+
+```
+{ 'x-powered-by': 'Express',
+  'content-type': 'application/json; charset=utf-8',
+  'content-length': '219',
+  etag: 'W/"db-Y2UuQgsM2lNs+DBPZ5BKLg"',
+  date: 'Thu, 13 Oct 2016 20:24:51 GMT',
+  connection: 'close' }
+```
 
 POST to create a new status post.
 ```

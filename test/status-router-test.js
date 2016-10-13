@@ -128,6 +128,7 @@ describe('Testing Status routes', function() {
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
+          console.log('line 131', res.headers);
           expect(res.status).to.equal(200);
           expect(res.body.userID).to.equal(this.tempUser._id.toString());
           expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
