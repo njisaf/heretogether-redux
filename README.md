@@ -60,12 +60,15 @@ POST to create a new user account.
 ```
 * **description:** a new user is authenticated by signing up with a valid username, password, and email. The password is hashed and then stored in the database so that no password is saved as plain text. Upon success, they are returned a token in JSON that grants the user authorization to use the program.
 
-* **expected headers:** username, password, email
+* **expected headers:**
 ```
-username: {type: String, required: true, unique: true},
-email: {type: String, required: true, unique: true},
-password: {type: String, required: true},
-```
+{ 'x-powered-by': 'Express',
+  'content-type': 'text/html; charset=utf-8',
+  'content-length': '<units in length>',
+  etag: 'W/"<etag>"',
+  date: '<date>',
+  connection: 'close' }
+  ```
 
 * **response:**
 
@@ -84,14 +87,17 @@ GET to login to a user account.
 
 * **description:** when a returning user logs in their username is sent through basic auth which gets the username off of the request header and checks to see if that username matches the username that the user signed up with. A returning user password is hashed and then compared to the hashed value of the password they used upon signup that is stored in the database, and if it matches, they are sent back a token that authorizes them to use the program.
 
-* **expected headers:** username, password, email
+* **expected headers:**
 ```
-username: {type: String, required: true, unique: true},
-email: {type: String, required: true, unique: true},
-password: {type: String, required: true},
+{ 'x-powered-by': 'Express',
+  'content-type': 'text/html; charset=utf-8',
+  'content-length': '<units in length>',
+  etag: 'W/"<etag>"',
+  date: '<date>',
+  connection: 'close' }
 ```
 
-* **response:** *responses for login will be the same as already specified upon signup*
+* **responses:** *responses for login will be the same as already specified upon signup*
 
 
 ### Hospitals
@@ -103,17 +109,50 @@ POST to create a new hospital.
 
 * **description:** this feature associates users to hospitals so they can connect to patients staying in the same hospital or reach out to other patients staying at different hospitals that also have the app. Only a valid user is can add a new hospital. This authentication is taken care of through the bearer-auth-middleware.
 
-* **expected headers:** name
+* **expected headers:**
 ```
-name: {type: String, required: true},
+{ 'x-powered-by': 'Express',
+  'content-type': 'application/json; charset=utf-8',
+  'content-length': '<units in length>',
+  etag: 'W/"<etag>"',
+  date: '<date>',
+  connection: 'close' }
 
-``` 
+```
+
+* **responses:**
+
+* 200 for valid request
+* 400 BadRequestError for request with invalid body
+* 400 BadRequestError for request with no body
+* 401 UnauthorizedError for request with invalid token
 
 
 DELETE to delete a hospital.
 ```
 /api/hospital/:hospitalID
 ```
+
+* **description:** allows authorized users to delete a hospital
+
+* **expected headers:**
+```
+{ 'x-powered-by': 'Express',
+  'content-type': 'text/html; charset=utf-8',
+  'content-length': '<units in length>',
+  etag: 'W/"<etag>"',
+  date: '<date>',
+  connection: 'close' }
+```
+
+* **responses:**
+
+* 204 for valid DELETE request
+* 404 NotFoundError for invalid ID
+* 404 NotFoundError for no ID provided
+* 400 BadRequestError for no auth
+* 400 BadRequestError for invalid auth
+
 
 
 ### Profiles
@@ -123,15 +162,44 @@ POST to create a new profile.
 /api/hospital/:hospitalID/profile
 ```
 
+**description:** an authorized user can create a profile. This profile is associated with a specific hospital through a hospitalID. Once a user has been passed through bearer-auth, their request is parsed by JSON and the hospitalID in that request is checked against the hospitalID that's stored in the database.
+
+**expected headers:**
+```
+{ 'x-powered-by': 'Express',
+  'content-type': 'application/json; charset=utf-8',
+  'content-length': '<units in length>',
+  etag: 'W/"<etag>"',
+  date: '<date>',
+  connection: 'close' }
+```
+
+**expected body:**
+```
+{ __v: 0,
+  profileName: 'Name',
+  userID: '<userID>',
+  bio: 'Bio',
+  hospitalID: '<hospitalID>',
+  _id: '<_id>',
+  created: '<date>' }
+```
+
+
+
 GET to fetch a list of all profiles associated with a hospital.
 ```
 /api/hospital/:hospitalID/profile
 ```
 
+
+
 GET, PUT, DELETE to fetch or modify an individual profile.
 ```
 /api/hospital/:hospitalID/profile/:profileID
 ```
+
+
 
 ### Status
 
