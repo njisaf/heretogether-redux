@@ -97,7 +97,6 @@ picRouter.delete('/api/profile/:profileID/pic/:picID', bearerAuth, function(req,
   Pic.findById(req.params.picID)
   .catch(err => Promise.reject(createError(404, err.message)))
   .then( pic => {
-    console.log('did delete get hit?');
 
     if(pic.userID.toString() !== req.user._id.toString())
       return Promise.reject(createError(401, 'user not authorized to delete picture'));
