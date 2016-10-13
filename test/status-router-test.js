@@ -13,6 +13,7 @@ const mockProfile = require('./lib/profile-mock');
 const mockUser = require('./lib/user-mock');
 const mockHospital = require('./lib/hospital-mock');
 const mockStatus = require('./lib/status-mock');
+const mockStatusFile = require('./lib/status-file-mock');
 
 mongoose.Promise = Promise;
 
@@ -282,6 +283,22 @@ describe('Testing Status routes', function() {
         });
       });
     });
+
+    describe('Testing DELETE with VALID IDs and FILEID', function() {
+
+      before(done => mockStatusFile.call(this, done));
+
+      it('Should return a status of 204', done => {
+        request.delete(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(204);
+          done();
+        });
+      });
+    });
+
 
     describe('Testing DELETE with HOSPITAL ID MISMATCH', function() {
 
