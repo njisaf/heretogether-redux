@@ -24,8 +24,6 @@ const examplePic = {
   image: `${__dirname}/data/shield.png`,
 };
 
-
-
 describe('testing PIC routes', function() {
   debug();
   before(done => serverCtrl.serverUp(server, done));
@@ -42,7 +40,6 @@ describe('testing PIC routes', function() {
 
         .set({Authorization: `Bearer ${this.tempToken}`})
         .attach('image', examplePic.image)
-        .field('username', this.tempUser.username)
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(200);
@@ -118,6 +115,22 @@ describe('testing PIC routes', function() {
        });
       });
     });
+
+    describe('Testing DELETE with VALID PROFILEID and INVALID PICID', function(){
+      before(done => mockPic.call(this, done));
+      it('Should return status 404 and an error message', (done) => {
+        request.delete(`${url}/api/profile/${this.tempProfile._id}/pic/1234`)
+       .set({Authorization: `Bearer ${this.tempToken}`})
+       .end((err, res) => {
+         expect(res.status).to.equal(404);
+         expect(res.text).to.equal('NotFoundError');
+         done();
+       });
+      });
+    });
+
+
+
   });
 
 });

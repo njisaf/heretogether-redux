@@ -55,10 +55,20 @@ picRouter.post('/api/profile/:profileID/pic', bearerAuth, upload.single('image')
     Key: `${req.file.filename}${ext}`,
     Body: fs.createReadStream(req.file.path),
   };
-
+  let tempProfile = null;
+  let tempPic = null;
   Profile.findById(req.params.profileID)
   .catch(err => Promise.reject(createError(404, err.message)))
-  .then(() => s3UploadPromise(params))
+  .then(profile => {
+    console.log(req.user);
+    console.log(profile);
+    if(profile.userID.toString() !== req.user._id.toString()) {
+      console.log('DNJNDGJNDJNDFNJDFJNDFJNDFJNFDJ');
+      return Promise.reject(createError(401, 'User not authorized'));
+    }
+    tempProfile = profile;
+    return s3UploadPromise(params);
+  })
   .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
   .then(s3data => {
     console.log('req.body', req.body);
@@ -73,13 +83,18 @@ picRouter.post('/api/profile/:profileID/pic', bearerAuth, upload.single('image')
     return new Pic(picData).save();
   })
   .then(pic => {
+    tempPic = pic;
+    tempProfile.picID = tempPic._id.toString();
+    return tempProfile.save();
+  })
+  .then(() => {
     //TODO: How do I set our pic mongoose ID# to the profile schema's picID?
     // Profile.call(this, err => {
       // if (err) next(err);
       // pic.picID = this.tempProfile.picID.toString();
       // console.log('line 88', this.tempProfile.picID.toString());
     // });
-    res.json(pic);
+    res.json(tempPic);
   })
   .catch(err => {
     del([`${dataDir}/*`]);
