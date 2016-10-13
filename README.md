@@ -165,14 +165,8 @@ POST to create a new profile.
 **description:** an authorized user can create a profile. This profile is associated with a specific hospital through a hospitalID. Once a user has been passed through bearer-auth, their request is parsed by JSON and the hospitalID in that request is checked against the hospitalID that's stored in the database.
 
 **expected headers:**
-```
-{ 'x-powered-by': 'Express',
-  'content-type': 'application/json; charset=utf-8',
-  'content-length': '<units in length>',
-  etag: 'W/"<etag>"',
-  date: '<date>',
-  connection: 'close' }
-```
+ * **Content-Type**: 'application/json; charset=utf-8',
+ * **Authorization**: Bearer <token>
 
 **expected body:**
 ```
