@@ -50,11 +50,12 @@ The program uses it's own Express API that authorizes new and returning users gr
 * superagent
 
 
-# Routes **routes/**
+# Routes
+
 
 ### Signup and Login
 
-POST to create a new user account.
+**POST** to create a new user account.
 ```
 /api/signup
 ```
@@ -80,7 +81,7 @@ POST to create a new user account.
   * 400 BadRequestError if no username provided
   * 409 ConflictError for duplicate username
 
-GET to login to a user account.
+**GET** to login to a user account.
 ```
 /api/login
 ```
@@ -100,9 +101,10 @@ GET to login to a user account.
 * **responses:** *responses for login will be the same as already specified upon signup*
 
 
+
 ### Hospitals
 
-POST to create a new hospital.
+**POST** to create a new hospital.
 ```
 /api/hospital
 ```
@@ -122,13 +124,13 @@ POST to create a new hospital.
 
 * **responses:**
 
-* 200 for valid request
-* 400 BadRequestError for request with invalid body
-* 400 BadRequestError for request with no body
-* 401 UnauthorizedError for request with invalid token
+  * 200 for valid request
+  * 400 BadRequestError for request with invalid body
+  * 400 BadRequestError for request with no body
+  * 401 UnauthorizedError for request with invalid token
 
 
-DELETE to delete a hospital.
+**DELETE** to delete a hospital.
 ```
 /api/hospital/:hospitalID
 ```
@@ -147,26 +149,32 @@ DELETE to delete a hospital.
 
 * **responses:**
 
-* 204 for valid DELETE request
-* 404 NotFoundError for invalid ID
-* 404 NotFoundError for no ID provided
-* 400 BadRequestError for no auth
-* 400 BadRequestError for invalid auth
+  * 204 for valid DELETE request
+  * 404 NotFoundError for invalid ID
+  * 404 NotFoundError for no ID provided
+  * 400 BadRequestError for no auth
+  * 400 BadRequestError for invalid auth
 
 
 
 ### Profiles
 
-POST to create a new profile.
+**POST** to create a new profile.
 ```
 /api/hospital/:hospitalID/profile
 ```
 
-**description:** an authorized user can create a profile. This profile is associated with a specific hospital through a hospitalID. Once a user has been passed through bearer-auth, their request is parsed by JSON and the hospitalID in that request is checked against the hospitalID that's stored in the database.
+* **description:** an authorized user can create a profile. This profile is associated with a specific hospital through a hospitalID. Once a user has been passed through bearer-auth, their request is parsed by JSON and the hospitalID in that request is checked against the hospitalID that's stored in the database.
 
-**expected headers:**
- * **Content-Type**: 'application/json; charset=utf-8',
- * **Authorization**: Bearer <token>
+* **expected headers:**
+```
+{ 'x-powered-by': 'Express',
+  'content-type': 'application/json; charset=utf-8',
+  'content-length': '<units in length>',
+  etag: 'W/"<etag>"',
+  date: '<date>',
+  connection: 'close' }
+```
 
 **expected body:**
 ```
@@ -179,16 +187,51 @@ POST to create a new profile.
   created: '<date>' }
 ```
 
+**responses:**
+
+  * 200 for valid profile request
+  * 400 BadRequestError for valid hospitalID, & body, but *no* auth
+  * 400 BadRequestError for valid hospitalID, & auth, but *invalid* body
+  * 404 NotFoundError for invalid hospitalID with valid body
+  * 404 NotFoundError for missing hospitalID with valid body
 
 
-GET to fetch a list of all profiles associated with a hospital.
+
+**GET** to fetch a list of all profiles associated with a hospital.
 ```
 /api/hospital/:hospitalID/profile
 ```
 
+**description:** allows an authorized user to get all profiles.
+
+**expected headers:**
+```
+{ 'x-powered-by': 'Express',
+  'content-type': 'application/json; charset=utf-8',
+  'content-length': '<units in length',
+  etag: 'W/"<etag>"',
+  date: '<date>',
+  connection: 'close' }
+  ```
+
+**expected body:**
+```
+{ _id: '_id',
+  profileName: '<lorem-ipsum>',
+  bio: '<lorem-ipsum text>',
+  userID: 'userID',
+  hospitalID: 'hospitalID',
+  __v: 0,
+  created: '<date>' }
+  ```
+
+**responses:**
+
+  * 200 for valid GET request
+  * <more responses to come: TODO>
 
 
-GET, PUT, DELETE to fetch or modify an individual profile.
+**GET, PUT, DELETE** to fetch or modify an individual profile.
 ```
 /api/hospital/:hospitalID/profile/:profileID
 ```
@@ -197,19 +240,104 @@ GET, PUT, DELETE to fetch or modify an individual profile.
 
 ### Status
 
-POST to create a new status post.
+* **description:** This feature is a model for a user's status post, similar to a Facebook user's status post. The user also has an option to include a file of any type to their post, along with normal text.
+
+
+**POST** to create a new status post.
 ```
 /api/hospital/:hospitalID/status
 ```
 
-GET to fetch a feed of all status posts for an individual hospital.
+* **expected headers:**
+
+```
+{ 'x-powered-by': 'Express',
+  'content-type': '<content-type> ',
+  'content-length': '<units in length>',
+  etag: '<etag>',
+  date: '<date>',
+  connection: 'close' }
+```
+* **expected body:**
+
+```
+{ __v: 0,
+  userID: '<userID that links back to Mongoose id of User schema>',
+  text: '<text>',
+  replyTo: '<an ID number that links to to Mongoose id of the Status Schema ',
+  hospitalID: '<hospitalID>',
+  _id: '<Status ID as generated by Mongoose>',
+  created: '<date>' }
+
+```
+
+**GET** to fetch a feed of all status posts for an individual hospital.
 ```
 /api/hospital/:hospitalID/status
 ```
 
-GET, PUT, DELETE to fetch or modify an individual status post.
+* **expected headers:**
+```
+{ 'x-powered-by': 'Express',
+  'content-type': '<content-type> ',
+  'content-length': '<units in length>',
+  etag: '<etag>',
+  date: '<date>',
+  connection: 'close' }
+```
+
+* **expected body (returns an array):**
+
+```
+[ { _id: '<status id as generated by Mongoose>',
+    text: '<>',
+    userID: '<userID>',
+    hospitalID: '<hospitalID>',
+    __v: 0,
+    created: '<date>' } ]
+```
+
+
+**GET, PUT, DELETE** to fetch or modify an individual status post.
 ```
 /api/hospital/:hospitalID/status/:statusID
+```
+
+* **expected headers for GET/PUT/DELETE:**
+```
+{ 'x-powered-by': 'Express',
+  'content-type': '<content-type> ',
+  'content-length': '<units in length>',
+  etag: '<etag>',
+  date: '<date>',
+  connection: 'close' }
+```
+
+* **expected body for GET - getting only one status:**
+
+```
+{ _id: '<status id as generated by Mongoose>',
+    text: '<>',
+    userID: '<userID>',
+    hospitalID: '<hospitalID>',
+    __v: 0,
+    created: '<date>' }
+```
+
+* **expected body for PUT:**
+
+```
+{ _id: '<status id as generated by Mongoose>',
+    text: '<>',
+    userID: '<userID>',
+    hospitalID: '<hospitalID>',
+    __v: 0,
+    created: '<date>' }
+```
+
+* **expected body for DELETE:**
+```
+A null object {}
 ```
 
 
@@ -233,11 +361,11 @@ GET, PUT, DELETE to fetch or modify an individual status post.
 
 **file-mock:** takes a fileURI, objectKey, & fileType
 
-*The fileURI & objectKey mock the AWS URI and objectKey*
+  * *The fileURI & objectKey mock the AWS URI and objectKey*
 
 **pic-mock:** takes a username, imageURI, & objectKey
 
-*The imageURI & objectKey mock the AWS URI and objectKey*
+  * *The imageURI & objectKey mock the AWS URI and objectKey*
 
 **status-mock:** takes text
 
