@@ -46,9 +46,17 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'),
     Body: fs.createReadStream(req.file.path),
   };
 
+  let tempStatus = null;
+  let tempFile = null;
   Status.findById(req.params.statusID)
   .catch(err => Promise.reject(createError(404, err.message)))
-  .then(() => s3UploadPromise(params))
+  .then(status => {
+    if(status.userID.toString() !== req.user._id.toString()) {
+      return Promise.reject(createError(401, 'User not authorized'));
+    }
+    tempStatus = status;
+    return s3UploadPromise(params);
+  })
   .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
   .then(s3data => {
     del([`${dataDir}/*`]);
@@ -60,7 +68,12 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'),
     };
     return new File(fileData).save();
   })
-  .then(file => res.json(file))
+  .then(file => {
+    tempFile = file;
+    tempStatus.fileID = tempFile._id.toString();
+    return tempFile.save();
+  })
+  .then(() => res.json(tempFile))
   .catch(err => {
     del([`${dataDir}/*`]);
     next(err);
@@ -92,7 +105,3 @@ fileRouter.delete('/api/status/:statusID/file/:fileID', bearerAuth, function(req
   .then(() => res.sendStatus(204))
   .catch(next);
 });
-
-// fileRouter.get('/api/status/:statusID/file/', bearerAuth, function(req, res, next){
-//   debug('Hit GET ALL /appi/status/:statusID')
-// });

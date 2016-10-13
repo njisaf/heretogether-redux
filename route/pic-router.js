@@ -60,10 +60,7 @@ picRouter.post('/api/profile/:profileID/pic', bearerAuth, upload.single('image')
   Profile.findById(req.params.profileID)
   .catch(err => Promise.reject(createError(404, err.message)))
   .then(profile => {
-    console.log(req.user);
-    console.log(profile);
     if(profile.userID.toString() !== req.user._id.toString()) {
-      console.log('DNJNDGJNDJNDFNJDFJNDFJNDFJNFDJ');
       return Promise.reject(createError(401, 'User not authorized'));
     }
     tempProfile = profile;
@@ -87,15 +84,7 @@ picRouter.post('/api/profile/:profileID/pic', bearerAuth, upload.single('image')
     tempProfile.picID = tempPic._id.toString();
     return tempProfile.save();
   })
-  .then(() => {
-    //TODO: How do I set our pic mongoose ID# to the profile schema's picID?
-    // Profile.call(this, err => {
-      // if (err) next(err);
-      // pic.picID = this.tempProfile.picID.toString();
-      // console.log('line 88', this.tempProfile.picID.toString());
-    // });
-    res.json(tempPic);
-  })
+  .then(() => res.json(tempPic))
   .catch(err => {
     del([`${dataDir}/*`]);
     next(err);
