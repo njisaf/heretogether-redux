@@ -14,7 +14,6 @@ const mockProfile = require('./lib/profile-mock');
 const mockUser = require('./lib/user-mock');
 const mockHospital = require('./lib/hospital-mock');
 const mockProfilePic = require('./lib/profile-pic-mock');
-const Pic = require('../model/pic');
 
 mongoose.Promise = Promise;
 
