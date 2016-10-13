@@ -111,6 +111,32 @@ describe('Testing Status routes', function() {
         });
       });
     });
+
+    describe('Testing POST with VALID IDs and REPLYTO field', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 200 and a status post', done => {
+        request.post(`${url}/api/hospital/${this.tempHospital._id}/status`)
+        .send({
+          userID: this.tempUser._id,
+          text: exampleStatus.text,
+          replyTo: this.tempStatus._id,
+          hospitalID: this.tempHospital._id,
+        })
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.userID).to.equal(this.tempUser._id.toString());
+          expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
+          expect(res.body.replyTo).to.equal(this.tempStatus._id.toString());
+          expect(res.body.text).to.equal(exampleStatus.text);
+          done();
+        });
+      });
+    });
+
   });
 
   describe('Testing Status GET routes', function() {
