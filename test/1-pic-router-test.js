@@ -44,7 +44,6 @@ describe('testing PIC routes', function() {
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(200);
-          //TODO: AWS mocks comparisons here
           expect(res.body.imageURI).to.equal(awsMocks.uploadMock.Location);
           expect(res.body.objectKey).to.equal(awsMocks.uploadMock.Key);
           done();
