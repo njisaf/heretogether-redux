@@ -55,6 +55,7 @@ describe('testing hospital-router', function(){
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
           done();
         });
       });
@@ -69,6 +70,7 @@ describe('testing hospital-router', function(){
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
           done();
         });
       });
@@ -84,6 +86,7 @@ describe('testing hospital-router', function(){
         .set({Authorization: 'Bearer badtoken'})
         .end((err, res) => {
           expect(res.status).to.equal(401);
+          expect(res.text).to.equal('UnauthorizedError');
           done();
         });
       });
@@ -118,6 +121,7 @@ describe('testing hospital-router', function(){
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res)=> {
           expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
           done();
         });
       });
