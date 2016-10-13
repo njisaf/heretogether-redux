@@ -105,6 +105,7 @@ describe('testing PIC routes', function() {
 
   //DELETE routes
   describe('testing DELETE routes to /api/profile/:profileID/pic/:picID', function(){
+
     describe('with successful deletion', function(){
       before(done => mockPic.call(this, done));
       it('should return status 204', (done) => {
@@ -114,6 +115,19 @@ describe('testing PIC routes', function() {
          if (err) return done(err);
          console.log('HBHFBDHGBHDHBDFHBFD ', res.body);
          expect(res.status).to.equal(204);
+         done();
+       });
+      });
+    });
+
+    describe('with invalid picID', function(){
+      before(done => mockPic.call(this, done));
+      it('should return status 404', (done) => {
+        request.delete(`${url}/api/profile/${this.tempProfile._id}/pic/${this.tempPic._id}badPicId#`)
+       .set({Authorization: `Bearer ${this.tempToken}`})
+       .end((err, res) => {
+         expect(res.status).to.equal(404);
+         expect(err.message).to.equal('Not Found');
          done();
        });
       });
