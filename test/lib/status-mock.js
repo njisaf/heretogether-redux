@@ -23,8 +23,6 @@ module.exports = function(done){
     hospitalMock.call(this, err => {
       if (err) return done (err);
       exampleStatus.hospitalID = this.tempHospital._id.toString();
-
-      console.log('exampleStatus  ', exampleStatus);
       new Status(exampleStatus).save()
       .then( status => {
         this.tempStatus = status;
