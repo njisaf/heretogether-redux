@@ -72,6 +72,45 @@ describe('Testing Status routes', function() {
         });
       });
     });
+
+    describe('Testing POST with INVALID TOKEN', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a status of 401 for invalid token ', done => {
+        request.post(`${url}/api/hospital/${this.tempHospital._id}/status`)
+        .send({
+          userID: this.tempUser._id,
+          text: exampleStatus.text,
+          hospitalID: this.tempHospital._id,
+        })
+        .set({Authorization: `Bearer ${this.tempToken}BADTOKEN`})
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(err.message).to.equal('Unauthorized');
+          done();
+        });
+      });
+    });
+
+    describe('Testing POST with NO TOKEN', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a status of 400 for no token ', done => {
+        request.post(`${url}/api/hospital/${this.tempHospital._id}/status`)
+        .send({
+          userID: this.tempUser._id,
+          text: exampleStatus.text,
+          hospitalID: this.tempHospital._id,
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(err.message).to.equal('Bad Request');
+          done();
+        });
+      });
+    });
   });
 
   describe('Testing Status GET routes', function() {
@@ -271,7 +310,7 @@ describe('Testing Status routes', function() {
       });
     });
 
-    describe('Testing PUT with HOSPITAL ID MISMATCH', function() {
+    describe('Testing PUT with INVALID HOSPITAL ID', function() {
 
       before(done => mockStatus.call(this, done));
 
