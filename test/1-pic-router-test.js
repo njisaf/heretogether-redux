@@ -132,7 +132,7 @@ describe('testing PIC routes', function() {
     });
 
 
-    describe('with mismatched userIDs', function(){
+    describe('Testing DELETE with INVALID USERID', function(){
 
       before(done => mockPic.call(this, done));
       before(done => mockUser.call(this, done));
@@ -143,6 +143,35 @@ describe('testing PIC routes', function() {
        .end((err, res) => {
          expect(res.status).to.equal(401);
          expect(err.message).to.equal('Unauthorized');
+         done();
+       });
+      });
+    });
+
+    describe('Testing DELETE with INVALID TOKEN', function(){
+
+      before(done => mockPic.call(this, done));
+
+      it('should return status 401', (done) => {
+        request.delete(`${url}/api/profile/${this.tempProfile._id}/pic/${this.tempPic._id}`)
+       .set({Authorization: `Bearer ${this.tempToken}BADTOKEN`})
+       .end((err, res) => {
+         expect(res.status).to.equal(401);
+         expect(err.message).to.equal('Unauthorized');
+         done();
+       });
+      });
+    });
+
+    describe('Testing DELETE with NO TOKEN', function(){
+
+      before(done => mockPic.call(this, done));
+
+      it('should return status 400', (done) => {
+        request.delete(`${url}/api/profile/${this.tempProfile._id}/pic/${this.tempPic._id}`)
+       .end((err, res) => {
+         expect(res.status).to.equal(400);
+         expect(err.message).to.equal('Bad Request');
          done();
        });
       });
