@@ -170,7 +170,20 @@ describe('Testing Status routes', function() {
       });
     });
 
+    describe('Testing GET with HOSPITAL ID MISMATCH', function() {
 
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 404 for no token', done => {
+        request.get(`${url}/api/hospital/${this.tempHospital._id}misMatchedID/status/${this.tempStatus._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(err.message).to.equal('Not Found');
+          done();
+        });
+      });
+    });
 
   });
 
