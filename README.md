@@ -272,6 +272,7 @@ POST to create a new status post.
   created: '<date>' }
 
 ```
+
 GET to fetch a feed of all status posts for an individual hospital.
 ```
 /api/hospital/:hospitalID/status
@@ -354,7 +355,7 @@ A null object {}
 
 # Mocks **test/lib/*
 
-*There is one mock per model. The following mocks are used for testing purposes**
+**There is one mock per model. The following mocks are used for testing purposes**
 
 **user-mock:** takes a username, password, & email attributes
 
