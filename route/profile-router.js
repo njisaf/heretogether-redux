@@ -21,12 +21,11 @@ profileRouter.post('/api/hospital/:hospitalID/profile', bearerAuth, jsonParser, 
   if(req.body.hospitalID !== req.params.hospitalID) return next(createError(404, 'Hospital not found.'));
   Hospital.findById(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
-  .then(() => {
-    new Profile(req.body).save()
-    .then( profile => {
-      res.json(profile);
-    });
+  .then(hospital => {
+    if(!hospital) return Promise.reject(createError(404, 'Hospital does not exist'));
+    return new Profile(req.body).save();
   })
+  .then(profile => res.json(profile))
   .catch(next);
 });
 
