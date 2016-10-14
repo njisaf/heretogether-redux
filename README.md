@@ -156,7 +156,7 @@ Content-Type: 'application/json; charset=utf=8'
 Authorization: 'Bearer <token>'
 ```
 
-**expected body:**
+* **expected body:**
 ```
 {
   profileName: <string>,
@@ -164,7 +164,7 @@ Authorization: 'Bearer <token>'
 }
 ```
 
-**responses:**
+* **responses:**
 
   * 200 for valid profile request
   * 400 BadRequestError for valid hospitalID, & body, but *no* auth
@@ -174,19 +174,19 @@ Authorization: 'Bearer <token>'
 
 
 
-**GET** to fetch a list of all profiles associated with a hospital.
+**GET** to fetch a list of *all* profiles associated with a hospital.
 
 **/api/hospital/:hospitalID/profile**
 
 **description:** allows an authorized user to get all profiles.
 
-**expected headers:**
+* **expected headers:**
 ```
 Content-Type: 'application/json; charset=utf=8'
 Authorization: 'Bearer <token>'
   ```
 
-**expected body:**
+* **expected body:**
 ```
 {
   profileName: <string>,
@@ -194,15 +194,80 @@ Authorization: 'Bearer <token>'
 }
 ```
 
-**responses:**
+* **responses:**
 
   * 200 for valid GET request
-  * <more responses to come: TODO>
 
 
-**GET, PUT, DELETE** to fetch or modify an individual profile.
+
+**GET** to fetch an individual profile.
 
 **/api/hospital/:hospitalID/profile/:profileID**
+
+* **expected headers:**
+```
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+  ```
+
+* **expected body:**
+```
+{
+  profileName: <string>,
+  bio: <string>,
+}
+```
+
+* **responses:**
+
+  * 200 for valid GET request
+
+
+
+**DELETE** to delete an individual profile
+
+* **expected headers:**
+```
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+```
+
+* **expected body:** (for DELETE)
+```
+{} <null object>
+```
+
+* **responses:**
+
+  * 204 for successful DELETE request
+  * 404 NotFoundError for invalid profileID
+  * 404 NotFoundError for invalid hospitalID
+
+
+
+**PUT** to update an individual profile
+**/api/hospital/:hospitalID/profile/:profileID**
+
+* **expected headers:**
+```
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+  ```
+
+* **expected body:**
+```
+{
+  profileName: <string>,
+  bio: <string>,
+}
+```
+
+* **responses:**
+
+  * 200 for successful PUT request
+  * 404 NotFoundError for invalid profileID
+  * 404 NotFoundError for invalid hospitalID
+  * 400 BadRequestError for invalid body
 
 
 
@@ -230,6 +295,19 @@ Authorization: 'Bearer <token>'
 
 ```
 
+* **responses:**
+
+  * 200 for successful POST request
+  * 200 for successful POST request and replyTO
+  * 404 NotFoundError for invalid hospitalID
+  * 401 UnauthorizedError for invalid token
+  * 400 BadRequestError for no token
+  * 404 NotFoundError for invalid hospitalID
+
+
+
+
+
 **GET** to fetch a feed of *all* status posts for an individual hospital.
 
 **/api/hospital/:hospitalID/status**
@@ -248,18 +326,27 @@ Authorization: 'Bearer <token>'
   }]
 ```
 
+* **responses:**
 
-**GET, PUT, DELETE** to fetch or modify an individual status post.
+  * 200 for successful GET *all* request
+  * 401 UnauthorizedError non-matching userID
+  * 400 BadRequestError for invalid statusID
+  * 401 UnauthorizedError for invalid token
+  * 400 BadRequestError for no token
+
+
+
+**GET** for an individual status
 
 **/api/hospital/:hospitalID/status/:statusID**
 
-* **expected headers for GET/PUT/DELETE:**
+* **expected headers:** for GET/PUT/DELETE:
 ```
 Content-Type: 'application/json; charset=utf=8'
 Authorization: 'Bearer <token>'
 ```
 
-* **expected body for GET - getting only one status:**
+* **expected body:**
 
 ```
 {
@@ -268,7 +355,26 @@ Authorization: 'Bearer <token>'
 
 ```
 
-* **expected body for PUT:**
+* **responses:**
+
+  * 200 for successful GET request
+  * 401 UnauthorizedError non-matching userID
+  * 400 BadRequestError for invalid statusID
+  * 401 UnauthorizedError for invalid token
+  * 400 BadRequestError for no token
+
+
+**PUT** to update an individual status
+
+**/api/hospital/:hospitalID/status/:statusID**
+
+* **expected headers:**
+```
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+```
+
+* **expected body:** for PUT
 ```
 {
   text: string
@@ -276,10 +382,27 @@ Authorization: 'Bearer <token>'
 
 ```
 
-* **expected body for DELETE:**
+* **responses:**
+
+  * 200 for valid PUT request
+  * 404 NotFoundError for invalid hospitalID
+  * 404 NotFoundError for invalid statusID
+  * 401 UnauthorizedError for invalid token
+  * 400 BadRequestError for no token
+  * 401 UnauthorizedError for non-matching userID
+
+
+**DELETE** to delete an individual status
+
+* **expected headers:**
+
+
+* **expected body**
 ```
 { } <null object>
 ```
+
+
 
 
 
@@ -310,6 +433,12 @@ fileType: <string>
 **/api/status/:statusID/file/:fileID**
 
 * **description:** The user has an option to delete the associated file.
+
+* **expected header:**
+```
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+```
 
 
 
