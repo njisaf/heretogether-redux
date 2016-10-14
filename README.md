@@ -20,34 +20,9 @@ The program uses it's own Express API that authorizes new and returning users gr
 
 [![Coverage Status](https://coveralls.io/repos/github/kaylynyuh/401-mid-quarter-project/badge.svg?branch=staging-branch)](https://coveralls.io/github/kaylynyuh/401-mid-quarter-project?branch=staging-branch)
 
-*See the Routes for more on how to interact with the app*
+*See package.json for required dependencies and devdependencies*
 
-# Dependencies:
-
-* aws-sdk
-* bcrypt
-* bluebird
-* body-parser
-* debug
-* del
-* dotenv
-* express
-* http-errors
-* jsonwebtoken
-* lorem-ipsum
-* mongoose
-* morgan
-* multer
-
-*Save the following as devDependencies*
-
-* aws-sdk-mock
-* chai
-* coveralls
-* eslint
-* istanbul
-* mocha
-* superagent
+*See Routes for more on how to interact with the app*
 
 
 # Routes
@@ -56,20 +31,25 @@ The program uses it's own Express API that authorizes new and returning users gr
 ### Signup and Login
 
 **POST** to create a new user account.
-```
-/api/signup
-```
+
+**/api/signup**
+
 * **description:** a new user is authenticated by signing up with a valid username, password, and email. The password is hashed and then stored in the database so that no password is saved as plain text. Upon success, they are returned a token in JSON that grants the user authorization to use the program.
 
-* **expected headers:**
+* **expected header:**
 ```
-{ 'x-powered-by': 'Express',
-  'content-type': 'text/html; charset=utf-8',
-  'content-length': '<units in length>',
-  etag: 'W/"<etag>"',
-  date: '<date>',
-  connection: 'close' }
-  ```
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+```
+
+* **expected body:**
+```
+{
+username: <string>,
+password: <string>,
+email: <string>,
+}
+```
 
 * **response:**
 
@@ -82,20 +62,25 @@ The program uses it's own Express API that authorizes new and returning users gr
   * 409 ConflictError for duplicate username
 
 **GET** to login to a user account.
-```
-/api/login
-```
+
+**/api/login**
+
 
 * **description:** when a returning user logs in their username is sent through basic auth which gets the username off of the request header and checks to see if that username matches the username that the user signed up with. A returning user password is hashed and then compared to the hashed value of the password they used upon signup that is stored in the database, and if it matches, they are sent back a token that authorizes them to use the program.
 
-* **expected headers:**
+* **expected header:**
 ```
-{ 'x-powered-by': 'Express',
-  'content-type': 'text/html; charset=utf-8',
-  'content-length': '<units in length>',
-  etag: 'W/"<etag>"',
-  date: '<date>',
-  connection: 'close' }
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+```
+
+* **expected body:**
+```
+{
+  username: <string>,
+  password: <string>,
+  email: <string>,
+}
 ```
 
 * **responses:** *responses for login will be the same as already specified upon signup*
@@ -105,21 +90,20 @@ The program uses it's own Express API that authorizes new and returning users gr
 ### Hospitals
 
 **POST** to create a new hospital.
-```
-/api/hospital
-```
+
+**/api/hospital**
 
 * **description:** this feature associates users to hospitals so they can connect to patients staying in the same hospital or reach out to other patients staying at different hospitals that also have the app. Only a valid user is can add a new hospital. This authentication is taken care of through the bearer-auth-middleware.
 
-* **expected headers:**
+* **expected header:**
 ```
-{ 'x-powered-by': 'Express',
-  'content-type': 'application/json; charset=utf-8',
-  'content-length': '<units in length>',
-  etag: 'W/"<etag>"',
-  date: '<date>',
-  connection: 'close' }
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+```
 
+* **expected body:**
+```
+name: <string>
 ```
 
 * **responses:**
@@ -131,20 +115,21 @@ The program uses it's own Express API that authorizes new and returning users gr
 
 
 **DELETE** to delete a hospital.
-```
-/api/hospital/:hospitalID
-```
+
+**/api/hospital/:hospitalID**
+
 
 * **description:** allows authorized users to delete a hospital
 
 * **expected headers:**
 ```
-{ 'x-powered-by': 'Express',
-  'content-type': 'text/html; charset=utf-8',
-  'content-length': '<units in length>',
-  etag: 'W/"<etag>"',
-  date: '<date>',
-  connection: 'close' }
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+```
+
+* **expected body:**
+```
+name: <string>
 ```
 
 * **responses:**
@@ -160,31 +145,23 @@ The program uses it's own Express API that authorizes new and returning users gr
 ### Profiles
 
 **POST** to create a new profile.
-```
-/api/hospital/:hospitalID/profile
-```
+
+**/api/hospital/:hospitalID/profile**
 
 * **description:** an authorized user can create a profile. This profile is associated with a specific hospital through a hospitalID. Once a user has been passed through bearer-auth, their request is parsed by JSON and the hospitalID in that request is checked against the hospitalID that's stored in the database.
 
 * **expected headers:**
 ```
-{ 'x-powered-by': 'Express',
-  'content-type': 'application/json; charset=utf-8',
-  'content-length': '<units in length>',
-  etag: 'W/"<etag>"',
-  date: '<date>',
-  connection: 'close' }
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
 ```
 
 **expected body:**
 ```
-{ __v: 0,
-  profileName: 'Name',
-  userID: '<userID>',
-  bio: 'Bio',
-  hospitalID: '<hospitalID>',
-  _id: '<_id>',
-  created: '<date>' }
+{
+  profileName: <string>,
+  bio: <string>,
+}
 ```
 
 **responses:**
@@ -198,32 +175,24 @@ The program uses it's own Express API that authorizes new and returning users gr
 
 
 **GET** to fetch a list of all profiles associated with a hospital.
-```
-/api/hospital/:hospitalID/profile
-```
+
+**/api/hospital/:hospitalID/profile**
 
 **description:** allows an authorized user to get all profiles.
 
 **expected headers:**
 ```
-{ 'x-powered-by': 'Express',
-  'content-type': 'application/json; charset=utf-8',
-  'content-length': '<units in length',
-  etag: 'W/"<etag>"',
-  date: '<date>',
-  connection: 'close' }
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
   ```
 
 **expected body:**
 ```
-{ _id: '_id',
-  profileName: '<lorem-ipsum>',
-  bio: '<lorem-ipsum text>',
-  userID: 'userID',
-  hospitalID: 'hospitalID',
-  __v: 0,
-  created: '<date>' }
-  ```
+{
+  profileName: <string>,
+  bio: <string>,
+}
+```
 
 **responses:**
 
@@ -232,113 +201,116 @@ The program uses it's own Express API that authorizes new and returning users gr
 
 
 **GET, PUT, DELETE** to fetch or modify an individual profile.
-```
-/api/hospital/:hospitalID/profile/:profileID
-```
+
+**/api/hospital/:hospitalID/profile/:profileID**
+
 
 
 
 ### Status
 
-* **description:** This feature is a model for a user's status post, similar to a Facebook user's status post. The user also has an option to include a file of any type to their post, along with normal text.
-
-
 **POST** to create a new status post.
-```
-/api/hospital/:hospitalID/status
-```
+
+**/api/hospital/:hospitalID/status**
+
+* **description:** This feature is a model for a user's status post, similar to a Facebook user's status post. The user also has an option to include a file of any type to their post, along with normal text.
 
 * **expected headers:**
 
 ```
-{ 'x-powered-by': 'Express',
-  'content-type': '<content-type> ',
-  'content-length': '<units in length>',
-  etag: '<etag>',
-  date: '<date>',
-  connection: 'close' }
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
 ```
 * **expected body:**
 
 ```
-{ __v: 0,
-  userID: '<userID that links back to Mongoose id of User schema>',
-  text: '<text>',
-  replyTo: '<an ID number that links to to Mongoose id of the Status Schema ',
-  hospitalID: '<hospitalID>',
-  _id: '<Status ID as generated by Mongoose>',
-  created: '<date>' }
+{
+  text: string
+}
 
 ```
 
-**GET** to fetch a feed of all status posts for an individual hospital.
-```
-/api/hospital/:hospitalID/status
-```
+**GET** to fetch a feed of *all* status posts for an individual hospital.
+
+**/api/hospital/:hospitalID/status**
 
 * **expected headers:**
 ```
-{ 'x-powered-by': 'Express',
-  'content-type': '<content-type> ',
-  'content-length': '<units in length>',
-  etag: '<etag>',
-  date: '<date>',
-  connection: 'close' }
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
 ```
 
 * **expected body (returns an array):**
 
 ```
-[ { _id: '<status id as generated by Mongoose>',
-    text: '<>',
-    userID: '<userID>',
-    hospitalID: '<hospitalID>',
-    __v: 0,
-    created: '<date>' } ]
+[{
+  text: <string>
+  }]
 ```
 
 
 **GET, PUT, DELETE** to fetch or modify an individual status post.
-```
-/api/hospital/:hospitalID/status/:statusID
-```
+
+**/api/hospital/:hospitalID/status/:statusID**
 
 * **expected headers for GET/PUT/DELETE:**
 ```
-{ 'x-powered-by': 'Express',
-  'content-type': '<content-type> ',
-  'content-length': '<units in length>',
-  etag: '<etag>',
-  date: '<date>',
-  connection: 'close' }
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
 ```
 
 * **expected body for GET - getting only one status:**
 
 ```
-{ _id: '<status id as generated by Mongoose>',
-    text: '<>',
-    userID: '<userID>',
-    hospitalID: '<hospitalID>',
-    __v: 0,
-    created: '<date>' }
+{
+  text: string
+}
+
 ```
 
 * **expected body for PUT:**
-
 ```
-{ _id: '<status id as generated by Mongoose>',
-    text: '<>',
-    userID: '<userID>',
-    hospitalID: '<hospitalID>',
-    __v: 0,
-    created: '<date>' }
+{
+  text: string
+}
+
 ```
 
 * **expected body for DELETE:**
 ```
-A null object {}
+{ } <null object>
 ```
+
+
+
+# File
+
+**POST** request
+
+**/api/status/:statusID/file**
+
+
+* **description:** This file route give a user the option to attach a file of any type to their status.
+
+* **expected header:**
+```
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+```
+
+* **expected body:**
+```
+fileURI: <string>
+objectKey: <string>
+fileType: <string>
+```
+
+**DELETE** request
+
+**/api/status/:statusID/file/:fileID**
+
+* **description:** The user has an option to delete the associated file.
+
 
 
 # Middleware
@@ -381,7 +353,7 @@ A null object {}
 
 **server-ctrl:** controls the server handling logic that turns the server on and off
 
-*Be sure to include the server handling and clean-db logic before each test*
+  * *Be sure to include the server handling and clean-db logic before each test*
 
 ```
 before(done => serverCtrl.serverUp(server, done));
@@ -391,7 +363,7 @@ afterEach(done => cleanDB(done));
 
 **test-env** should include the following:
 
-*This file should be required at the top of EVERY test file, before any other files/modules are required*
+  * *This file should be required at the top of EVERY test file, before any other files/modules are required*
 
 ```
 process.env.PORT=3000;
