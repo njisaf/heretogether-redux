@@ -22,7 +22,9 @@ statusRouter.post('/api/hospital/:hospitalID/status', bearerAuth, jsonParser, fu
   if(req.body.hospitalID !== req.params.hospitalID) return next(createError(404, 'Hospital not found.'));
   Hospital.findById(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
-  .then(() => {
+  .then(hospital => {
+    if(hospital === null) return Promise.reject(createError(404, 'Hospital does not exist'));
+    console.log('NO HOSPITAL ', hospital);
     new Status(req.body).save()
     .then(status => res.json(status));
   })
@@ -36,7 +38,6 @@ statusRouter.get('/api/hospital/:hospitalID/status/:statusID', bearerAuth, funct
   .populate('fileID')
   .catch(err => Promise.reject(createError(400, err.message)))
   .then(status => {
-    console.log('HDBHBDFHBHDBFHBDF    ', status);
     if(status.userID.toString() !== req.user._id.toString()) return Promise.reject(createError(401, 'invalid userid'));
     if(status.hospitalID.toString() !== req.params.hospitalID.toString()) return Promise.reject(createError(404, 'Hospital mismatch'));
     res.json(status);
@@ -53,7 +54,6 @@ statusRouter.get('/api/hospital/:hospitalID/status/', bearerAuth, function(req, 
     .populate('fileID');
   })
   .then(statArr => {
-    console.log('HNDHFBHDFHDBFHBDHF  ', statArr);
     res.json(statArr);
   })
   .catch(next);
