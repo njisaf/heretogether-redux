@@ -278,7 +278,7 @@ Authorization: 'Bearer <token>'
 
 **/api/hospital/:hospitalID/status**
 
-* **description:** This feature is a model for a user's status post, similar to a Facebook user's status post. The user also has an option to include a file of any type to their post, along with normal text.
+* **description:** after a user has been sent through bearer auth and has created a profile, they can post statuses, react to other users' statuses, and update or delete statuses.
 
 * **expected headers:**
 
@@ -303,8 +303,6 @@ Authorization: 'Bearer <token>'
   * 401 UnauthorizedError for invalid token
   * 400 BadRequestError for no token
   * 404 NotFoundError for invalid hospitalID
-
-
 
 
 
@@ -395,14 +393,24 @@ Authorization: 'Bearer <token>'
 **DELETE** to delete an individual status
 
 * **expected headers:**
-
+```
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+```
 
 * **expected body**
 ```
 { } <null object>
 ```
 
+* **responses:**
 
+  * 204 for successful DELETE request
+  * 204 for valid ID and fileID
+  * 404 NotFoundError for non-matching hospitalID
+  * 401 UnauthorizedError for non-matching userID
+  * 400 BadRequestError for no token
+  * 401 UnauthorizedError for invalid tokens
 
 
 
@@ -413,7 +421,7 @@ Authorization: 'Bearer <token>'
 **/api/status/:statusID/file**
 
 
-* **description:** This file route give a user the option to attach a file of any type to their status.
+* **description:** a file is associated with a status and allows authorized users to upload any file-type to a status
 
 * **expected header:**
 ```
@@ -426,6 +434,41 @@ Authorization: 'Bearer <token>'
 fileURI: <string>
 objectKey: <string>
 fileType: <string>
+```
+
+**DELETE** request
+
+**/api/status/:statusID/file/:fileID**
+
+* **description:** The user has an option to delete the associated file.
+
+* **expected header:**
+```
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+```
+
+
+
+# Pic
+
+**POST** request
+
+**/api/status/:statusID/file**
+
+
+* **description:** a pic is associated with a profile, authorized users can upload, change, or delete their profile picture.
+
+* **expected header:**
+```
+Content-Type: 'application/json; charset=utf=8'
+Authorization: 'Bearer <token>'
+```
+
+* **expected body:**
+```
+imageURI: <string>
+objectKey: <string>
 ```
 
 **DELETE** request
