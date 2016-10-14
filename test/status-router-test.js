@@ -14,6 +14,7 @@ const mockUser = require('./lib/user-mock');
 const mockHospital = require('./lib/hospital-mock');
 const mockStatus = require('./lib/status-mock');
 const mockStatusFile = require('./lib/status-file-mock');
+const mockFakeHospitalStatus = require('./lib/fake-hospital-status-mock');
 
 mongoose.Promise = Promise;
 
@@ -138,6 +139,28 @@ describe('Testing Status routes', function() {
       });
     });
 
+    describe('Testing POST with VALID IDs but FAKE HOSPITAL', function() {
+
+      before(done => mockUser.call(this, done));
+      before(done => mockFakeHospitalStatus.call(this, done));
+
+      it('Should return a status of 404 and an error message', done => {
+        console.log('JDNFJNDJFNDJFNDJNFDNF ', this.tempHospital);
+        request.post(`${url}/api/hospital/${this.tempHospital._id}/status`)
+        .send({
+          userID: this.tempUser._id,
+          text: exampleStatus.text,
+          hospitalID: this.tempHospital._id,
+        })
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+    });
+
   });
 
   describe('Testing Status GET routes', function() {
@@ -244,6 +267,22 @@ describe('Testing Status routes', function() {
         });
       });
     });
+
+    describe('Testing GET ALL with INVALID HOSPITALID', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 404 and an error message', done => {
+        request.get(`${url}/api/hospital/1234/status/`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+    });
+
 
     describe('Testing GET with INVALID STATUS ID', function() {
 

@@ -10,11 +10,10 @@ const userMock = require('./user-mock');
 module.exports = function(done){
   debug('create mock status');
 
-  let text = lorem({count: 3, unit:'sentences'}).split(' ').join('-');
-
   let exampleStatus = {
-    text,
+    text: lorem({count: 3, unit:'sentences'}).split(' ').join('-'),
   };
+
 
   userMock.call(this, err => {
     if (err) return done (err);
