@@ -1,12 +1,8 @@
 ## Readme Version 0.1
 
-## Team
+**This App uses coverall.io to monitor code coverage:**
 
-Kaylyn Yuh https://github.com/kaylynyuh
-
-Judy Vue https://github.com/JudyVue
-
-Nassir Isaf https://github.com/njisaf
+[![Coverage Status](https://coveralls.io/repos/github/kaylynyuh/401-mid-quarter-project/badge.svg?branch=staging-branch)](https://coveralls.io/github/kaylynyuh/401-mid-quarter-project?branch=staging-branch)
 
 # \<heretogether\>
 
@@ -16,9 +12,6 @@ Nassir Isaf https://github.com/njisaf
 
 The program uses it's own Express API that authorizes new and returning users granting them access to CRUD operations that enable the user to follow other users, create profiles, post statuses, and upload photos. The app uses Express to respond to and route HTTP methods appropriately from client requests at a particular endpoint. The specified models are created via mongoose which map to a mongoDB collection and define the shape of the documents within that collection. A user will authenticate by passing in a valid name, email, and a password and will get back a token upon success. JSON web tokens is used to validate tokens which allows information to be passed back and fourth in JSON format if the token is good. The program is compatible with AWS and uses it to store uploaded images.
 
-**This App uses coverall.io to monitor code coverage:**
-
-[![Coverage Status](https://coveralls.io/repos/github/kaylynyuh/401-mid-quarter-project/badge.svg?branch=staging-branch)](https://coveralls.io/github/kaylynyuh/401-mid-quarter-project?branch=staging-branch)
 
 *See package.json for required dependencies and devdependencies*
 
@@ -584,3 +577,14 @@ process.env.AWS_SECRET_ACCESS_KEY='<some string>';
 ```
 
 ##Don't forget to include a server file that requires in and uses all the routes.
+
+
+
+
+## Team
+
+Kaylyn Yuh https://github.com/kaylynyuh
+
+Judy Vue https://github.com/JudyVue
+
+Nassir Isaf https://github.com/njisaf
