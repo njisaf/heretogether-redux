@@ -436,6 +436,15 @@ objectKey: <string>
 fileType: <string>
 ```
 
+* **responses:**
+
+  * 200 for valid POST request
+  * 400 BadRequestError for no file provided
+  * 401 UnauthorizedError for invalid token
+  * 400 BadRequestError for no token provided
+  * 401 UnauthorizedError for no statusID provided
+
+
 **DELETE** request
 
 **/api/status/:statusID/file/:fileID**
@@ -448,13 +457,21 @@ Content-Type: 'application/json; charset=utf=8'
 Authorization: 'Bearer <token>'
 ```
 
+* **responses:**
+
+  * 204 for successful DELETE request
+  * 401 UnauthorizedError for invalid token
+  * 400 BadRequestError for no token provided
+  * 400 BadRequestError for no bearer-auth
+  * 400 BadRequestError for invalid statusID
+
 
 
 # Pic
 
 **POST** request
 
-**/api/status/:statusID/file**
+**/api/status/:statusID/pic**
 
 
 * **description:** a pic is associated with a profile, authorized users can upload, change, or delete their profile picture.
@@ -467,21 +484,42 @@ Authorization: 'Bearer <token>'
 
 * **expected body:**
 ```
+username: <string>
 imageURI: <string>
 objectKey: <string>
 ```
 
-**DELETE** request
+* **responses:**
 
-**/api/status/:statusID/file/:fileID**
+  * 200 for valid POST request
+  * 400 BadRequestError for no image attached
+  * 401 UnauthorizedError for invalid token
+  * 400 BadRequestError for no image attached
+  * 404 NotFoundError for invalid profileID
+  * 401 UnauthorizedError for invalid userID
+  * 400 BadRequestError for no token
 
-* **description:** The user has an option to delete the associated file.
+
+**DELETE**
+
+**/api/status/:statusID/pic/:picID**
+
+* **description:** a user has an option to delete the associated pic.
 
 * **expected header:**
 ```
 Content-Type: 'application/json; charset=utf=8'
 Authorization: 'Bearer <token>'
 ```
+
+* **responses:**
+
+* 204 for successful DELETE request
+* 204 for valid ID and fileID
+* 404 NotFoundError for non-matching hospitalID
+* 401 UnauthorizedError for non-matching userID
+* 400 BadRequestError for no token
+* 401 UnauthorizedError for invalid tokens
 
 
 
