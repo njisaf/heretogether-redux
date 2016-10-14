@@ -3,6 +3,7 @@ db
 .env
 coverage
 html-report
+temp-readme.md
 
 # Created by https://www.gitignore.io/api/osx,vim,linux,windows,node
 

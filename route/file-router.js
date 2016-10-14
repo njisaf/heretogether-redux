@@ -44,6 +44,7 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'),
     Body: fs.createReadStream(req.file.path),
   };
 
+
   let tempStatus = null;
   let tempFile = null;
   Status.findById(req.params.statusID)
