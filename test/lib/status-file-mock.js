@@ -26,8 +26,6 @@ module.exports = function(done){
     fileType: 'audio/mp3',
   };
 
-
-
   userMock.call(this, err => {
     if (err) return done (err);
     exampleStatus.userID = this.tempUser._id.toString();
@@ -46,7 +44,6 @@ module.exports = function(done){
         done();
       })
       .catch(done);
-
     });
   });
 };

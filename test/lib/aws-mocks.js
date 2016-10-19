@@ -5,14 +5,12 @@ const AWSMock = require('aws-sdk-mock');
 module.exports = exports = {};
 
 exports.uploadMock = {
- //TODO: get info from real upload to AWS
   ETag: '"5eefd06b5b384cc52f35a0c49414ea31',
   Location: 'https://heretogether-assets.s3.amazonaws.com/59f1919f92651d13d8693fc887887aa2.png',
   key: '59f1919f92651d13d8693fc887887aa2.png',
   Key: '59f1919f92651d13d8693fc887887aa2.png',
   Bucket: 'heretogether-assets',
 };
-
 
 AWSMock.mock('S3', 'upload', function(params, callback){
   if(params.ACL !== 'public-read')

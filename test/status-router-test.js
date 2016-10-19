@@ -548,6 +548,4 @@ describe('Testing Status routes', function() {
       });
     });
   });
-
-
 });

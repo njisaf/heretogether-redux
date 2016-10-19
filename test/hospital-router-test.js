@@ -173,7 +173,5 @@ describe('testing hospital-router', function(){
         });
       });
     });
-
-
   });
 });

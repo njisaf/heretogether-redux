@@ -1,15 +1,12 @@
 'use strict';
 
-//npm modules
 const debug = require('debug')('ht: profile-mock');
 const lorem = require('lorem-ipsum');
 
-//module constants
 const Profile = require('../../model/profile');
 const Pic = require('../../model/pic');
 const userMock = require('./user-mock');
 const hospitalMock = require('./hospital-mock');
-
 
 module.exports = function(done){
   debug('Creating mock profile with pic associated');
