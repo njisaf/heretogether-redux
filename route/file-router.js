@@ -29,7 +29,6 @@ function s3UploadPromise(params){
   });
 }
 
-//'file' should be added to example file in file-router-test-js
 fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'), function(req, res, next){
   debug('hit POST /api/status/:statusID/file');
   if(!req.file)

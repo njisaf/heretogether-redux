@@ -14,7 +14,6 @@ module.exports = function(done){
     text: lorem({count: 3, unit:'sentences'}).split(' ').join('-'),
   };
 
-
   userMock.call(this, err => {
     if (err) return done (err);
     exampleStatus.userID = this.tempUser._id.toString();

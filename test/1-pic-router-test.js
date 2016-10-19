@@ -9,7 +9,6 @@ const Promise = require('bluebird');
 const mongoose = require('mongoose');
 const debug = require('debug')('ht: pic-router-test');
 
-
 const serverCtrl = require('./lib/server-ctrl');
 const cleanDB = require('./lib/clean-db');
 const mockProfile = require('./lib/profile-mock');
@@ -50,7 +49,6 @@ describe('testing PIC routes', function() {
         });
       });
     });
-
 
     describe('no image attached', function(){
       before(done => mockProfile.call(this, done));
@@ -134,7 +132,6 @@ describe('testing PIC routes', function() {
 
   });
 
-  //DELETE routes
   describe('testing DELETE routes to /api/profile/:profileID/pic/:picID', function(){
 
     describe('with successful deletion', function(){
@@ -208,8 +205,5 @@ describe('testing PIC routes', function() {
         });
       });
     });
-
-
   });
-
 });

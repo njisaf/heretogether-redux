@@ -1,13 +1,11 @@
 'use strict';
 
 require('./aws-mocks.js');
-//npm modules
+
 const debug = require('debug')('ht: pic-mock');
 const lorem = require('lorem-ipsum');
 
-//app modules
 const Pic = require('../../model/pic.js');
-// const awsMocks = require('./aws-mocks.js');
 const profileMock = require('./profile-mock.js');
 
 module.exports = function(done){

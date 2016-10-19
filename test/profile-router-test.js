@@ -1,7 +1,6 @@
 'use strict';
 
 require('./lib/test-env.js');
-// require('./lib/aws-mocks');
 
 const expect = require('chai').expect;
 const request = require('superagent');
@@ -550,8 +549,5 @@ describe('Testing Profile routes', function() {
         });
       });
     });
-
-
   });
-
 });

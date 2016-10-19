@@ -1,36 +1,24 @@
 'use strict';
 
-//node module
 const fs = require('fs');
 const path = require('path');
 
-
-//npm module
 const del = require('del');
 const AWS = require('aws-sdk');
 const multer = require('multer');
 const createError = require('http-errors');
 const debug = require('debug');
-// const jsonParser = require('body-parser').json();
 
-
-//app module
 const Pic = require('../model/pic');
 const Profile = require('../model/profile');
 const picRouter = module.exports = require('express').Router();
 const bearerAuth = require('../lib/bearer-auth-middleware');
-//TODO: uncomment Status later when we have Status
-// const Status = require('../model/status');
 
-//bluebird
 AWS.config.setPromisesDependency(require('bluebird'));
 
-//module constants
 const s3 = new AWS.S3();
 const dataDir = `${__dirname}/../data`;
 const upload = multer({dest: dataDir});
-
-
 
 function s3UploadPromise(params){
   return new Promise((resolve, reject) => {
@@ -40,7 +28,6 @@ function s3UploadPromise(params){
     });
   });
 }
-
 
 picRouter.post('/api/profile/:profileID/pic', bearerAuth, upload.single('image'), function(req, res, next){
   debug('hit POST route /api/profile/:profileID/pic');
