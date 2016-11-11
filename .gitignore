@@ -1,9 +1,10 @@
-# catgram ignore
+# heretogether ignore
 db
 .env
 coverage
 html-report
 temp-readme.md
+ng-template/
 
 # Created by https://www.gitignore.io/api/osx,vim,linux,windows,node
 
