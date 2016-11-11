@@ -11,6 +11,7 @@
     "start-debug": "DEBUG='slug*' npm start",
     "start-watch": "DEBUG='slug*' ./node_modules/nodemon/bin/nodemon.js server.js",
     "test-back": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha",
+    "test": "npm run test-front && npm run test-back",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "test-debug": "DEBUG='slug*' ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha",

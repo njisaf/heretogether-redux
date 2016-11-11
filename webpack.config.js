@@ -1,6 +1,9 @@
 'use strict';
 
 require('dotenv').load();
+if (process.env.NODE_ENV === 'test'){
+  require('./test/lib/test-env.js');
+}
 if (!process.env.API_URL || !process.env.NODE_ENV || !process.env.TITLE){
   console.error('ERROR: ng-template requires .env file');
   process.exit(1);
