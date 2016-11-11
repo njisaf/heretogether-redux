@@ -20,6 +20,7 @@ let plugins = [
   new webpack.DefinePlugin({
     __API_URL__: JSON.stringify(process.env.API_URL),
     __TITLE__: JSON.stringify(process.env.TITLE),
+    __GOOGLE_CLIENT_ID__: JSON.stringify(process.env.GOOGLE_CLIENT_ID),
     __DEBUG__: JSON.stringify(!production),
   }),
 ];
