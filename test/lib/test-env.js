@@ -4,3 +4,7 @@ process.env.MONGODB_URI='mongodb://localhost/heretogetherdev';
 process.env.APP_SECRET='this is secret string';
 process.env.AWS_ACCESS_KEY_ID='sdlfkjsdl';
 process.env.AWS_SECRET_ACCESS_KEY='lsdfjsdkfj';
+process.env.GOOGLE_CLIENT_ID='fakeID';
+process.env.GOOGLE_CLIENT_SECRET='fakeSecret';
+process.env.API_URL='http://localhost:3000';
+process.env.TITLE='heretogether-test';
