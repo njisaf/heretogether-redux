@@ -7,13 +7,23 @@ module.exports = {
 };
 
 function SignupController($log, $location, authService, profileService, hospitalService){
+  let exampleHospital = {
+    name: 'Seattle Children\'s Hospital',
+  };
+
+  hospitalService.createHospital(exampleHospital);
+
   this.signup = function(user){
+    $log.debug('IN SIGNUPCONTROLLER!!!');
     authService.signup(user)
     .then(() => {
+      $log.debug('IN SIGNUPCONTROLLER');
+
       let profile = {
         profileName: user.username,
         hospitalID: hospitalService.hospitalID,
       };
+
       profileService.createProfile(profile);
       $location.path('/home'); // upon sucessful signup, route user to homepage
     })

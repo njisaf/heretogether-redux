@@ -1,6 +1,6 @@
 'use strict';
 
-module.export = ['$q', '$log', '$http', 'authService', 'hospitalService', profileService];
+module.exports = ['$q', '$log', '$http', 'authService', 'hospitalService', profileService];
 
 function profileService($q, $log, $http, authService, hospitalService) {
   $log.debug('Initializing profileService');
@@ -13,7 +13,8 @@ function profileService($q, $log, $http, authService, hospitalService) {
     $log.debug('Hit profileService.createProfile()');
 
     if (!profile.hospitalID) profile.hospitalID = hospitalService.hospitalID;
-    
+
+    $log.debug('PROFILE', profile);
     return authService.getToken()
     .then(token => {
       let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile`;
@@ -38,5 +39,6 @@ function profileService($q, $log, $http, authService, hospitalService) {
     });
 
   };
+  return service;
 
 }
