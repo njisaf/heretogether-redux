@@ -7,6 +7,12 @@ function hospitalService($q, $log, $http, authService) {
 
   let service = {};
 
+  let exampleHospital = {
+    name: 'Seattle Children\'s Hospital',
+  };
+
+  service.createHospital(exampleHospital);
+
   service.hospitalID = null;
 
   service.createHospital = function(hospital) {
@@ -26,8 +32,9 @@ function hospitalService($q, $log, $http, authService) {
       return $http.post(url, hospital, config);
     })
     .then(res => {
-      $log.log('Hosptial created');
+      $log.log('Hospital created');
       let hospital = res.data;
+      service.hospitalID = res.data._id;
       return hospital;
     })
     .catch(err => {

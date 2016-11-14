@@ -49,7 +49,6 @@ function authService($q, $log, $http, $window){
     return $http.post(url, user, config)
     .then( res => {
       $log.log('success', res.data);
-      // res.data is the response body aka the service.token
       return service.setToken(res.data);
     })
     .catch(err => {
