@@ -8,7 +8,7 @@ const profileSchema = Schema({
   profileName: {type: String, required:true, unique:true},
   userID: {type: mongoose.Schema.Types.ObjectId, required: true},
   picID: {type: mongoose.Schema.Types.ObjectId, ref: 'pic'},
-  bio: {type: String, required: true},
+  bio: {type: String, required: true, default: 'Welcome! Tell us a little bit about yourself.'},
   hospitalID: {type: mongoose.Schema.Types.ObjectId, required: true},
   created: {type: Date, default: Date.now},
 });
