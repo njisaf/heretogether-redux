@@ -1,6 +1,7 @@
 # heretogether ignore
 db
 .env
+build
 coverage
 html-report
 temp-readme.md
