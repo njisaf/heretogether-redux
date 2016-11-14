@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	eval("'use strict';\n\n// build sass\n\n__webpack_require__(1);\n\n// require node modules\nvar path = __webpack_require__(10);\n\n// require npm modules\nvar angular = __webpack_require__(12);\nvar camelcase = __webpack_require__(14);\nvar pascalcase = __webpack_require__(15);\n\n// require angualr modules\nvar ngTouch = __webpack_require__(16);\nvar ngAnimate = __webpack_require__(18);\nvar uiRouter = __webpack_require__(20);\nvar uiBootstrap = __webpack_require__(21);\n\n// create angular module\nvar app = angular.module(camelcase((\"Pic Gallery\")), [ngTouch, ngAnimate, uiRouter, uiBootstrap]);\n\n// set up $rootScope globals\napp.run(['$rootScope', function ($rootScope) {\n  $rootScope.title = (\"Pic Gallery\");\n}]);\n\n// load configuration\nvar context = __webpack_require__(23);\ncontext.keys().forEach(function (path) {\n  app.config(context(path));\n});\n\n// load services \ncontext = __webpack_require__(27);\ncontext.keys().forEach(function (key) {\n  var name = camelcase(path.basename(key, '.js'));\n  var module = context(key);\n  app.service(name, module);\n});\n\n// load view controllers\ncontext = __webpack_require__(29);\ncontext.keys().forEach(function (key) {\n  var name = pascalcase(path.basename(key, '.js'));\n  var module = context(key);\n  app.controller(name, module);\n});\n\n// load components \ncontext = __webpack_require__(33);\ncontext.keys().forEach(function (key) {\n  var name = camelcase(path.basename(key, '.js'));\n  var module = context(key);\n  app.component(name, module);\n});\n\n// load directives \ncontext = __webpack_require__(38);\ncontext.keys().forEach(function (key) {\n  var name = camelcase(path.basename(key, '.js'));\n  var module = context(key);\n  app.directive(name, module);\n});\n\n// load filters\ncontext = __webpack_require__(39);\ncontext.keys().forEach(function (key) {\n  var name = camelcase(path.basename(key, '.js'));\n  var module = context(key);\n  app.filter(name, module);\n});\n\n// after everything is loaded in to the app \n// load bootstrap onto the page\nangular.bootstrap(document, [camelcase((\"Pic Gallery\"))]);\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/entry.js\n// module id = 0\n// module chunks = 0\n//# sourceURL=webpack:///./app/entry.js?");
+	eval("'use strict';\n\n// build sass\n\n__webpack_require__(1);\n\n// require node modules\nvar path = __webpack_require__(10);\n\n// require npm modules\nvar angular = __webpack_require__(12);\nvar camelcase = __webpack_require__(14);\nvar pascalcase = __webpack_require__(15);\n\n// require angualr modules\nvar ngTouch = __webpack_require__(16);\nvar ngAnimate = __webpack_require__(18);\nvar uiRouter = __webpack_require__(20);\nvar uiBootstrap = __webpack_require__(21);\n\n// create angular module\nvar app = angular.module(camelcase((\"here together\")), [ngTouch, ngAnimate, uiRouter, uiBootstrap]);\n\n// set up $rootScope globals\napp.run(['$rootScope', function ($rootScope) {\n  $rootScope.title = (\"here together\");\n}]);\n\n// load configuration\nvar context = __webpack_require__(23);\ncontext.keys().forEach(function (path) {\n  app.config(context(path));\n});\n\n// load services \ncontext = __webpack_require__(27);\ncontext.keys().forEach(function (key) {\n  var name = camelcase(path.basename(key, '.js'));\n  var module = context(key);\n  app.service(name, module);\n});\n\n// load view controllers\ncontext = __webpack_require__(29);\ncontext.keys().forEach(function (key) {\n  var name = pascalcase(path.basename(key, '.js'));\n  var module = context(key);\n  app.controller(name, module);\n});\n\n// load components \ncontext = __webpack_require__(34);\ncontext.keys().forEach(function (key) {\n  var name = camelcase(path.basename(key, '.js'));\n  var module = context(key);\n  app.component(name, module);\n});\n\n// load directives \ncontext = __webpack_require__(39);\ncontext.keys().forEach(function (key) {\n  var name = camelcase(path.basename(key, '.js'));\n  var module = context(key);\n  app.directive(name, module);\n});\n\n// load filters\ncontext = __webpack_require__(40);\ncontext.keys().forEach(function (key) {\n  var name = camelcase(path.basename(key, '.js'));\n  var module = context(key);\n  app.filter(name, module);\n});\n\n// after everything is loaded in to the app \n// load bootstrap onto the page\nangular.bootstrap(document, [camelcase((\"here together\"))]);\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/entry.js\n// module id = 0\n// module chunks = 0\n//# sourceURL=webpack:///./app/entry.js?");
 
 /***/ },
 /* 1 */
@@ -154,7 +154,7 @@
 /* 25 */
 /***/ function(module, exports, __webpack_require__) {
 
-	eval("'use strict';\n\nmodule.exports = ['$stateProvider', '$urlRouterProvider', routerConfig];\n\nfunction routerConfig($stateProvider, $urlRouterProvider) {\n  $urlRouterProvider.when('', '/home');\n  $urlRouterProvider.when('/', '/home');\n\n  var states = [{\n    name: 'home',\n    url: '/home',\n    controllerAs: 'homeCtrl',\n    controller: 'HomeController',\n    template: __webpack_require__(26)\n  }];\n\n  states.forEach(function (state) {\n    $stateProvider.state(state);\n  });\n}\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/config/router-config.js\n// module id = 25\n// module chunks = 0\n//# sourceURL=webpack:///./app/config/router-config.js?");
+	eval("'use strict';\n\nmodule.exports = ['$stateProvider', '$urlRouterProvider', routerConfig];\n\nfunction routerConfig($stateProvider, $urlRouterProvider) {\n  $urlRouterProvider.when('', '/home');\n  $urlRouterProvider.when('/', '/home');\n\n  var states = [{\n    name: 'home',\n    url: '/home',\n    controllerAs: 'homeCtrl',\n    controller: 'HomeController',\n    template: __webpack_require__(26)\n  }, {\n    name: 'landing',\n    url: '/join',\n    controllerAs: 'landingCtrl',\n    controller: 'LandingController',\n    template: __webpack_require__(41)\n  }];\n\n  states.forEach(function (state) {\n    $stateProvider.state(state);\n  });\n}\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/config/router-config.js\n// module id = 25\n// module chunks = 0\n//# sourceURL=webpack:///./app/config/router-config.js?");
 
 /***/ },
 /* 26 */
@@ -178,7 +178,7 @@
 /* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
-	eval("var map = {\n\t\"./home/home-controller.js\": 30\n};\nfunction webpackContext(req) {\n\treturn __webpack_require__(webpackContextResolve(req));\n};\nfunction webpackContextResolve(req) {\n\treturn map[req] || (function() { throw new Error(\"Cannot find module '\" + req + \"'.\") }());\n};\nwebpackContext.keys = function webpackContextKeys() {\n\treturn Object.keys(map);\n};\nwebpackContext.resolve = webpackContextResolve;\nmodule.exports = webpackContext;\nwebpackContext.id = 29;\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/view .js$\n// module id = 29\n// module chunks = 0\n//# sourceURL=webpack:///./app/view_.js$?");
+	eval("var map = {\n\t\"./home/home-controller.js\": 30,\n\t\"./landing/landing-controller.js\": 33\n};\nfunction webpackContext(req) {\n\treturn __webpack_require__(webpackContextResolve(req));\n};\nfunction webpackContextResolve(req) {\n\treturn map[req] || (function() { throw new Error(\"Cannot find module '\" + req + \"'.\") }());\n};\nwebpackContext.keys = function webpackContextKeys() {\n\treturn Object.keys(map);\n};\nwebpackContext.resolve = webpackContextResolve;\nmodule.exports = webpackContext;\nwebpackContext.id = 29;\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/view .js$\n// module id = 29\n// module chunks = 0\n//# sourceURL=webpack:///./app/view_.js$?");
 
 /***/ },
 /* 30 */
@@ -197,43 +197,61 @@
 /* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
-	eval("var map = {\n\t\"./landing/login/login.js\": 34,\n\t\"./landing/signup/signup.js\": 36\n};\nfunction webpackContext(req) {\n\treturn __webpack_require__(webpackContextResolve(req));\n};\nfunction webpackContextResolve(req) {\n\treturn map[req] || (function() { throw new Error(\"Cannot find module '\" + req + \"'.\") }());\n};\nwebpackContext.keys = function webpackContextKeys() {\n\treturn Object.keys(map);\n};\nwebpackContext.resolve = webpackContextResolve;\nmodule.exports = webpackContext;\nwebpackContext.id = 33;\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/component .js$\n// module id = 33\n// module chunks = 0\n//# sourceURL=webpack:///./app/component_.js$?");
+	eval("'use strict';\n\n__webpack_require__(42);\n\nmodule.exports = ['$log', '$location', '$rootScope', 'authService', LandingController];\n\nfunction LandingController($log, $location) {\n  var url = $location.url();\n  this.showSignup = url === '/join#signup' || url === '/join';\n}\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/view/landing/landing-controller.js\n// module id = 33\n// module chunks = 0\n//# sourceURL=webpack:///./app/view/landing/landing-controller.js?");
 
 /***/ },
 /* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
-	eval("'use strict';\n\nmodule.exports = {\n  template: __webpack_require__(35),\n  controller: ['$log', '$location', 'authService', LoginController],\n  controllerAs: 'loginCtrl'\n};\n\nfunction LoginController($log, $location, authService) {\n  this.login = function (user) {\n    authService.login(user).then(function () {\n      $location.path('/home'); // upon successful login, route user to homepage\n    }).catch(function () {\n      console.log('failed to login');\n    });\n  };\n}\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/component/landing/login/login.js\n// module id = 34\n// module chunks = 0\n//# sourceURL=webpack:///./app/component/landing/login/login.js?");
+	eval("var map = {\n\t\"./landing/login/login.js\": 35,\n\t\"./landing/signup/signup.js\": 37\n};\nfunction webpackContext(req) {\n\treturn __webpack_require__(webpackContextResolve(req));\n};\nfunction webpackContextResolve(req) {\n\treturn map[req] || (function() { throw new Error(\"Cannot find module '\" + req + \"'.\") }());\n};\nwebpackContext.keys = function webpackContextKeys() {\n\treturn Object.keys(map);\n};\nwebpackContext.resolve = webpackContextResolve;\nmodule.exports = webpackContext;\nwebpackContext.id = 34;\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/component .js$\n// module id = 34\n// module chunks = 0\n//# sourceURL=webpack:///./app/component_.js$?");
 
 /***/ },
 /* 35 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	eval("module.exports = \"<section class=\\\"login\\\">\\n  <form\\n    ng-submit=\\\"loginCtrl.login(loginCtrl.user)\\\"\\n    novalidate>\\n\\n    <input class=\\\"form-control\\\"\\n    ng-minlength=\\\"6\\\" required\\n    type=\\\"text\\\" placeholder=\\\"Username\\\" ng-model=\\\"loginCtrl.user.username\\\">\\n\\n    <input class=\\\"form-control\\\"\\n    required type=\\\"password\\\" ng-minlength=\\\"8\\\"\\n    placeholder=\\\"Password\\\" ng-model=\\\"loginCtrl.user.password\\\">\\n\\n    <input type=\\\"submit\\\" class=\\\"btn btn-primary\\\" value=\\\"Submit\\\">\\n  </form>\\n</section>\\n\";\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/component/landing/login/login.html\n// module id = 35\n// module chunks = 0\n//# sourceURL=webpack:///./app/component/landing/login/login.html?");
+	eval("'use strict';\n\nmodule.exports = {\n  template: __webpack_require__(36),\n  controller: ['$log', '$location', 'authService', LoginController],\n  controllerAs: 'loginCtrl'\n};\n\nfunction LoginController($log, $location, authService) {\n  this.login = function (user) {\n    authService.login(user).then(function () {\n      $location.path('/home'); // upon successful login, route user to homepage\n    }).catch(function () {\n      console.log('failed to login');\n    });\n  };\n}\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/component/landing/login/login.js\n// module id = 35\n// module chunks = 0\n//# sourceURL=webpack:///./app/component/landing/login/login.js?");
 
 /***/ },
 /* 36 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	eval("'use strict';\n\nmodule.exports = {\n  template: __webpack_require__(37),\n  controller: ['$log', '$location', 'authService', SignupController],\n  controllerAs: 'signupCtrl'\n};\n\nfunction SignupController($log, $location, authService) {\n  this.signup = function (user) {\n    authService.signup(user).then(function () {\n      $location.path('/home'); // upon sucessful signup, route user to homepage\n    }).catch(function () {\n      console.log('failed to signup');\n    });\n  };\n}\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/component/landing/signup/signup.js\n// module id = 36\n// module chunks = 0\n//# sourceURL=webpack:///./app/component/landing/signup/signup.js?");
+	eval("module.exports = \"<section class=\\\"login\\\">\\n  <form\\n    ng-submit=\\\"loginCtrl.login(loginCtrl.user)\\\"\\n    novalidate>\\n\\n    <input class=\\\"form-control\\\"\\n    ng-minlength=\\\"6\\\" required\\n    type=\\\"text\\\" placeholder=\\\"Username\\\" ng-model=\\\"loginCtrl.user.username\\\">\\n\\n    <input class=\\\"form-control\\\"\\n    required type=\\\"password\\\" ng-minlength=\\\"8\\\"\\n    placeholder=\\\"Password\\\" ng-model=\\\"loginCtrl.user.password\\\">\\n\\n    <input type=\\\"submit\\\" class=\\\"btn btn-primary\\\" value=\\\"Submit\\\">\\n  </form>\\n</section>\\n\";\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/component/landing/login/login.html\n// module id = 36\n// module chunks = 0\n//# sourceURL=webpack:///./app/component/landing/login/login.html?");
 
 /***/ },
 /* 37 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	eval("module.exports = \"<section class=\\\"signup\\\">\\n  <form\\n    ng-submit=\\\"signupCtrl.signup(signupCtrl.user)\\\"\\n    novalidate>\\n\\n    <input class=\\\"form-control\\\"\\n    ng-minlength=\\\"6\\\" required\\n    type=\\\"text\\\" placeholder=\\\"Username\\\" ng-model=\\\"signupCtrl.user.username\\\">\\n\\n    <input class=\\\"form-control\\\"\\n    required type=\\\"email\\\" placeholder=\\\"Email\\\" ng-model=\\\"signupCtrl.user.email\\\">\\n\\n    <input class=\\\"form-control\\\"\\n    required type=\\\"password\\\" ng-minlength=\\\"8\\\"\\n    placeholder=\\\"Password\\\" ng-model=\\\"signupCtrl.user.password\\\">\\n\\n    <input type=\\\"submit\\\" class=\\\"btn btn-primary\\\" value=\\\"Submit\\\">\\n  </form>\\n</section>\\n\";\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/component/landing/signup/signup.html\n// module id = 37\n// module chunks = 0\n//# sourceURL=webpack:///./app/component/landing/signup/signup.html?");
+	eval("'use strict';\n\nmodule.exports = {\n  template: __webpack_require__(38),\n  controller: ['$log', '$location', 'authService', SignupController],\n  controllerAs: 'signupCtrl'\n};\n\nfunction SignupController($log, $location, authService) {\n  this.signup = function (user) {\n    authService.signup(user).then(function () {\n      $location.path('/home'); // upon sucessful signup, route user to homepage\n    }).catch(function () {\n      console.log('failed to signup');\n    });\n  };\n}\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/component/landing/signup/signup.js\n// module id = 37\n// module chunks = 0\n//# sourceURL=webpack:///./app/component/landing/signup/signup.js?");
 
 /***/ },
 /* 38 */
 /***/ function(module, exports) {
 
-	eval("function webpackContext(req) {\n\tthrow new Error(\"Cannot find module '\" + req + \"'.\");\n}\nwebpackContext.keys = function() { return []; };\nwebpackContext.resolve = webpackContext;\nmodule.exports = webpackContext;\nwebpackContext.id = 38;\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/directive .js$\n// module id = 38\n// module chunks = 0\n//# sourceURL=webpack:///./app/directive_.js$?");
+	eval("module.exports = \"<section class=\\\"signup\\\">\\n  <form\\n    ng-submit=\\\"signupCtrl.signup(signupCtrl.user)\\\"\\n    novalidate>\\n\\n    <input class=\\\"form-control\\\"\\n    ng-minlength=\\\"6\\\" required\\n    type=\\\"text\\\" placeholder=\\\"Username\\\" ng-model=\\\"signupCtrl.user.username\\\">\\n\\n    <input class=\\\"form-control\\\"\\n    required type=\\\"email\\\" placeholder=\\\"Email\\\" ng-model=\\\"signupCtrl.user.email\\\">\\n\\n    <input class=\\\"form-control\\\"\\n    required type=\\\"password\\\" ng-minlength=\\\"8\\\"\\n    placeholder=\\\"Password\\\" ng-model=\\\"signupCtrl.user.password\\\">\\n\\n    <input type=\\\"submit\\\" class=\\\"btn btn-primary\\\" value=\\\"Submit\\\">\\n  </form>\\n</section>\\n\";\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/component/landing/signup/signup.html\n// module id = 38\n// module chunks = 0\n//# sourceURL=webpack:///./app/component/landing/signup/signup.html?");
 
 /***/ },
 /* 39 */
 /***/ function(module, exports) {
 
-	eval("function webpackContext(req) {\n\tthrow new Error(\"Cannot find module '\" + req + \"'.\");\n}\nwebpackContext.keys = function() { return []; };\nwebpackContext.resolve = webpackContext;\nmodule.exports = webpackContext;\nwebpackContext.id = 39;\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/filter .js$\n// module id = 39\n// module chunks = 0\n//# sourceURL=webpack:///./app/filter_.js$?");
+	eval("function webpackContext(req) {\n\tthrow new Error(\"Cannot find module '\" + req + \"'.\");\n}\nwebpackContext.keys = function() { return []; };\nwebpackContext.resolve = webpackContext;\nmodule.exports = webpackContext;\nwebpackContext.id = 39;\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/directive .js$\n// module id = 39\n// module chunks = 0\n//# sourceURL=webpack:///./app/directive_.js$?");
+
+/***/ },
+/* 40 */
+/***/ function(module, exports) {
+
+	eval("function webpackContext(req) {\n\tthrow new Error(\"Cannot find module '\" + req + \"'.\");\n}\nwebpackContext.keys = function() { return []; };\nwebpackContext.resolve = webpackContext;\nmodule.exports = webpackContext;\nwebpackContext.id = 40;\n\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/filter .js$\n// module id = 40\n// module chunks = 0\n//# sourceURL=webpack:///./app/filter_.js$?");
+
+/***/ },
+/* 41 */
+/***/ function(module, exports) {
+
+	eval("module.exports = \"<main class=\\\"landing\\\">\\n  <div class=\\\"join-container\\\"\\n    ng-if=\\\"landingCtrl.showSignup\\\">\\n    <div class=\\\"join-inner-container\\\">\\n      <signup></signup>\\n      <p>Already a member?</p>\\n      <a href=\\\"/#/join#login\\\"\\n        ng-click=\\\"landingCtrl.showSignup=false\\\">\\n        Login\\n      </a>\\n    </div>\\n  </div>\\n\\n  <div class=\\\"join-container\\\"\\n    ng-if=\\\"!landingCtrl.showSignup\\\">\\n    <div class=\\\"join-inner-container\\\">\\n      <login></login>\\n      <p>Not a member yet?</p>\\n      <a href=\\\"/#/join#signup\\\"\\n        ng-click=\\\"landingCtrl.showSignup=true\\\">\\n        Signup\\n      </a>\\n    </div>\\n  </div>\\n</main>\\n\";\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/view/landing/landing.html\n// module id = 41\n// module chunks = 0\n//# sourceURL=webpack:///./app/view/landing/landing.html?");
+
+/***/ },
+/* 42 */
+/***/ function(module, exports) {
+
+	eval("// removed by extract-text-webpack-plugin\n\n//////////////////\n// WEBPACK FOOTER\n// ./app/view/landing/_landing.scss\n// module id = 42\n// module chunks = 0\n//# sourceURL=webpack:///./app/view/landing/_landing.scss?");
 
 /***/ }
 /******/ ]);

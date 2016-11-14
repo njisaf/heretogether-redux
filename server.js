@@ -25,6 +25,7 @@ const app = express();
 
 app.use(morgan('dev'));
 
+app.use(express.static(`${__dirname}/build`));
 app.use(authRouter);
 app.use(fileRouter);
 app.use(hospitalRouter);
