@@ -1,17 +1,11 @@
 'use strict';
 
-module.export = ['$q', '$log', '$http', 'authService', hospitalService];
+module.exports = ['$q', '$log', '$http', 'authService', hospitalService];
 
 function hospitalService($q, $log, $http, authService) {
   $log.debug('Initializing hospitalService');
 
   let service = {};
-
-  let exampleHospital = {
-    name: 'Seattle Children\'s Hospital',
-  };
-
-  service.createHospital(exampleHospital);
 
   service.hospitalID = null;
 
@@ -43,5 +37,5 @@ function hospitalService($q, $log, $http, authService) {
     });
 
   };
-
+  return service;
 }
