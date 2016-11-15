@@ -25,9 +25,11 @@ function HomeController($log, $rootScope, statusService, hospitalService){
     hospitalService.createHospital(exampleHospital)
     .then(() => {
       this.fetchStatuses();
+      this.statuses =  statusService.statuses;
     });
   } else {
     this.fetchStatuses();
+    this.statuses =  statusService.statuses;
   }
 
   $rootScope.$on('$locationChangeSuccess', () => {

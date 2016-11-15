@@ -12,6 +12,8 @@ function CreateStatusController($log, statusService){
   this.status = {};
 
   this.createStatus = function(){
+    console.log('THIS STATUS', this.status);
+    $log.debug('HIT CREATE STATUS');
     statusService.createStatus(this.status)
     .then(() => {
       this.status.text = null;
