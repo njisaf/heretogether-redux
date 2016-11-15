@@ -12,6 +12,7 @@ function statusService($q, $log, $http, authService, hospitalService, fileServic
   service.createStatus = function(status) {
     $log.debug('statusService.createStatus()');
 
+
     let fileData = null;
 
     if(!status.hospitalID) status.hospitalID = hospitalService.hospitalID;
