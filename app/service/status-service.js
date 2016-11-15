@@ -12,9 +12,11 @@ function statusService($q, $log, $http, authService, hospitalService) {
   service.createStatus = function(status) {
     $log.debug('statusService.createStatus()');
 
+    if(!status.hospitalID) status.hospitalID = hospitalService.hospitalID;
+
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospita/${hospitalService.hospitalID}/status`;
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -95,7 +97,7 @@ function statusService($q, $log, $http, authService, hospitalService) {
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospita/${hospitalService.hospitalID}/status/?sort=dsc`;
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/`;
       let config = {
         headers: {
           Accept: 'application/json',

@@ -1,0 +1,16 @@
+<sectionc class="create-status">
+  <form name="createStatusForm"
+    class="form-inline"
+    novalidate
+    ng-submit="createStatusCtrl.createStatus()">
+    <div class="form-group">
+      <label for="text">What's going on?</label>
+      <input name="text"
+       class="form-control"
+       type="text"
+       uib-tooltip="Your thoughts go here"
+       ng-model="createStatusCtrl.status.text">
+    </div>
+    <button class="glyphicon glyphicon-plus" type="submit"></button>
+  </form>
+</section>
