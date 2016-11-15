@@ -10,7 +10,7 @@ function statusService($q, $log, $http, authService, hospitalService, fileServic
   service.statuses = [];
 
   service.createStatus = function(status) {
-    $log.debug('statusService.createStatus()');
+    $log.debug('statusService.createStatus()', status);
 
 
     let fileData = null;
@@ -21,6 +21,7 @@ function statusService($q, $log, $http, authService, hospitalService, fileServic
       fileData = status.file;
     }
 
+    console.log('FILEDATA:', fileData);
 
     return authService.getToken()
     .then(token => {

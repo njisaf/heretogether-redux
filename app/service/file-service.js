@@ -12,8 +12,6 @@ function fileService($q, $log, $http, Upload, authService){
   service.uploadStatusFile = function (statusID, fileData){
     $log.debug('fileService.uploadFile()');
 
-    console.log('FILEDATA:', fileData);
-
     return authService.getToken()
     .then((token) => {
 
@@ -28,19 +26,19 @@ function fileService($q, $log, $http, Upload, authService){
         headers,
         method: 'POST',
         data: {
-          file: fileData.file,
+          file: fileData,
         },
       });
     })
-    //on successful request
     .then((res) => {
-      console.log('PicService line 34', res);
+      $log.log('File upoladed successfully');
+      let file = res.data;
+      return file;
     })
     .catch((err) => {
       $log.error(err.message);
       return $q.reject(err);
     });
   };
-
   return service;
 }
