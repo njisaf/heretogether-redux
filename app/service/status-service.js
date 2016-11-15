@@ -31,6 +31,7 @@ function statusService($q, $log, $http, authService, hospitalService) {
       $log.log('Status successfully instantiated');
       let status = res.data;
       service.statuses.unshift(status);
+      $log.log('HERES OUR STATUSES', service.statuses);
       return status;
     })
     .catch(err => {

@@ -13,7 +13,4 @@ module.exports = {
 
 function StatusFeedController($log) {
   $log.debug('Initializing StatusFeedController');
-
-  this.status = {};
-
 }
