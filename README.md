@@ -288,9 +288,6 @@ Authorization: 'Bearer <token>'
 
 ```
 
-<<<<<<< HEAD
-GET to fetch a feed of all status posts for an individual hospital.
-=======
 * **responses:**
 
   * 200 for successful POST request
@@ -342,7 +339,6 @@ Authorization: 'Bearer <token>'
 
 * **expected body:**
 
->>>>>>> c13763951b376be5ccea781ce0881b6c7a73e522
 ```
 {
   text: string
