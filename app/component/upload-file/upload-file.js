@@ -10,7 +10,7 @@ module.exports = {
   },
 };
 
-function UploadFileController($log, fileService){
+function UploadFileController($log){
   $log.debug('Initializing uploadFileCtrl');
 
   this.file = {};
