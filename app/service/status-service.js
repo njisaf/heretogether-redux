@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = ['$q', '$log', '$http', 'authService', 'hospitalService', statusService];
+module.exports = ['$q', '$log', '$http', 'authService', 'hospitalService', 'fileService', statusService];
 
-function statusService($q, $log, $http, authService, hospitalService) {
+function statusService($q, $log, $http, authService, hospitalService, fileService) {
   $log.debug('Initializing statusService');
 
   let service = {};
@@ -12,7 +12,14 @@ function statusService($q, $log, $http, authService, hospitalService) {
   service.createStatus = function(status) {
     $log.debug('statusService.createStatus()');
 
+    let fileData = null;
+
     if(!status.hospitalID) status.hospitalID = hospitalService.hospitalID;
+
+    if(status.file) {
+      fileData = status.file;
+    }
+
 
     return authService.getToken()
     .then(token => {
@@ -32,6 +39,7 @@ function statusService($q, $log, $http, authService, hospitalService) {
       let status = res.data;
       service.statuses.unshift(status);
       $log.log('HERES OUR STATUSES', service.statuses);
+      fileService.uploadStatusFile(status._id, fileData);
       return status;
     })
     .catch(err => {
