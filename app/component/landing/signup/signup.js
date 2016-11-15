@@ -7,6 +7,7 @@ module.exports = {
 };
 
 function SignupController($log, $location, authService, profileService, hospitalService){
+
   let exampleHospital = {
     name: 'Seattle Children\'s Hospital',
   };

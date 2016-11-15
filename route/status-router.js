@@ -19,6 +19,8 @@ const statusRouter = module.exports = Router();
 statusRouter.post('/api/hospital/:hospitalID/status', bearerAuth, jsonParser, function(req, res, next) {
   debug('Hit POST /api/hospital/:hospitalID/status');
   if(req.body.hospitalID !== req.params.hospitalID) return next(createError(404, 'Hospital not found.'));
+  if(!req.body.userID) req.body.userID = req.user._id;
+
   Hospital.findById(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
   .then(hospital => {

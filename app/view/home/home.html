@@ -1,3 +1,6 @@
 <main class="home">
-  <status-feed ng-repeat="status in homeCtrl.statuses"></status-feed>
+  <create-status></create-status>
+  <status-feed ng-repeat="status in homeCtrl.statuses"
+    status="status">
+  </status-feed>
 </main>
