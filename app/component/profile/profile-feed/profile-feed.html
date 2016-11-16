@@ -1,8 +1,7 @@
 <section class="profile-feed">
-  <div>
+  <div ng-click="profileFeedCtrl.showProfile()">
     <img ng-src="{{profileFeedCtrl.profilePic}}">
-    <p>
-      {{profileFeedCtrl.profile.profileName}}</p>
+    <p>{{profileFeedCtrl.profile.profileName}}</p>
     <!-- <delete-profile profile="profileFeedCtrl.profile"></delete-profile> -->
   </div>
 </section>
