@@ -44,7 +44,7 @@ profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, fu
   .catch(next);
 });
 
-profileRouter.get('/api/hospital/:hospitalID/profile/', bearerAuth, function(req, res, next) {
+profileRouter.get('/api/hospital/:hospitalID/profile/all', bearerAuth, function(req, res, next) {
   debug('Hit GET ALL /api/hospital/:hospitalID/profile/');
   Hospital.findById(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
@@ -53,6 +53,19 @@ profileRouter.get('/api/hospital/:hospitalID/profile/', bearerAuth, function(req
     .populate('picID');
   })
   .then(profArr => res.json(profArr))
+  .catch(next);
+});
+
+profileRouter.get('/api/hospital/:hospitalID/profile', bearerAuth, function(req, res, next) {
+  debug('Hit GET /api/hospital/:hospitalID/profile');
+
+  Profile.findOne({userID: req.user._id})
+  .populate('picID')
+  .catch(err => Promise.reject(createError(400, err.message)))
+  .then(profile => {
+    if(profile.hospitalID.toString() !== req.params.hospitalID.toString()) return Promise.reject(createError(404, 'Hospital mismatch'));
+    res.json(profile);
+  })
   .catch(next);
 });
 
