@@ -1,25 +1,11 @@
 <nav class="navbar navbar-default">
+  <img src="https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-mobile-logo">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/#/">{{navCtrl.appTitle}}</a>
-
     <div ng-hide="navCtrl.hideButtons">
       <button ng-click="navCtrl.logout()"
         class="btn pull-right btn-default navbar-btn btn-logout">
         logout
       </button>
-      <div class="btn-group pull-right" uib-dropdown>
-        <button id="btn-append-to-body"
-          type="button"
-          class="btn btn-dropdown btn-primary navbar-btn"
-          uib-dropdown-toggle>
-          <span class="glyphicon glyphicon-menu-hamburger"></span>
-        </button>
-
-        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
-          <li role="menuitem"><a href="#" ng-click="navCtrl.logout()">Logout</a></li>
-          <li role="menuitem"><a href="#">Profile</a></li>
-          <li role="menuitem"><a href="#">Search</a></li>
-        </ul>
       </div>
     </div>
   </div>

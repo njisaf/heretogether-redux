@@ -39,7 +39,6 @@ function NavController($log, $location, $rootScope, authService){
     this.checkPath();
   });
 
-
   this.logout = function(){
     $log.log('navCtrl.logout()');
     this.hideButtons = true;
