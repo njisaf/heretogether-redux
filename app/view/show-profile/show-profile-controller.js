@@ -2,9 +2,9 @@
 
 require('./show-profile.html');
 
-module.exports = ['$log', '$location', 'profileService', ShowProfileController];
+module.exports = ['$log', '$location', ShowProfileController];
 
-function ShowProfileController($log, $location, profileService) {
+function ShowProfileController($log, $location) {
   $log.debug('Initializing ShowProfileController');
 
   this.profile = {};
