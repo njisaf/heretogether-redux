@@ -6,16 +6,20 @@ module.exports = {
   template: require('./navbar.html'),
   controller: ['$log', '$location', '$rootScope', 'authService', NavController],
   controllerAs: 'navCtrl',
-  bindings: {
-    appTitle: '@',
-  },
 };
 
 function NavController($log, $location, $rootScope, authService){
   $log.debug('init navCtrl');
 
+  this.logoPic;
+
   this.checkPath = function(){
     let path = $location.path();
+    if(path === '/join'){
+      this.logoPic = 'https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-logo';
+    } else {
+      this.logoPic = 'https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-mobile-logo';
+    }
     if (path === '/join'){
       authService.getToken()
       .then(() => {
@@ -47,7 +51,13 @@ function NavController($log, $location, $rootScope, authService){
 
   this.home = function(){
     $log.log('navCtrl.home()');
+
     let path = $location.path();
+
+    if(path ==='/join'){
+      return;
+    }
+
     if (path === '/home'){
       authService.getToken()
       .then(() => {
