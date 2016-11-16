@@ -57,7 +57,7 @@ profileRouter.get('/api/hospital/:hospitalID/profile/all', bearerAuth, function(
 });
 
 profileRouter.get('/api/hospital/:hospitalID/profile', bearerAuth, function(req, res, next) {
-  debug('Hit GET /api/hospital/:hospitalID/profile');
+  debug('Hit GET ONE /api/hospital/:hospitalID/profile');
 
   Profile.findOne({userID: req.user._id})
   .populate('picID')
@@ -85,7 +85,6 @@ profileRouter.delete('/api/hospital/:hospitalID/profile/:profileID', bearerAuth,
       return Promise.reject(createError(401, 'Invalid user ID'));
     }
     if (profile.picID) {
-      console.log('I HIT IT!!!!!!!!!!');
       return Pic.findById(profile.picID)
       .then(pic => {
 
