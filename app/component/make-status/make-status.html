@@ -1,0 +1,16 @@
+<form novalidate
+  ng-submit="makeStatusCtrl.handleSubmit()">
+  <input type="text"
+  placeholder="Type status here"
+  ng-model="makeStatusCtrl.status.text">
+
+  <div class="btn btn-default"
+    ngf-select
+    ng-model="makeStatusCtrl.status.file">
+    Choose Image
+  </div>
+
+  <button type="submit"
+  class="btn btn-primary">Create Status</button>
+
+</form>

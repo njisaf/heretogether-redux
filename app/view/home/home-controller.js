@@ -2,14 +2,18 @@
 
 require('./_home.scss');
 
-module.exports = ['$log', '$rootScope', 'statusService', 'hospitalService', HomeController];
+module.exports = ['$log', '$rootScope', '$window', 'statusService', 'hospitalService', HomeController];
 
-function HomeController($log, $rootScope, statusService, hospitalService){
+function HomeController($log, $rootScope, $window, statusService, hospitalService){
   $log.debug('init homeCtrl');
 
-  let exampleHospital = {
-    name: 'Seattle Children\'s Hospital',
-  };
+  //TODO DONE: localStorage works here
+  if(!hospitalService.hospitalID) hospitalService.hospitalID = $window.localStorage.getItem('hospitalID');
+
+  //TODO: No need to have this example hospital again, already handled in signup.js
+  // let exampleHospital = {
+  //   name: 'Seattle Children\'s Hospital',
+  // };
 
   this.statuses = [];
   this.currentStatus = null;
@@ -21,16 +25,21 @@ function HomeController($log, $rootScope, statusService, hospitalService){
       return statuses;
     });
   };
-  if(!hospitalService.hospitalID) {
-    hospitalService.createHospital(exampleHospital)
-    .then(() => {
-      this.fetchStatuses();
-      this.statuses =  statusService.statuses;
-    });
-  } else {
-    this.fetchStatuses();
-    this.statuses =  statusService.statuses;
-  }
+  //TODO: Just commented out to reference what we had before
+  // if(!hospitalService.hospitalID) {
+  //   hospitalService.createHospital(exampleHospital)
+  //   .then(() => {
+  //     $log.log('hit line 30 of homeCtrl?');
+  //     this.fetchStatuses();
+  //     this.statuses =  statusService.statuses;
+  //   });
+  // } else {
+  //   $log.log('hit line 35 of homeCtrl?');
+  //   this.fetchStatuses();
+  //   this.statuses =  statusService.statuses;
+  // }
+  this.fetchStatuses();
+  // this.statuses =  statusService.statuses;
 
   $rootScope.$on('$locationChangeSuccess', () => {
     this.fetchStatuses();
