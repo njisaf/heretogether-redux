@@ -1,4 +1,15 @@
 <form
+class="edit-status"
+novalidate
 ng-submit="editStatusCtrl.editStatus()">
+  <div>
+    <label for ="edit-status-text">Edit Your Status</label>
+      <input type="text"
+      class="form-control"
+      ng-model="editStatusCtrl.status.text">
+  </div>
+
+  <button class="btn btn-warning">Update Status</button>
+
 
 </form>

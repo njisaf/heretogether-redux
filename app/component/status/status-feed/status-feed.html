@@ -2,7 +2,12 @@
   <div>
     <p>
       {{statusFeedCtrl.status.text}}
+      <span class="glyphicon glyphicon-pencil"
+      ng-click="statusFeedCtrl.showEditStatus = !statusFeedCtrl.showEditStatus"></span>
     </p>
+    <edit-status
+    ng-if="statusFeedCtrl.showEditStatus"
+    status="statusFeedCtrl.status"></edit-status>
     <img ng-src="{{statusFeedCtrl.status.fileID.fileURI}}">
     <delete-status status="statusFeedCtrl.status"></delete-status>
   </div>

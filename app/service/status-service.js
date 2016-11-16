@@ -111,7 +111,7 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospita/${hospitalService.hospitalID}/status/${statusID}`;
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/${statusID}`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -139,6 +139,7 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
 
     return authService.getToken()
     .then(token => {
+      console.log('did we get token?');
       let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/all/status/`;
       let config = {
         headers: {
