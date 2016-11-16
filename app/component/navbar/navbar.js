@@ -16,6 +16,7 @@ function NavController($log, $location, $rootScope, authService){
   this.checkPath = function(){
     let path = $location.path();
     if(path === '/join'){
+      this.hideButtons = false;
       this.logoPic = 'https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-logo';
     } else {
       this.logoPic = 'https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-mobile-logo';
@@ -29,7 +30,7 @@ function NavController($log, $location, $rootScope, authService){
     }
 
     if(path !== '/join'){
-      this.hideButtons = true;
+      // this.hideButtons = true;
       authService.getToken()
       .catch( () => {
         $location.url('/join#login');
