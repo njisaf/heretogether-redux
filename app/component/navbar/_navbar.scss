@@ -11,7 +11,19 @@ body {
 }
 
 form {
-  text-align: center;
+
+    text-align: center;
+
+  .glyphicon-camera:before {
+    content: "\E046";
+    font-size: 2em;
+  }
+
+  .glyphicon-plus:before {
+    content: "+";
+    font-size: 1.75em;
+  }
+
 
   .form-control {
     height: 3em;
