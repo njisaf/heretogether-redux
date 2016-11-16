@@ -18,6 +18,9 @@ function UploadFileController($log){
   this.uploadStatusFile = function(){
     console.log('UploadFileController.uploadStatusFile');
     this.status.file = this.file.file;
+
+    // fileService.uploadStatusFile(this.status._id, this.status.file);
+
     console.log('this.status.file', this.status.file);
     this.file.file = null;
 

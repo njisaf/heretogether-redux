@@ -4,7 +4,7 @@ require('./_status-feed.scss');
 
 module.exports = {
   template: require('./status-feed.html'),
-  controller: ['$log', StatusFeedController],
+  controller: ['$log', 'statusService','fileService', StatusFeedController],
   controllerAs: 'statusFeedCtrl',
   bindings: {
     status: '<',
@@ -13,4 +13,5 @@ module.exports = {
 
 function StatusFeedController($log) {
   $log.debug('Initializing StatusFeedController');
+  // if(!this.status.fileURI) this.status.fileURI = fileService.fileURI;
 }

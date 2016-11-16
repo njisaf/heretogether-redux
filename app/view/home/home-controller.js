@@ -38,10 +38,8 @@ function HomeController($log, $rootScope, $window, statusService, hospitalServic
   //   this.fetchStatuses();
   //   this.statuses =  statusService.statuses;
   // }
-
-  $log.log('hit line 35 of homeCtrl?');
   this.fetchStatuses();
-  this.statuses =  statusService.statuses;
+  // this.statuses =  statusService.statuses;
 
   $rootScope.$on('$locationChangeSuccess', () => {
     this.fetchStatuses();
