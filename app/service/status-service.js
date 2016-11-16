@@ -1,14 +1,16 @@
 'use strict';
 
-module.exports = ['$q', '$log', 'Upload', '$http', '$window', 'authService', 'hospitalService', 'fileService', statusService];
+module.exports = ['$q', '$log', 'Upload', '$http', '$window', 'authService', 'hospitalService', statusService];
 
-function statusService($q, $log, Upload, $http, $window, authService, hospitalService, fileService) {
+function statusService($q, $log, Upload, $http, $window, authService, hospitalService) {
   $log.debug('Initializing statusService');
 
   let service = {};
 
   service.statuses = [];
   service.fileURI = null;
+
+  //creating status with an attached file
   service.createFileStatus = function(status){
     $log.debug('statusService.createFileStatus hit');
 
@@ -71,11 +73,6 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
       let status = res.data;
       service.statuses.unshift(status);
       $log.log('HERES OUR STATUSES', service.statuses);
-      fileService.uploadStatusFile(status._id, fileData)
-      .then(res => {
-        $log.log('HERES DA RES', res);
-        status.fileURI = res.fileURI;
-      });
       return status;
     })
     .catch(err => {

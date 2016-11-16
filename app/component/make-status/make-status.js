@@ -12,12 +12,8 @@ function MakeStatusController($log, statusService){
   this.handleSubmit = function(){
 
     if (!this.status.file){
-      // make request to route that only creates a status
-
-      return;
+      return statusService.createStatus(this.status);
     }
-
-    // else make a request that makes a file
     statusService.createFileStatus(this.status)
     .then((status) => {
       console.log(status);
