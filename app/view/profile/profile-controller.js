@@ -14,7 +14,7 @@ function ProfileController($log, $q, $rootScope, profileService) {
     return profileService.fetchProfiles()
     .then(profiles => {
       this.profiles = profiles;
-      return this.profiles;
+      return profiles;
     });
   };
 

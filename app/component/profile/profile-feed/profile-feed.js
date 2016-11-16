@@ -4,7 +4,7 @@ require('./_profile-feed.scss');
 
 module.exports = {
   template: require('./profile-feed.html'),
-  controller: ['$log', 'profileService','fileService', ProfileFeedController],
+  controller: ['$log', ProfileFeedController],
   controllerAs: 'profileFeedCtrl',
   bindings: {
     profile: '<',
@@ -13,4 +13,8 @@ module.exports = {
 
 function ProfileFeedController($log) {
   $log.debug('Initializing ProfileFeedController');
+
+  this.profilePic = 'https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-mobile-logo';
+
+  // this.profilePic = this.profile.picID.picURI || 'https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-mobile-logo';
 }
