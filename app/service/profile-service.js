@@ -118,5 +118,4 @@ function profileService($q, $log, $http, authService, hospitalService) {
   };
 
   return service;
-
 }
