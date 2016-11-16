@@ -139,7 +139,7 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/`;
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/?sort=dsc`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -150,9 +150,14 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
       return $http.get(url, config);
     })
     .then(res => {
+
+      //sort array according to date
+
       $log.log('Statuses fetched', res.data);
       service.statuses = res.data;
-      return service.statuses;
+      return service.statuses.sort((a, b) => {
+        return (new Date(b.created)) - (new Date(a.created));
+      });
     })
     .catch(err => {
       $log.error(err.message);
