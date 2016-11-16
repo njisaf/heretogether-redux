@@ -1,12 +1,9 @@
 <nav class="navbar navbar-default">
-  <img src="https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-mobile-logo">
+  <img ng-click="navCtrl.home()" src="https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-mobile-logo">
   <div class="container-fluid">
-    <div ng-hide="navCtrl.hideButtons">
-      <button ng-click="navCtrl.logout()"
-        class="btn pull-right btn-default navbar-btn btn-logout">
-        logout
-      </button>
-      </div>
-    </div>
+    <button ng-click="navCtrl.logout()"
+      class="btn pull-right btn-default navbar-btn btn-logout">
+      logout
+    </button>
   </div>
 </nav>

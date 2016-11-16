@@ -17,7 +17,6 @@ function NavController($log, $location, $rootScope, authService){
   this.checkPath = function(){
     let path = $location.path();
     if (path === '/join'){
-      this.hideButtons = true;
       authService.getToken()
       .then(() => {
         $location.url('/join');
@@ -25,7 +24,6 @@ function NavController($log, $location, $rootScope, authService){
     }
 
     if(path !== '/join'){
-      this.hideButtons = false;
       authService.getToken()
       .catch( () => {
         $location.url('/join#login');
@@ -41,10 +39,27 @@ function NavController($log, $location, $rootScope, authService){
 
   this.logout = function(){
     $log.log('navCtrl.logout()');
-    this.hideButtons = true;
     authService.logout()
     .then(() => {
       $location.url('/');
     });
+  };
+
+  this.home = function(){
+    $log.log('navCtrl.home()');
+    let path = $location.path();
+    if (path === '/home'){
+      authService.getToken()
+      .then(() => {
+        $location.url('/home');
+      });
+    }
+
+    if(path !== '/home'){
+      authService.getToken()
+      .catch( () => {
+        $location.url('/home');
+      });
+    }
   };
 }
