@@ -139,7 +139,7 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/?sort=dsc`;
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/all/status/`;
       let config = {
         headers: {
           Accept: 'application/json',

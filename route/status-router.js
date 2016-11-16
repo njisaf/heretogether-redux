@@ -45,8 +45,8 @@ statusRouter.get('/api/hospital/:hospitalID/status/:statusID', bearerAuth, funct
   .catch(next);
 });
 
-statusRouter.get('/api/hospital/:hospitalID/status/', bearerAuth, function(req, res, next) {
-  debug('Hit GET ALL /api/hospital/:hospitalID/status/');
+statusRouter.get('/api/hospital/:hospitalID/all/status/', bearerAuth, function(req, res, next) {
+  debug('Hit GET ALL /api/hospital/:hospitalID/all/status/');
   Hospital.findById(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
   .then(() => {

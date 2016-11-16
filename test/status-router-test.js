@@ -219,7 +219,7 @@ describe('Testing Status routes', function() {
       before(done => mockStatus.call(this, done));
 
       it('Should return a status of 200 and an array of statuses', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/`)
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/all/status/`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
@@ -236,7 +236,7 @@ describe('Testing Status routes', function() {
       before(done => mockStatusFile.call(this, done));
 
       it('Should return a status of 200 and an array of statuses', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/`)
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/all/status/`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
@@ -256,7 +256,7 @@ describe('Testing Status routes', function() {
       before(done => mockHospital.call(this, done));
 
       it('Should return a status of 200 and an empty array', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/`)
+        request.get(`${url}/api/hospital/${this.tempHospital._id}/all/status/`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
@@ -272,7 +272,7 @@ describe('Testing Status routes', function() {
       before(done => mockStatus.call(this, done));
 
       it('Should return a status of 404 and an error message', done => {
-        request.get(`${url}/api/hospital/1234/status/`)
+        request.get(`${url}/api/hospital/1234/all/status/`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           expect(res.status).to.equal(404);
