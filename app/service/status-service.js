@@ -59,7 +59,7 @@ function statusService($q, $log, $http, authService, hospitalService, fileServic
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospita/${hospitalService.hospitalID}/status/${statusID}`;
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/${statusID}`;
       let config = {
         headers: {
           Authorization: `Bearer ${token}`,
