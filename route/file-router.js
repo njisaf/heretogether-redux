@@ -69,9 +69,72 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'),
   .then(file => {
     tempFile = file;
     tempStatus.fileID = tempFile._id.toString();
-    return tempFile.save();
+    console.log('tempStatus', tempStatus);
+    return tempStatus.save();
   })
   .then(() => res.json(tempFile))
+  .catch(err => {
+    del([`${dataDir}/*`]);
+    next(err);
+  });
+});
+
+
+fileRouter.post('/api/hospital/:hospitalID/statusfile', bearerAuth, upload.single('file'), function(req, res, next){
+  debug('hit POST /api/hospital/:hospitalID/statusfile');
+
+  // create a status
+  // with UserID and HospitalID and text
+  if(!req.file)
+    return next(createError(400, 'no file found'));
+
+  let ext = path.extname(req.file.originalname);
+
+  let params = {
+    ACL: 'public-read',
+    Bucket: 'heretogether-assets',
+    Key: `${req.file.filename}${ext}`,
+    Body: fs.createReadStream(req.file.path),
+  };
+
+
+  let tempStatus = null;
+  let tempFile = null;
+  new Status({
+    userID: req.user._id.toString(),
+    hospitalID: req.params.hospitalID,
+    text: req.body.text,
+  }).save()
+  .catch(err => Promise.reject(createError(404, err.message)))
+  .then(status => {
+    if(status.userID.toString() !== req.user._id.toString()) {
+      return Promise.reject(createError(401, 'User not authorized'));
+    }
+    tempStatus = status;
+    return s3UploadPromise(params);
+  })
+  .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
+  .then(s3data => {
+    del([`${dataDir}/*`]);
+    let fileData = {
+      objectKey: s3data.Key,
+      fileURI: s3data.Location,
+      userID: req.user._id,
+      fileType: req.file.mimetype,
+    };
+    return new File(fileData).save();
+  })
+  .then(file => {
+    tempFile = file;
+    tempStatus.fileID = tempFile._id.toString();
+    console.log('tempStatus', tempStatus);
+    return tempStatus.save();
+  })
+  .then((status) => {
+    return Status.findById(status._id)
+    .populate('fileID');
+  })
+  .then(status => res.json(status))
   .catch(err => {
     del([`${dataDir}/*`]);
     next(err);

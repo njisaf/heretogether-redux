@@ -13,5 +13,4 @@ module.exports = {
 
 function StatusFeedController($log) {
   $log.debug('Initializing StatusFeedController');
-  // if(!this.status.fileURI) this.status.fileURI = fileService.fileURI;
 }

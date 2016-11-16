@@ -1,14 +1,43 @@
 'use strict';
 
-module.exports = ['$q', '$log', '$http', '$window', 'authService', 'hospitalService', 'fileService', statusService];
+module.exports = ['$q', '$log', 'Upload', '$http', '$window', 'authService', 'hospitalService', 'fileService', statusService];
 
-function statusService($q, $log, $http, $window, authService, hospitalService, fileService) {
+function statusService($q, $log, Upload, $http, $window, authService, hospitalService, fileService) {
   $log.debug('Initializing statusService');
 
   let service = {};
 
   service.statuses = [];
   service.fileURI = null;
+  service.createFileStatus = function(status){
+    $log.debug('statusService.createFileStatus hit');
+
+    return authService.getToken()
+    .then((token) => {
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/statusfile`;
+      let headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      return Upload.upload({
+        url,
+        method: 'POST',
+        data: {
+          text: status.text,
+          file: status.file,
+        },
+        headers,
+      });
+    })
+    .then((res) => {
+      service.statuses.unshift(res.data);
+      return res.data;
+    })
+    .catch(err => {
+      $log.error(err.message);
+      return $q.reject(err);
+    });
+  };
 
   service.createStatus = function(status) {
     $log.debug('statusService.createStatus()', status);

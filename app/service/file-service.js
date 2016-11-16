@@ -8,8 +8,6 @@ function fileService($q, $log, $http, Upload, authService){
 
   let service = {};
 
-  service.fileURI
-
 
   service.uploadStatusFile = function (statusID, fileData){
     $log.debug('fileService.uploadFile()');
@@ -36,7 +34,6 @@ function fileService($q, $log, $http, Upload, authService){
     .then((res) => {
       $log.log('File upoladed successfully', res);
       let file = res.data;
-      service.fileURI = res.data.fileURI;
       return file;
     })
     .catch((err) => {
