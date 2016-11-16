@@ -2,9 +2,9 @@
 
 require('./profile.html');
 
-module.exports = ['$log', '$q', '$rootScope', 'profileService', ProfileController];
+module.exports = ['$log', '$q', '$rootScope', '$location', 'profileService', ProfileController];
 
-function ProfileController($log, $q, $rootScope, profileService) {
+function ProfileController($log, $q, $rootScope, $location, profileService) {
   $log.debug('Initializing ProfileController');
 
   this.profiles = [];
@@ -16,6 +16,10 @@ function ProfileController($log, $q, $rootScope, profileService) {
       this.profiles = profiles;
       return profiles;
     });
+  };
+
+  this.enterProfile = function() {
+    $location.path(`/profile/${this.profile._id}`);
   };
 
   this.fetchProfiles();
