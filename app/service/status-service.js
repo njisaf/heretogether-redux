@@ -12,6 +12,9 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
 
   //creating status with an attached file
   service.createFileStatus = function(status){
+
+    if(!status.hospitalID) status.hospitalID = $window.localStorage.getItem('hospitalID');
+    
     $log.debug('statusService.createFileStatus hit');
 
     return authService.getToken()
@@ -135,6 +138,7 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
   };
 
   service.fetchStatuses = function() {
+
     $log.debug('Fetching all statuses');
 
     return authService.getToken()
