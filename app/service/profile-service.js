@@ -1,13 +1,15 @@
 'use strict';
 
-module.exports = ['$q', '$log', '$http', 'authService', 'hospitalService', profileService];
+module.exports = ['$q', '$log', '$http', '$window', 'authService', 'hospitalService', profileService];
 
-function profileService($q, $log, $http, authService, hospitalService) {
+function profileService($q, $log, $http, $window, authService, hospitalService) {
   $log.debug('Initializing profileService');
 
   let service = {};
 
   service.profiles = [];
+
+  if(!hospitalService.hospitalID) hospitalService.hospitalID = $window.localStorage.getItem('hospitalID');
 
   service.createProfile = function(profile) {
     $log.debug('Hit profileService.createProfile()');
@@ -65,12 +67,12 @@ function profileService($q, $log, $http, authService, hospitalService) {
     });
   };
 
-  profileService.fetchProfiles = function() {
+  service.fetchProfiles = function() {
     $log.debug('Hit profileService.fetchProfiles. Fetching all profiles');
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile/all`;
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/all/profile/`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -91,7 +93,7 @@ function profileService($q, $log, $http, authService, hospitalService) {
     });
   };
 
-  profileService.deleteProfile = function(profileID) {
+  service.deleteProfile = function(profileID) {
     $log.debug('Hit profileService.deleteProfile');
 
     return authService.getToken()
