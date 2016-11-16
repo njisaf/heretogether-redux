@@ -12,7 +12,7 @@ function SignupController($log, $location, authService, profileService, hospital
     name: 'Seattle Children\'s Hospital',
   };
 
-  hospitalService.createHospital(exampleHospital);
+  if (!hospitalService.hospitalID) hospitalService.createHospital(exampleHospital);
 
   this.signup = function(user){
     $log.debug('IN SIGNUPCONTROLLER!!!');

@@ -39,6 +39,33 @@ function profileService($q, $log, $http, authService, hospitalService) {
     });
 
   };
+
+  service.getProfile = function(profileID){
+    $log.debug('Initializing service.getProfile()');
+
+    return authService.getToken()
+    .then( token => {
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile/${profileID}`;
+      let config = {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      return $http.get(url, config);
+    })
+    .then(res => {
+      $log.log('getProfile res', res);
+      let profile = res.data;
+      return profile;
+    })
+    .catch(err => {
+      $log.error(err.message);
+      return $q.reject(err);
+    });
+
+
+  };
   return service;
 
 }

@@ -35,7 +35,7 @@ function authService($q, $log, $http, $window){
   };
 
   service.signup = function(user) {
-    $log.debug('authService.signup()');
+    $log.debug('authService.signup()', user);
     let url = `${__API_URL__}/api/signup`;
     console.log('signup url', url);
 
