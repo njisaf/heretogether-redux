@@ -44,8 +44,8 @@ profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, fu
   .catch(next);
 });
 
-profileRouter.get('/api/hospital/:hospitalID/profile/all', bearerAuth, function(req, res, next) {
-  debug('Hit GET ALL /api/hospital/:hospitalID/profile/');
+profileRouter.get('/api/hospital/:hospitalID/all/profile', bearerAuth, function(req, res, next) {
+  debug('Hit GET ALL /api/hospital/:hospitalID/all/profile');
   Hospital.findById(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
   .then(() => {
