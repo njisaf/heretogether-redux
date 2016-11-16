@@ -3,14 +3,15 @@
 module.exports = ['$q', '$log', '$http', 'Upload', 'authService', fileService]
 ;
 
-
 function fileService($q, $log, $http, Upload, authService){
   $log.debug('Initializing fileService');
 
   let service = {};
 
+
   service.uploadStatusFile = function (statusID, fileData){
     $log.debug('fileService.uploadFile()');
+
 
     return authService.getToken()
     .then((token) => {
@@ -31,7 +32,7 @@ function fileService($q, $log, $http, Upload, authService){
       });
     })
     .then((res) => {
-      $log.log('File upoladed successfully');
+      $log.log('File upoladed successfully', res);
       let file = res.data;
       return file;
     })

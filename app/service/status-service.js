@@ -1,13 +1,43 @@
 'use strict';
 
-module.exports = ['$q', '$log', '$http', 'authService', 'hospitalService', 'fileService', statusService];
+module.exports = ['$q', '$log', 'Upload', '$http', '$window', 'authService', 'hospitalService', 'fileService', statusService];
 
-function statusService($q, $log, $http, authService, hospitalService, fileService) {
+function statusService($q, $log, Upload, $http, $window, authService, hospitalService, fileService) {
   $log.debug('Initializing statusService');
 
   let service = {};
 
   service.statuses = [];
+  service.fileURI = null;
+  service.createFileStatus = function(status){
+    $log.debug('statusService.createFileStatus hit');
+
+    return authService.getToken()
+    .then((token) => {
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/statusfile`;
+      let headers = {
+        Authorization: `Bearer ${token}`,
+      };
+
+      return Upload.upload({
+        url,
+        method: 'POST',
+        data: {
+          text: status.text,
+          file: status.file,
+        },
+        headers,
+      });
+    })
+    .then((res) => {
+      service.statuses.unshift(res.data);
+      return res.data;
+    })
+    .catch(err => {
+      $log.error(err.message);
+      return $q.reject(err);
+    });
+  };
 
   service.createStatus = function(status) {
     $log.debug('statusService.createStatus()', status);
@@ -15,7 +45,7 @@ function statusService($q, $log, $http, authService, hospitalService, fileServic
 
     let fileData = null;
 
-    if(!status.hospitalID) status.hospitalID = hospitalService.hospitalID;
+    if(!status.hospitalID) status.hospitalID = $window.localStorage.getItem('hospitalID');
 
     if(status.file) {
       fileData = status.file;
@@ -40,7 +70,7 @@ function statusService($q, $log, $http, authService, hospitalService, fileServic
       // $log.log('Status successfully instantiated');
       let status = res.data;
       service.statuses.unshift(status);
-      // $log.log('HERES OUR STATUSES', service.statuses);
+      $log.log('HERES OUR STATUSES', service.statuses);
       fileService.uploadStatusFile(status._id, fileData)
       .then(res => {
         $log.log('HERES DA RES', res);
@@ -123,7 +153,7 @@ function statusService($q, $log, $http, authService, hospitalService, fileServic
       return $http.get(url, config);
     })
     .then(res => {
-      $log.log('Statuses fetched');
+      $log.log('Statuses fetched', res.data);
       service.statuses = res.data;
       return service.statuses;
     })

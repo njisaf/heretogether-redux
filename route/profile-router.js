@@ -19,7 +19,7 @@ const profileRouter = module.exports = Router();
 profileRouter.post('/api/hospital/:hospitalID/profile', bearerAuth, jsonParser, function(req, res, next){
   debug('hit POST route /api/hospital/:hospitalID/profile');
   if(req.body.hospitalID !== req.params.hospitalID) return next(createError(404, 'Hospital not found.'));
-  if(!req.body.userID) req.body.userID = req.user._id;
+
   Hospital.findById(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
   .then(hospital => {
