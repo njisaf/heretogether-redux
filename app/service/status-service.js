@@ -106,7 +106,7 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
     });
   };
 
-  service.updateService = function(statusID, status) {
+  service.updateStatus = function(statusID, status) {
     $log.debug('statusService.updateStatus()');
 
     return authService.getToken()
@@ -150,9 +150,6 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
       return $http.get(url, config);
     })
     .then(res => {
-
-      //sort array according to date
-
       $log.log('Statuses fetched', res.data);
       service.statuses = res.data;
       return service.statuses.sort((a, b) => {
