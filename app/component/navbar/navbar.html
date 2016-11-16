@@ -3,9 +3,12 @@
     <li><img ng-click="navCtrl.home()" ng-src="{{navCtrl.logoPic}}"></li>
   </ul>
   <div class="container-fluid">
+    <div ng-hide="navCtrl.hideButtons">
+
     <button ng-click="navCtrl.logout()"
       class="btn pull-right btn-default navbar-btn btn-logout">
       logout
     </button>
+  </div>
   </div>
 </nav>
