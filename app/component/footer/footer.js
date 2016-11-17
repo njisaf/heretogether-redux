@@ -12,27 +12,12 @@ function FooterController($log, $location, $rootScope, authService){
   $log.debug('init FooterController');
 
   this.checkPath = function(){
-    let path = $location.path;
+    let path = $location.path();
 
     if(path === '/join'){
       this.hideFooter = true;
     } else {
       this.hideFooter = false;
-    }
-
-    if (path === '/join'){
-      this.hideFooter = true;
-      authService.getToken()
-      .then(() => {
-        $location.url('/join');
-      });
-    }
-    if(path !== '/join'){
-      this.hideFooter = false;
-      authService.getToken()
-      .catch( () => {
-        $location.url('/join#login');
-      });
     }
   };
 
