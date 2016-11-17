@@ -38,7 +38,7 @@ profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, fu
   .populate('picID')
   .catch(err => Promise.reject(createError(400, err.message)))
   .then( profile => {
-    if(profile.userID.toString() !== req.user._id.toString()) return Promise.reject(createError(401, 'invalid userid'));
+    // if(profile.userID.toString() !== req.user._id.toString()) return Promise.reject(createError(401, 'invalid userid'));
     if(profile.hospitalID.toString() !== req.params.hospitalID.toString()) return Promise.reject(createError(404, 'Hospital mismatch'));
     res.json(profile);
   })
@@ -54,12 +54,13 @@ profileRouter.get('/api/hospital/:hospitalID/all/profile', bearerAuth, function(
     .populate('picID');
   })
   .then(profArr => {
-    console.log('JNSFJNFJDFD', profArr);
     res.json(profArr);
   })
   .catch(next);
 });
 
+
+//needs tests
 profileRouter.get('/api/hospital/:hospitalID/profile/', bearerAuth, function(req, res, next) {
   debug('Hit GET ONE /api/hospital/:hospitalID/profile');
 

@@ -21,7 +21,7 @@ function ProfileFeedController($log, $location) {
   this.showProfile = function() {
     $log.debug('Navigating to profile...');
 
-    $location.path(`/profile/?id=${this.profile._id}`);
+    $location.path(`/profile/id=${this.profile._id}`);
   };
 
 }

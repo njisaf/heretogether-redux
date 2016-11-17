@@ -41,8 +41,8 @@ function profileService($q, $log, $http, $window, authService, hospitalService) 
     });
   };
 
-  service.getProfile = function() {
-    $log.debug('Hit profileService.getProfile');
+  service.getOneProfileNoID = function() {
+    $log.debug('Hit profileService.getOneProfileNoID; profile will be fetched using bearerAuth alone');
 
     return authService.getToken()
     .then(token => {
@@ -65,6 +65,33 @@ function profileService($q, $log, $http, $window, authService, hospitalService) 
       $log.error(err.message);
       return $q.reject(err);
     });
+  };
+
+  service.getOneProfileWithID = function(profileID) {
+    $log.debug('Hit profileService.getOneProfileWithID; will fetch profile directly');
+
+    return authService.getToken()
+    .then(token => {
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile/${profileID}`;
+      let config = {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      return $http.get(url, config);
+    })
+    .then(res => {
+      $log.log('Got a profile', res.data);
+      let profile = res.data;
+      return profile;
+    })
+    .catch(err => {
+      $log.error(err.message);
+      return $q.reject(err);
+    });
+
   };
 
   service.fetchProfiles = function() {
