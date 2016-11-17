@@ -14,7 +14,7 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
   service.createFileStatus = function(status){
 
     if(!status.hospitalID) status.hospitalID = $window.localStorage.getItem('hospitalID');
-    
+
     $log.debug('statusService.createFileStatus hit');
 
     return authService.getToken()
@@ -137,8 +137,37 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
     });
   };
 
-  service.fetchStatuses = function() {
+  service.fetchUserStatuses = function(userID) {
+    $log.debug('Fetching all statuses for one user');
 
+    return authService.getToken()
+    .then(token => {
+      console.log('did we get token?');
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/all/status/${userID}`;
+      let config = {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      return $http.get(url, config);
+    })
+    .then(res => {
+      $log.log('User statuses fetched', res.data);
+      service.statuses = res.data;
+      return service.statuses.sort((a, b) => {
+        return (new Date(b.created)) - (new Date(a.created));
+      });
+    })
+    .catch(err => {
+      $log.error(err.message);
+      return $q.reject(err);
+    });
+
+  };
+
+  service.fetchStatuses = function() {
     $log.debug('Fetching all statuses');
 
     return authService.getToken()

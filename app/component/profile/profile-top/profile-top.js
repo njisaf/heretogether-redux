@@ -12,7 +12,7 @@ module.exports = {
 };
 
 function ProfileTopController($log) {
-  $log.debug('Initializing ProfileTopController');
+  $log.debug('Initializing ProfileTopController', this.profile);
 
   this.profilePic = null;
 
@@ -21,5 +21,8 @@ function ProfileTopController($log) {
   } else {
     this.profilePic = this.profile.picID.picURI;
   }
+
+
+
 
 }
