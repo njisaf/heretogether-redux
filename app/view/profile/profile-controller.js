@@ -18,9 +18,9 @@ function ProfileController($log, $q, $rootScope, $location, profileService) {
     });
   };
 
-  this.enterProfile = function() {
-    $location.path(`/profile/${this.profile._id}`);
-  };
+  // this.enterProfile = function() {
+  //   $location.path(`/profile/${this.profile._id}`);
+  // };
 
   this.fetchProfiles();
 
