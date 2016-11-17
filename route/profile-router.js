@@ -60,7 +60,7 @@ profileRouter.get('/api/hospital/:hospitalID/all/profile', bearerAuth, function(
   .catch(next);
 });
 
-profileRouter.get('/api/hospital/:hospitalID/profile', bearerAuth, function(req, res, next) {
+profileRouter.get('/api/hospital/:hospitalID/profile/', bearerAuth, function(req, res, next) {
   debug('Hit GET ONE /api/hospital/:hospitalID/profile');
 
   Profile.findOne({userID: req.user._id})
@@ -68,6 +68,7 @@ profileRouter.get('/api/hospital/:hospitalID/profile', bearerAuth, function(req,
   .catch(err => Promise.reject(createError(400, err.message)))
   .then(profile => {
     if(profile.hospitalID.toString() !== req.params.hospitalID.toString()) return Promise.reject(createError(404, 'Hospital mismatch'));
+    console.log('PROFILE', profile);
     res.json(profile);
   })
   .catch(next);

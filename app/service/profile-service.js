@@ -46,7 +46,7 @@ function profileService($q, $log, $http, $window, authService, hospitalService) 
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile`;
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile/`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -57,7 +57,7 @@ function profileService($q, $log, $http, $window, authService, hospitalService) 
       return $http.get(url, config);
     })
     .then(res => {
-      $log.log('Got a profile');
+      $log.log('Got a profile', res.data);
       let profile = res.data;
       return profile;
     })

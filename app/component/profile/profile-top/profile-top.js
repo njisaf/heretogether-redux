@@ -16,7 +16,7 @@ function ProfileTopController($log) {
 
   this.profilePic = null;
 
-  if (!this.profile.picID.picURI) {
+  if (!this.profile.picID) {
     this.profilePic = 'https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-mobile-logo';
   } else {
     this.profilePic = this.profile.picID.picURI;
