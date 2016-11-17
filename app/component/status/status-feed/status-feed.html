@@ -11,7 +11,7 @@
       ng-click="statusFeedCtrl.showEditStatus = !statusFeedCtrl.showEditStatus"></span>
     </p>
     <img class="status-feed-img" ng-src="{{statusFeedCtrl.status.fileID.fileURI}}">
-    <p class="display-date">Status Posted: {{statusFeedCtrl.status.created | date:'medium'}}</p>
+    <p class="display-date">Status Posted: {{statusFeedCtrl.status.created | date:'MMM d, y h:mm: a'}}</p>
    </div>
 
 
