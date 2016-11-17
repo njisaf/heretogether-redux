@@ -43,6 +43,16 @@ function NavController($log, $location, $window, $rootScope, authService, hospit
      });
   };
 
+  this.logout = function() {
+    $log.log('navbarCtrl.logout()');
+    this.hideLogout = true;
+    this.hideLogin = false;
+    authService.logout()
+      .then(() => {
+        $location.url('/');
+      });
+  };
+  
   $window.onload = this.pageLoadHandler.bind(this);
   $rootScope.$on('$stateChangeStart', this.pageLoadHandler.bind(this));
 }
