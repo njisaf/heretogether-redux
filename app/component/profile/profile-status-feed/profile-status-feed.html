@@ -1,0 +1,14 @@
+<section class="profile-status-feed">
+  <div>
+    <p>
+      {{profileStatusFeedCtrl.status.text}}
+      <span class="glyphicon glyphicon-pencil"
+      ng-click="profileStatusFeedCtrl.showEditStatus = !profileStatusFeedCtrl.showEditStatus"></span>
+    </p>
+    <edit-status
+    ng-if="profileStatusFeedCtrl.showEditStatus"
+    status="profileStatusFeedCtrl.status"></edit-status>
+    <img ng-src="{{profileStatusFeedCtrl.status.fileID.fileURI}}">
+    <delete-status status="profileStatusFeedCtrl.status"></delete-status>
+  </div>
+</section>
