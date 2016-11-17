@@ -63,5 +63,11 @@ function hospitalService($q, $log, $http, $window, authService) {
       return $q.reject(err.message);
     });
   };
+
+  service.setHospitalID = function(hospitalID){
+    $log.log('hit setHospitalID()');
+
+    service.hospitalID = hospitalID;
+  };
   return service;
 }
