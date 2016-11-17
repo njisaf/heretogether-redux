@@ -1,18 +1,18 @@
 'use strict';
 
-require('./_profile-top.scss');
+require('./_edit-profile.scss');
 
 module.exports = {
-  template: require('./profile-top.html'),
-  controller: ['$log', ProfileTopController],
-  controllerAs: 'profileTopCtrl',
+  template: require('./edit-profile.html'),
+  controller: ['$log', EditProfileController],
+  controllerAs: 'editProfileCtrl',
   bindings: {
     profile: '<',
   },
 };
 
-function ProfileTopController($log) {
-  $log.debug('Initializing ProfileTopController', this.profile);
+function EditProfileController($log) {
+  $log.debug('Initializing EditProfileController', this.profile);
 
   this.profilePic = null;
 
