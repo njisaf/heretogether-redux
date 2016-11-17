@@ -4,15 +4,15 @@ require('./_footer.scss');
 
 module.exports = {
   template: require('./footer.html'),
-  controller: ['$log', '$location', '$window', '$rootScope', 'authService', FooterController],
+  controller: ['$log', '$location', '$window', '$rootScope', FooterController],
   controllerAs: 'footerCtrl',
 };
 
-function FooterController($log, $location, $window, $rootScope, authService){
+function FooterController($log, $location, $window, $rootScope){
   $log.debug('init FooterController');
 
   this.hideFooter = null;
-  
+
   this.pageLoadHandler = function(){
     $log.debug('footerCtrl.pageLoadHandler()');
     let path = $location.path();
