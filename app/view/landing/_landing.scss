@@ -19,7 +19,7 @@
       margin-top: 5%;
 
       &[type='submit'] {
-        color: $app-secondary;
+        color: #0078ae;
       }
     }
 
@@ -30,6 +30,7 @@
     }
 
     a {
+      color: $app-white;
       display: inline-block;
       font-size: 1.2em;
       text-decoration: none;
@@ -37,12 +38,12 @@
 
     @media(min-width: 300px){
       width: 80%;
-      margin-top: 50%;
+      margin-top: 30%;
     }
 
     @media (min-width: 400px) {
       width: 90%;
-      margin-top: 50%;
+      margin-top: 35%;
     }
 
     @media (min-width: 600px) {

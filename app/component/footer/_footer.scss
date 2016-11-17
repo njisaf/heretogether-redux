@@ -1,9 +1,18 @@
 @import "theme";
 
 footer ul {
-  li {
-    list-style: none;
-    float: left;
-    margin-right: 2%;
-  }
+
+  margin-top: -10%;
+  text-align: center;
+
+    li {
+      list-style: none;
+      display: inline;
+      margin-right: 12%;
+      font-size: 2em;
+
+      a {
+        color: #0078ae;
+      }
+    }
 }
