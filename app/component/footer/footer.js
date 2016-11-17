@@ -4,11 +4,11 @@ require('./_footer.scss');
 
 module.exports = {
   template: require('./footer.html'),
-  controller: ['$log', '$location', '$rootScope', 'authService', FooterController],
+  controller: ['$log', '$location', '$rootScope', FooterController],
   controllerAs: 'footerCtrl',
 };
 
-function FooterController($log, $location, $rootScope, authService){
+function FooterController($log, $location, $rootScope){
   $log.debug('init FooterController');
 
   this.checkPath = function(){
