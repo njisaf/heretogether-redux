@@ -29,7 +29,6 @@ function hospitalService($q, $log, $http, $window, authService) {
       $log.log('Hospital created');
       let hospital = res.data;
       service.hospitalID = res.data._id;
-      //TODO: DONE Put hospital ID in local storage
       $window.localStorage.setItem('hospitalID', service.hospitalID);
       return hospital;
     })

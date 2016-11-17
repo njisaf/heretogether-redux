@@ -19,6 +19,7 @@ const profileRouter = module.exports = Router();
 profileRouter.post('/api/hospital/:hospitalID/profile', bearerAuth, jsonParser, function(req, res, next){
   debug('hit POST route /api/hospital/:hospitalID/profile');
   if(req.body.hospitalID !== req.params.hospitalID) return next(createError(404, 'Hospital not found.'));
+  if(!req.body.userID) req.body.userID = req.user._id;
 
   Hospital.findById(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
@@ -44,15 +45,32 @@ profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, fu
   .catch(next);
 });
 
-profileRouter.get('/api/hospital/:hospitalID/profile/', bearerAuth, function(req, res, next) {
-  debug('Hit GET ALL /api/hospital/:hospitalID/profile/');
+profileRouter.get('/api/hospital/:hospitalID/all/profile', bearerAuth, function(req, res, next) {
+  debug('Hit GET ALL /api/hospital/:hospitalID/all/profile');
   Hospital.findById(req.params.hospitalID)
   .catch(err => Promise.reject(createError(404, err.message)))
   .then(() => {
     return Profile.find({hospitalID: req.params.hospitalID})
     .populate('picID');
   })
-  .then(profArr => res.json(profArr))
+  .then(profArr => {
+    console.log('JNSFJNFJDFD', profArr);
+    res.json(profArr);
+  })
+  .catch(next);
+});
+
+profileRouter.get('/api/hospital/:hospitalID/profile/', bearerAuth, function(req, res, next) {
+  debug('Hit GET ONE /api/hospital/:hospitalID/profile');
+
+  Profile.findOne({userID: req.user._id})
+  .populate('picID')
+  .catch(err => Promise.reject(createError(400, err.message)))
+  .then(profile => {
+    if(profile.hospitalID.toString() !== req.params.hospitalID.toString()) return Promise.reject(createError(404, 'Hospital mismatch'));
+    console.log('PROFILE', profile);
+    res.json(profile);
+  })
   .catch(next);
 });
 
@@ -72,7 +90,6 @@ profileRouter.delete('/api/hospital/:hospitalID/profile/:profileID', bearerAuth,
       return Promise.reject(createError(401, 'Invalid user ID'));
     }
     if (profile.picID) {
-      console.log('I HIT IT!!!!!!!!!!');
       return Pic.findById(profile.picID)
       .then(pic => {
 

@@ -7,4 +7,25 @@ p {
 
 .status-feed-img {
   width: 90%;
+
+
+.status-feed {
+  text-align: center;
+  margin: 0 auto;
+
+  .glyphicon-pencil {
+    position: absolute;
+    display: inline-block;
+    margin-right: 70%;
+  }
+
+  p {
+    position: relative;
+    display: block;
+
+  }
+
+  img {
+    width: 60%;
+  }
 }

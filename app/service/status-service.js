@@ -1,15 +1,20 @@
 'use strict';
 
-module.exports = ['$q', '$log', 'Upload', '$http', '$window', 'authService', 'hospitalService', 'fileService', statusService];
+module.exports = ['$q', '$log', 'Upload', '$http', '$window', 'authService', 'hospitalService', statusService];
 
-function statusService($q, $log, Upload, $http, $window, authService, hospitalService, fileService) {
+function statusService($q, $log, Upload, $http, $window, authService, hospitalService) {
   $log.debug('Initializing statusService');
 
   let service = {};
 
   service.statuses = [];
   service.fileURI = null;
+
+  //creating status with an attached file
   service.createFileStatus = function(status){
+
+    if(!status.hospitalID) status.hospitalID = $window.localStorage.getItem('hospitalID');
+    
     $log.debug('statusService.createFileStatus hit');
 
     return authService.getToken()
@@ -71,11 +76,6 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
       let status = res.data;
       service.statuses.unshift(status);
       $log.log('HERES OUR STATUSES', service.statuses);
-      fileService.uploadStatusFile(status._id, fileData)
-      .then(res => {
-        $log.log('HERES DA RES', res);
-        status.fileURI = res.fileURI;
-      });
       return status;
     })
     .catch(err => {
@@ -109,12 +109,12 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
     });
   };
 
-  service.updateService = function(statusID, status) {
+  service.updateStatus = function(statusID, status) {
     $log.debug('statusService.updateStatus()');
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospita/${hospitalService.hospitalID}/status/${statusID}`;
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/${statusID}`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -138,11 +138,13 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
   };
 
   service.fetchStatuses = function() {
+
     $log.debug('Fetching all statuses');
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/`;
+      console.log('did we get token?');
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/all/status/`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -155,7 +157,9 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
     .then(res => {
       $log.log('Statuses fetched', res.data);
       service.statuses = res.data;
-      return service.statuses;
+      return service.statuses.sort((a, b) => {
+        return (new Date(b.created)) - (new Date(a.created));
+      });
     })
     .catch(err => {
       $log.error(err.message);
