@@ -15,7 +15,7 @@ function ShowProfileController($log, $q, $location, profileService) {
   this.getOneProfile = function(query) {
     $log.debug('Getting user profile', query);
 
-    profileService.getProfile()
+    profileService.getOneProfileWithID(query)
     .then(res => {
       $log.debug('Got a user profile', res);
       this.profile = res;
