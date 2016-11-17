@@ -9,6 +9,8 @@ function hospitalService($q, $log, $http, $window, authService) {
 
   service.hospitalID = null;
 
+  service.hospitals = [];
+
   service.createHospital = function(hospital) {
     $log.debug('Hit hospitalService.createHospital()');
 
@@ -37,6 +39,29 @@ function hospitalService($q, $log, $http, $window, authService) {
       return $q.reject(err);
     });
 
+
+  };
+  service.fetchHospitals = function(){
+    $log.debug('hit fetchHospitals()');
+
+    let url = `${__API_URL__}/api/hospital`;
+    let config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    };
+
+    return $http.get(url, config)
+    .then((res) => {
+      $log.log('Hospitals fetched', res);
+      service.hospitals = res;
+      return service.hospitals;
+    })
+    .catch((err) => {
+      $log.error(err.message);
+      return $q.reject(err.message);
+    });
   };
   return service;
 }

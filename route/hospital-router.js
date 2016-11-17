@@ -24,3 +24,14 @@ hospitalRouter.delete('/api/hospital/:hospitalID', bearerAuth, function(req, res
   .then(() => res.sendStatus(204))
   .catch(next);
 });
+
+//TODO: Needs testing
+hospitalRouter.get('/api/hospital', function(req, res, next){
+  debug('Hit GET /api/hospital');
+  Hospital.find({})
+  .then((hospitals) => {
+    console.log(hospitals);
+    res.json(hospitals);
+  })
+  .catch(next);
+});
