@@ -11,7 +11,20 @@
     required type="password" ng-minlength="8"
     placeholder="Password" ng-model="loginCtrl.user.password">
 
+    <!-- <input
+    ng-repeat="hospital in loginCtrl.hospitals"> -->
+
+    <select
+    ng-model="loginCtrl.hospital"
+    class="form-control">
+      <option
+      ng-repeat="hospital in loginCtrl.hospitals"
+      ng-value="hospital._id" >{{hospital.name}}</option>
+    </select>
+
+
     <input type="submit" class="btn btn-primary" value="Submit">
+
 
 
   </form>
