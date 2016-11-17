@@ -4,6 +4,8 @@ footer ul {
 
   margin-top: -10%;
   text-align: center;
+  // background-color: #FF5029;
+  background-color: #0078ae;
 
     li {
       list-style: none;
@@ -12,7 +14,7 @@ footer ul {
       font-size: 2em;
 
       a {
-        color: #0078ae;
+        color: $app-white;
       }
     }
 }

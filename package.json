@@ -71,6 +71,7 @@
     "pascalcase": "^0.1.1",
     "resolve-url-loader": "^1.6.0",
     "sass-loader": "^4.0.2",
+    "satellizer": "^0.15.5",
     "style-loader": "^0.13.1",
     "ui-router": "^1.0.0-alpha.3",
     "url-loader": "^0.5.7",
