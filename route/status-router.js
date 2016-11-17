@@ -59,6 +59,21 @@ statusRouter.get('/api/hospital/:hospitalID/all/status/', bearerAuth, function(r
   .catch(next);
 });
 
+//TODO: needs tests
+statusRouter.get('/api/hospital/:hospitalID/all/status/:userID', bearerAuth, function(req, res, next) {
+  debug('Hit GET ALL /api/hospital/:hospitalID/all/status/:userID');
+  Hospital.findById(req.params.hospitalID)
+  .catch(err => Promise.reject(createError(404, err.message)))
+  .then(() => {
+    return Status.find({userID: req.params.userID})
+    .populate('fileID');
+  })
+  .then(statArr => {
+    res.json(statArr);
+  })
+  .catch(next);
+});
+
 statusRouter.delete('/api/hospital/:hospitalID/status/:statusID', bearerAuth, function(req, res, next) {
   debug('Hit DELETE /api/hospital/:hospitalID/status/:statusID');
 
