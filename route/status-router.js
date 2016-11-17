@@ -100,6 +100,10 @@ statusRouter.put('/api/hospital/:hospitalID/status/:statusID', bearerAuth, jsonP
     if(status.userID.toString() === req.user._id.toString()) {
       if(status.hospitalID.toString() !== req.params.hospitalID) return Promise.reject(createError(404, 'Hospital mismatch'));
       Status.findByIdAndUpdate(req.params.statusID, req.body, {new: true})
+      .then((status) => {
+        return Status.findById(status._id)
+        .populate('fileID');
+      })
       .then(status => res.json(status))
       .catch(next);
     } else {

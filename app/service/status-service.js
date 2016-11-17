@@ -8,13 +8,13 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
   let service = {};
 
   service.statuses = [];
-  service.fileURI = null;
+  // service.fileURI = null;
 
   //creating status with an attached file
   service.createFileStatus = function(status){
 
     if(!status.hospitalID) status.hospitalID = $window.localStorage.getItem('hospitalID');
-    
+
     $log.debug('statusService.createFileStatus hit');
 
     return authService.getToken()
@@ -143,6 +143,9 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
 
     return authService.getToken()
     .then(token => {
+      // if(!hospitalService.hopsitalID){
+      //   hospitalService.hospitalID = $window.localStorage.getItem('hospitalID');
+      // }
       console.log('did we get token?');
       let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/all/status/`;
       let config = {
