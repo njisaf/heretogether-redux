@@ -1,26 +1,14 @@
-<nav class="navbar navbar-default">
+<nav class="navbar">
+  <ul class="nav navbar-nav">
+    <li><img ng-click="navCtrl.home()" ng-src="{{navCtrl.logoPic}}"></li>
+  </ul>
   <div class="container-fluid">
-    <a class="navbar-brand" href="/#/">{{navCtrl.appTitle}}</a>
+    <div ng-hide="navCtrl.hideLogout">
 
-    <div ng-hide="navCtrl.hideButtons">
-      <button ng-click="navCtrl.logout()"
-        class="btn pull-right btn-default navbar-btn btn-logout">
-        logout
-      </button>
-      <div class="btn-group pull-right" uib-dropdown>
-        <button id="btn-append-to-body"
-          type="button"
-          class="btn btn-dropdown btn-primary navbar-btn"
-          uib-dropdown-toggle>
-          <span class="glyphicon glyphicon-menu-hamburger"></span>
-        </button>
-
-        <ul class="dropdown-menu" uib-dropdown-menu role="menu">
-          <li role="menuitem"><a href="#" ng-click="navCtrl.logout()">Logout</a></li>
-          <li role="menuitem"><a href="#">Profile</a></li>
-          <li role="menuitem"><a href="#">Search</a></li>
-        </ul>
-      </div>
-    </div>
+    <button ng-click="navCtrl.logout()"
+      class="btn pull-right btn-default navbar-btn btn-logout">
+      logout
+    </button>
+  </div>
   </div>
 </nav>

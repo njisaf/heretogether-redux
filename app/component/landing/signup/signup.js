@@ -13,7 +13,6 @@ function SignupController($log, $location, authService, profileService, hospital
   };
 
   this.signup = function(user){
-    $log.debug('IN SIGNUPCONTROLLER!!!');
     authService.signup(user)
     .then(() => {
       $log.debug('IN SIGNUPCONTROLLER');

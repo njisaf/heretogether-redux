@@ -82,6 +82,5 @@ function authService($q, $log, $http, $window){
     });
   };
 
-  // return service
   return service;
 }
