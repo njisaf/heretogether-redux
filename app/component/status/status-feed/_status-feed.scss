@@ -16,11 +16,11 @@ p {
 
   .glyphicon-pencil {
     position: absolute;
-    display: inline-block;
-    margin-right: 70%;
+    // display: inline;
+    border: dotted 2px orange;
   }
 
-  p {
+  .status-text {
     position: relative;
     display: block;
 
@@ -28,5 +28,13 @@ p {
 
   img {
     width: 60%;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .display-date {
+    margin-top: 0%;
+    padding-top: 0%;
+    font-size: 75%;
   }
 }

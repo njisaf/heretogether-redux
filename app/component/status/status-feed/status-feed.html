@@ -1,14 +1,21 @@
 <section class="status-feed">
   <div class="container">
-    <p>
-      {{statusFeedCtrl.status.text}}
-      <span class="glyphicon glyphicon-pencil"
-      ng-click="statusFeedCtrl.showEditStatus = !statusFeedCtrl.showEditStatus"></span>
-    </p>
+
     <edit-status
     ng-if="statusFeedCtrl.showEditStatus"
     status="statusFeedCtrl.status"></edit-status>
-    <img class="status-feed-img" ng-src="{{statusFeedCtrl.status.fileID.fileURI}}">
-    <delete-status status="statusFeedCtrl.status"></delete-status>
+
+    <div class="status-container">
+      <p class="status-text">
+        {{statusFeedCtrl.status.text}}
+        <span class="glyphicon glyphicon-pencil"
+        ng-click="statusFeedCtrl.showEditStatus = !statusFeedCtrl.showEditStatus"></span>
+      </p>
+      <img class="status-feed-img" ng-src="{{statusFeedCtrl.status.fileID.fileURI}}">
+      <p class="display-date">Status Posted: {{statusFeedCtrl.status.created | date:'MMM d, y h:mm: a'}}</p>
+   </div>
+
+
+   <delete-status status="statusFeedCtrl.status"></delete-status>
   </div>
 </section>

@@ -12,7 +12,6 @@ function MakeStatusController($log, statusService){
   this.handleSubmit = function(){
 
     if (!this.status.file){
-      console.log('hit here?');
       return statusService.createStatus(this.status)
       .then(() => {
         this.status.text = null;
