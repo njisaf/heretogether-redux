@@ -4,11 +4,11 @@ require('./_navbar.scss');
 
 module.exports = {
   template: require('./navbar.html'),
-  controller: ['$log', '$location', '$window', '$rootScope', 'authService', 'hospitalService', NavController],
+  controller: ['$log', '$location', '$window', '$rootScope', 'authService',  NavController],
   controllerAs: 'navCtrl',
 };
 
-function NavController($log, $location, $window, $rootScope, authService, hospitalService){
+function NavController($log, $location, $window, $rootScope, authService){
   $log.debug('init navCtrl');
 
   this.pageLoadHandler = function(){
@@ -52,7 +52,7 @@ function NavController($log, $location, $window, $rootScope, authService, hospit
         $location.url('/');
       });
   };
-  
+
   $window.onload = this.pageLoadHandler.bind(this);
   $rootScope.$on('$stateChangeStart', this.pageLoadHandler.bind(this));
 }
