@@ -16,7 +16,8 @@ function FooterController($log, $location, $rootScope, authService){
 
     if(path === '/join'){
       this.hideFooter = true;
-    } else {
+    }
+    if(path !== '/join'){
       this.hideFooter = false;
     }
   };
