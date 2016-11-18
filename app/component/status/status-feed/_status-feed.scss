@@ -9,14 +9,12 @@ p {
   width: 90%;
 }
 
-
 .status-feed {
   text-align: center;
   margin: 0 auto;
 
   .glyphicon-pencil {
     position: absolute;
-    // display: inline;
     border: dotted 2px orange;
   }
 
@@ -24,12 +22,6 @@ p {
     position: relative;
     display: block;
 
-  }
-
-  img {
-    width: 60%;
-    display: block;
-    margin: 0 auto;
   }
 
   .display-date {
