@@ -9,21 +9,23 @@
   function MockHospitalController($log, $window, hospitalService){
     $log.debug('init MockHospitalController');
 
-    this.mockHospitals = [{ _id: '582e77c3cbc996e7ecb5cc97',
-      name: 'Seattle Children\'s Hospital',
-    },
-    { _id: '582e77c3cbc996e7ecb5cc98',
-      name: 'Providence',
-    },
-    { _id: '582e77c3cbc996e7ecb5cc99',
-      name: 'Evergreen',
-    },
-    { _id: '582e77c3cbc996e7ecb5cc9a',
-      name: 'St. Francis',
-    },
-    { _id: '582e77c3cbc996e7ecb5cc9b',
-      name: 'UW Medical Center',
-    } ];
+    this.mockHospitals = [];
+
+    // this.mockHospitals = [{ _id: '582e77c3cbc996e7ecb5cc97',
+    //   name: 'Seattle Children\'s Hospital',
+    // },
+    // { _id: '582e77c3cbc996e7ecb5cc98',
+    //   name: 'Providence',
+    // },
+    // { _id: '582e77c3cbc996e7ecb5cc99',
+    //   name: 'Evergreen',
+    // },
+    // { _id: '582e77c3cbc996e7ecb5cc9a',
+    //   name: 'St. Francis',
+    // },
+    // { _id: '582e77c3cbc996e7ecb5cc9b',
+    //   name: 'UW Medical Center',
+    // } ];
 
     let exampleHospital1 = {
       name: 'Seattle Children\'s Hospital',
@@ -70,7 +72,7 @@
     .then(() => {
       hospitalService.fetchHospitals()
       .then((hospitals) => {
-        this.mockHospitals = hospitals.data;
+        this.mockHospitals.push(hospitals.data);
       });
     });
     };
@@ -87,7 +89,7 @@
       hospitalService.fetchHospitals();
     };
 
-  // this.createMockHospitals();
+    this.createMockHospitals();
   // this.stopCreatingMockHospitals();
   // console.log('hahaha', this.hospital);
 
