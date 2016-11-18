@@ -2,25 +2,76 @@
 
 require('./_home.scss');
 
-module.exports = ['$log', '$rootScope', '$window', 'statusService', 'hospitalService', HomeController];
+module.exports = ['$log', '$rootScope', '$window', 'statusService', 'hospitalService', 'profileService', HomeController];
 
-function HomeController($log, $rootScope, $window, statusService, hospitalService){
+function HomeController($log, $rootScope, $window, statusService, hospitalService, profileService){
   $log.debug('init homeCtrl');
 
   if(!hospitalService.hospitalID) hospitalService.hospitalID = $window.localStorage.getItem('hospitalID');
 
   this.statuses = [];
+  this.profiles = [];
+  this.combinedData = null;
   this.currentStatus = null;
 
-  this.fetchStatuses = function() {
+  this.fetchData = function() {
     return statusService.fetchStatuses()
     .then(statuses => {
+      $log.debug('Statuses fetched!', statuses);
       this.statuses = statuses;
-      return statuses;
+      return this.statuses;
+    })
+    .then(() => {
+      return profileService.fetchProfiles();
+    })
+    .then(profiles => {
+      $log.debug('Profiles fetched!', profiles);
+      this.profiles = profiles;
+      return this.profiles;
+    })
+    .then(profiles => {
+      this.combinedData = this.statuses.map(function(value, index) {
+        return {
+          status: value,
+          profile: profiles[index],
+        };
+      });
+      $log.debug('COMBINED DATA', this.combinedData);
     });
   };
 
-  this.fetchStatuses();
+  // this.fetchStatuses = function() {
+  //   return statusService.fetchStatuses()
+  //   .then(statuses => {
+  //     $log.debug('Statuses fetched!', statuses);
+  //     this.statuses = statuses;
+  //     return statuses;
+  //   });
+  // };
+  //
+  // this.fetchProfiles = function() {
+  //   return profileService.fetchProfiles()
+  //   .then(profiles => {
+  //     $log.debug('Profiles fetched!', profiles);
+  //     this.profiles = profiles;
+  //     return profiles;
+  //   });
+  // };
+  //
+  // this.combineData = function() {
+  //   this.combinedData = this.statuses.map(function(value, index) {
+  //     return {
+  //       status: value,
+  //       profile: this.profiles[index],
+  //     };
+  //   });
+  //   $log.debug('COMBINED DATA', this.combinedData);
+  // };
+  //
+  // this.fetchProfiles();
+  // this.fetchStatuses();
+  // this.combineData();
+  this.fetchData();
 
   $rootScope.$on('$locationChangeSuccess', () => {
     this.fetchStatuses();
