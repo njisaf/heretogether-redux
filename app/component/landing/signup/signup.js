@@ -37,15 +37,4 @@ function SignupController($log, $location, authService, profileService, hospital
       console.log('failed to signup');
     });
   };
-
-  //TODO: Figure this out
-  this.getHospitalAtLogin = function(){
-    hospitalService.fetchHospitals()
-    .then((hospitals) => {
-      this.hospitals = hospitals.data;
-      return this.hospitals;
-    });
-  };
-  this.getHospitalAtLogin();
-
 }

@@ -22,13 +22,6 @@ function LoginController($log, $location, authService, hospitalService){
     });
   };
 
-  this.getHospitalAtLogin = function(){
-    hospitalService.fetchHospitals()
-    .then((hospitals) => {
-      this.hospitals = hospitals.data;
-      return this.hospitals;
-    });
-  };
 
   this.getHospitalAtLogin();
 }
