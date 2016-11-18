@@ -30,6 +30,7 @@ function HomeController($log, $rootScope, $window, statusService, hospitalServic
       return this.profiles;
     })
     .then(profiles => {
+
       this.statuses.forEach(status => {
         for (var i = 0; i < profiles.length; ++i) {
           if (profiles[i].userID === status.userID) {

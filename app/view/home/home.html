@@ -1,6 +1,7 @@
+<div class="container">
 <main class="home">
   <mock-hospital></mock-hospital>
-  <button ng-click="homeCtrl.fetchData()"> refresh </button>
+  <button class="btn btn-primary" ng-click="homeCtrl.fetchData()">Add Hospital</button>
   <make-status></make-status>
   <status-feed
     ng-repeat="data in homeCtrl.combinedData"
@@ -8,3 +9,4 @@
     profile="data.profile">
   </status-feed>
 </main>
+</div>
