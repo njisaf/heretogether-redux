@@ -1,0 +1,39 @@
+<section class="edit-profile">
+  <img ng-src="{{editProfileCtrl.profilePic}}">
+
+  <form novalidate
+    ng-submit="editProfileCtrl.uploadPic()">
+
+    <div class="glyphicon glyphicon-camera"
+      ngf-select
+      ng-model="editProfileCtrl.pic">
+    </div>
+
+    <button type="submit"
+    class="glyphicon glyphicon-plus"></button>
+  </form>
+
+  <form
+    novalidate
+    ng-submit="editProfileCtrl.updateProfile()">
+
+    <input
+      type="text"
+      class="form-control"
+      ng-model="editProfileCtrl.profile.profileName"
+      placeholder="{{editProfileCtrl.profile.profileName}}">
+
+    <input
+      type="text"
+      class="form-control"
+      ng-model="editProfileCtrl.profile.bio"
+      placeholder="{{editProfileCtrl.profile.bio}}">
+
+    <button type="submit" class="btn btn-primary" value="Update">
+
+  </form>
+
+</section>
+
+<!-- <p>{{editProfileCtrl.profile.profileName}}</p>
+<p>{{editProfileCtrl.profile.bio}}</p> -->
