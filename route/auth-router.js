@@ -77,7 +77,6 @@ authRouter.get('/api/auth/oauth_callback', googleOAUTH, function(req, res){
     res.redirect(`/#/join?token=${token}`);
   })
   .catch(err => {
-    console.err(err);
     console.log('user not found');
     res.redirect('/#/join');
   });
