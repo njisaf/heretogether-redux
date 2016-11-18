@@ -2,7 +2,9 @@
   <mock-hospital ></mock-hospital>
   <button ng-click="homeCtrl.fetchStatuses()"> refresh </button>
   <make-status></make-status>
-  <status-feed ng-repeat="status in homeCtrl.statuses"
-    status="status">
+  <status-feed
+    ng-repeat="data in homeCtrl.combinedData"
+    status="data.status"
+    profile="data.profile">
   </status-feed>
 </main>

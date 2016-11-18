@@ -1,11 +1,13 @@
 <section class="status-feed">
   <div class="container">
 
+
     <edit-status
     ng-if="statusFeedCtrl.showEditStatus"
     status="statusFeedCtrl.status"></edit-status>
 
     <div class="status-container">
+      <status-feed-profile profile="statusFeedCtrl.profile"></status-feed-profile>
       <p class="status-text">
         {{statusFeedCtrl.status.text}}
         <span class="glyphicon glyphicon-pencil"
