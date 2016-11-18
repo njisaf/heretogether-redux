@@ -4,14 +4,14 @@ require('./_status-feed-profile.scss');
 
 module.exports = {
   template: require('./status-feed-profile.html'),
-  controller: ['$log', StatusFeedProfileController],
+  controller: ['$log', '$location', StatusFeedProfileController],
   controllerAs: 'statusFeedProfileCtrl',
   bindings: {
     profile: '<',
   },
 };
 
-function StatusFeedProfileController($log){
+function StatusFeedProfileController($log, $location){
   $log.debug('init StatusFeedProfileController()', this.profile);
 
   if (!this.profile.picID) {
@@ -19,4 +19,8 @@ function StatusFeedProfileController($log){
   } else {
     this.profilePic = this.profile.picID.picURI;
   }
+
+  this.navigateToProfile = function() {
+    $location.url(`/profile/id=${this.profile._id}`);
+  };
 }
