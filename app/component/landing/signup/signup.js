@@ -9,19 +9,20 @@ module.exports = {
 function SignupController($log, $location, authService, profileService, hospitalService){
   $log.debug('IN SIGNUPCONTROLLER');
 
-  let exampleHospital = {
-    name: 'Seattle Children\'s Hospital',
-  };
-
+  // let exampleHospital = {
+  //   name: 'Seattle Children\'s Hospital',
+  // };
+  //
   this.hospitals = [];
 
   this.signup = function(user){
     authService.signup(user)
     .then(() => {
+      console.log('hospitalID', hospitalService.hospitalID);
 
-      if (!hospitalService.hospitalID){
-        return hospitalService.createHospital(exampleHospital);
-      }
+      // if (!hospitalService.hospitalID){
+      //   return hospitalService.createHospital(exampleHospital);
+      // }
 
     }).then(() => {
       let profile = {

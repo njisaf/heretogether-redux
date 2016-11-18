@@ -1,6 +1,6 @@
 <main class="home">
-  <mock-hospital ></mock-hospital>
-  <button ng-click="homeCtrl.fetchStatuses()"> refresh </button>
+  <mock-hospital></mock-hospital>
+  <button ng-click="homeCtrl.fetchData()"> refresh </button>
   <make-status></make-status>
   <status-feed
     ng-repeat="data in homeCtrl.combinedData"

@@ -11,8 +11,8 @@ const debug = require('debug')('ht:user');
 const Schema = mongoose.Schema;
 
 const userSchema = Schema({
-  username: {type: String, required: true, unique: true},
-  email: {type: String, required: true, unique: true},
+  username: {type: String, required: true},
+  email: {type: String, required: true},
   password: {type: String},
   findHash: {type: String, unique: true},
   created: {type: Date, default: Date.now},
