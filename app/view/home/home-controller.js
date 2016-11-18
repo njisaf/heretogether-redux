@@ -30,7 +30,7 @@ function HomeController($log, $rootScope, $window, statusService, hospitalServic
       return this.profiles;
     })
     .then(profiles => {
-      this.combinedData = this.statuses.forEach(function(value, index) {
+      this.combinedData = this.statuses.map(function(value, index) {
         return {
           status: value,
           profile: profiles[index],

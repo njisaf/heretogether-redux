@@ -7,10 +7,6 @@
     <div ng-class="{
       'has-error': signupForm.username.$invalid,
       'has-success': signupForm.username.$valid,
-      'has-error': signupForm.email.$invalid,
-      'has-success': signupForm.email.$valid,
-      'has-error': signupForm.password.$invalid,
-      'has-success': signupForm.password.$valid,
     }"
     class="form-group">
 
@@ -27,13 +23,25 @@
       type="text"
       placeholder="Username"
       ng-model="signupCtrl.user.username">
+    </div>
 
+    <div ng-class="{
+      'has-error': signupForm.email.$invalid,
+      'has-success': signupForm.email.$valid,
+    }"
+    class="form-group">
     <input
       class="form-control"
       required type="email"
       placeholder="Email"
       ng-model="signupCtrl.user.email">
+    </div>
 
+    <div ng-class="{
+      'has-error': signupForm.password.$invalid,
+      'has-success': signupForm.password.$valid,
+    }"
+    class="form-group">
     <input
       class="form-control"
       uib-tooltip="Password must have at least 8 characters"
@@ -47,9 +55,10 @@
       ng-minlength="8"
       placeholder="Password"
       ng-model="signupCtrl.user.password">
+    </div>
 
 
-      <mock-hospital> </mock-hospital>
+      <mock-hospital class="mock-hospital-container"> </mock-hospital>
 
     <input type="submit" class="btn btn-primary" value="Submit">
   </form>
