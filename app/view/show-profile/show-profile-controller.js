@@ -10,6 +10,8 @@ function ShowProfileController($log, $q, $location, profileService, statusServic
   this.profile = {};
   this.userProfiles = [];
   let userID = null;
+  this.editButtonText = 'Edit Profile';
+  this.editToggle = false;
 
   let profileString = $location.url();
   let query = profileString.split('=')[1].toString();
@@ -44,6 +46,17 @@ function ShowProfileController($log, $q, $location, profileService, statusServic
     .catch(err => {
       $log.error(err.message);
     });
+  };
+
+  this.editToggler = function() {
+
+    if (this.editToggle === false) {
+      this.editToggle = true;
+      this.editButtonText = 'Done Editing';
+    } else {
+      this.editToggle = false;
+      this.editButtonText = 'Edit Profile';
+    }
   };
 
   this.getProfileAndStatuses(query);

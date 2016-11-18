@@ -1,4 +1,6 @@
 <main class="show-profile">
-  <profile-top profile="showProfileCtrl.profile"></profile-top>
+  <profile-top ng-if="showProfileCtrl.editToggle === false" profile="showProfileCtrl.profile"></profile-top>
+  <edit-profile ng-if="showProfileCtrl.editToggle === true" profile="showProfileCtrl.profile"></edit-profile>
+  <div class="glyphicon glyphicon-pencil" ng-click="showProfileCtrl.editToggler()">{{showProfileCtrl.editButtonText}}</div>
   <profile-status-feed ng-repeat="status in showProfileCtrl.userProfiles" status="status"></profile-status-feed>
 </main>

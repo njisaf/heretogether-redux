@@ -146,5 +146,31 @@ function profileService($q, $log, $http, $window, authService, hospitalService) 
     });
   };
 
+  service.updateProfile = function(profile) {
+    $log.debug('Hit profileService.updateProfile');
+
+    return authService.getToken()
+    .then(token => {
+      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile/${profile._id}`;
+      let config = {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      return $http.put(url, profile, config);
+    })
+    .then(res => {
+      $log.debug('Profile updated');
+      let profile = res.data;
+      return profile;
+    })
+    .catch(err => {
+      $log.error(err.message);
+      return $q.reject(err);
+    });
+  };
+
   return service;
 }
