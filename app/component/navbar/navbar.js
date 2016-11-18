@@ -30,7 +30,9 @@ function NavController($log, $location, $window, $rootScope, authService){
        }
      })
      .catch(() => {
+       console.log('there is not yet a token');
        let query = $location.search();
+       console.log('lskjdflksdjf query', query)
        if (query.token) {
          return authService.setToken(query.token)
          .then(() => {
