@@ -22,12 +22,6 @@ function FooterController($log, $location, $window, $rootScope, profileService){
     }
   };
 
-  $window.onload = this.pageLoadHandler.bind(this);
-  $rootScope.$on('$stateChangeStart', this.pageLoadHandler.bind(this));
-
-
-  //Judy and Nassir's additions
-
   this.goToUserProfile = function(){
 
     profileService.getOneProfileNoID()
@@ -38,5 +32,11 @@ function FooterController($log, $location, $window, $rootScope, profileService){
       $log.error(err.message);
     });
   };
+
+
+
+  $window.onload = this.pageLoadHandler.bind(this);
+  $rootScope.$on('$stateChangeStart', this.pageLoadHandler.bind(this));
+
 
 }

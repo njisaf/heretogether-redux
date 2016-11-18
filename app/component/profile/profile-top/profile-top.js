@@ -14,15 +14,8 @@ module.exports = {
 function ProfileTopController($log) {
   $log.debug('Initializing ProfileTopController', this.profile);
 
-  this.profilePic = null;
+  this.profilePic = require('../../../assets/imgs/heretogether-mobile-logo.png');
 
-  if (!this.profile.picID.imageURI) {
-    this.profilePic = require('../../../assets/imgs/heretogether-mobile-logo.png');
-  } else {
-    this.profilePic = this.profile.picID.imageURI;
-  }
-
-
-
+  if (this.profile.picID) this.profilePic = this.profile.picID.imageURI;
 
 }

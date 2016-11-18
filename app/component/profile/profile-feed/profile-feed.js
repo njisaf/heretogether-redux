@@ -14,10 +14,12 @@ module.exports = {
 function ProfileFeedController($log, $location) {
   $log.debug('Initializing ProfileFeedController');
 
-  this.profilePic = 'https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-mobile-logo';
-
-  // this.profilePic = this.profile.picID.picURI || 'https://s3-us-west-2.amazonaws.com/heretogether-assets/heretogether-mobile-logo';
-
+  if (!this.profile.picID) {
+    this.profilePic = require('../../../assets/imgs/heretogether-mobile-logo.png');
+  } else {
+    this.profilePic = this.profile.picID.picURI;
+  }
+  
   this.showProfile = function() {
     $log.debug('Navigating to profile...');
 
