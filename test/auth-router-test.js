@@ -114,8 +114,8 @@ describe('testing auth-router', function(){
           email: exampleUser.email,
         })
         .end((err, res) => {
-          expect(res.status).to.equal(200);
-          // expect(res.text).to.equal('ConflictError');
+          expect(res.status).to.equal(409);
+          expect(res.text).to.equal('ConflictError');
           done();
         });
       });
@@ -131,8 +131,8 @@ describe('testing auth-router', function(){
           email: this.tempUser.email,
         })
         .end((err, res) => {
-          expect(res.status).to.equal(200);
-          // expect(res.text).to.equal('ConflictError');
+          expect(res.status).to.equal(409);
+          expect(res.text).to.equal('ConflictError');
           done();
         });
       });
