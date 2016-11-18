@@ -1,20 +1,52 @@
 <section class="login">
   <form
+    name="loginForm"
     ng-submit="loginCtrl.login(loginCtrl.user)"
     novalidate>
-
-    <input class="form-control"
-    ng-minlength="6" required
-    type="text" placeholder="Username" ng-model="loginCtrl.user.username">
-
-    <input class="form-control"
-    required type="password" ng-minlength="8"
-    placeholder="Password" ng-model="loginCtrl.user.password">
-
-    
-
-    <input type="submit" class="btn btn-primary" value="Submit">
-
-
+    <div ng-class="{
+      'has-error': loginForm.username.$invalid,
+      'has-success': loginForm.username.$valid,
+      'has-error': loginForm.password.$invalid,
+      'has-success': loginForm.password.$valid,
+    }"
+    class="form-group">
+    <input
+      name="username"
+      uib-tooltip="Username must have at least 5 characters"
+      tooltip-enable="loginForm.$submitted && loginForm.username.$invalid"
+      tooltip-is-open="loginForm.$submitted && loginForm.username.$invalid &&
+      loginForm.username.$focus"
+      tooltip-placement="top-left"
+      tooltip-trigger="'focus'"
+      class="form-control"
+      ng-minlength="5"
+      required
+      type="text"
+      placeholder="Username"
+      ng-model="loginCtrl.user.username">
+    </div>
+    <div ng-class="{
+      'has-error': loginForm.password.$invalid && loginForm.$submitted,
+      'has-success': loginForm.password.$valid,
+    }"
+    class="form-group">
+    <input
+      type="password"
+      name="password"
+      uib-tooltip="Password must have at least 8 characters"
+      tooltip-enable="loginForm.$submitted && loginForm.password.$invalid"
+      tooltip-is-open="loginForm.$submitted && loginForm.password.$invalid &&
+      loginForm.password.$focus"
+      tooltip-placement="top-left"
+      tooltip-trigger="'focus'"
+      class="form-control has-error"
+      required
+      ng-minlength="8"
+      placeholder="Password"
+      ng-model="loginCtrl.user.password">
+    <input
+      type="submit"
+      class="btn btn-primary"
+      value="Submit">
   </form>
 </section>

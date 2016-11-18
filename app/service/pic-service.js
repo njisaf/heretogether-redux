@@ -1,21 +1,18 @@
 'use strict';
 
-module.exports = ['$q', '$log', '$http', 'Upload', 'authService', fileService];
+module.exports = ['$q', '$log', '$http', 'Upload', 'authService', picService];
 
-function fileService($q, $log, $http, Upload, authService){
-  $log.debug('Initializing fileService');
+function picService($q, $log, $http, Upload, authService) {
+  $log.debug('Initializing picService');
 
   let service = {};
 
-
-  service.uploadStatusFile = function (statusID, fileData){
-    $log.debug('fileService.uploadFile()');
-
+  service.uploadProfilePic = function (profileID, picData){
+    $log.debug('picService.uploadProfilePic()');
 
     return authService.getToken()
     .then((token) => {
-
-      let url = `${__API_URL__}/api/status/${statusID}/file`;
+      let url = `${__API_URL__}/api/profile/${profileID}/pic`;
       let headers = {
         Authorization: `Bearer ${token}`,
         Accept: 'application/json',
@@ -26,14 +23,14 @@ function fileService($q, $log, $http, Upload, authService){
         headers,
         method: 'POST',
         data: {
-          file: fileData,
+          image: picData,
         },
       });
     })
     .then((res) => {
-      $log.log('File upoladed successfully', res);
-      let file = res.data;
-      return file;
+      $log.log('Pic uploaded successfully', res);
+      let pic = res.data;
+      return pic;
     })
     .catch((err) => {
       $log.error(err.message);

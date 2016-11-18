@@ -16,10 +16,10 @@ function ProfileTopController($log) {
 
   this.profilePic = null;
 
-  if (!this.profile.picID) {
+  if (!this.profile.picID.imageURI) {
     this.profilePic = require('../../../assets/imgs/heretogether-mobile-logo.png');
   } else {
-    this.profilePic = this.profile.picID.picURI;
+    this.profilePic = this.profile.picID.imageURI;
   }
 
 
