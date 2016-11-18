@@ -1,4 +1,4 @@
-require('dotenv').load()
+require('dotenv').load();
 const mongoose = require('mongoose');
 const Promise = require('bluebird');
 const Hospital = require('./model/hospital.js');
