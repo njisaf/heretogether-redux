@@ -61,23 +61,27 @@ authRouter.get('/api/auth/oauth_callback', googleOAUTH, function(req, res){
         username: req.googleOAUTH.email,
         email: req.googleOAUTH.email,
         google: {
-          googleID: req.googleOUATH.googleID,
-          tokenTimeToLive: req.googleOUATH.tokenTimeToLive,
+          googleID: req.googleOAUTH.googleID,
+          tokenTTL: req.googleOAUTH.tokenTimeToLive,
           tokenTimestamp: Date.now(),
-          refreshToken: req.googleOUATH.refreshToken,
-          accessToken: req.googleOUATH.accessToken,
+          refreshToken: req.googleOAUTH.refreshToken,
+          accessToken: req.googleOAUTH.accessToken,
         },
       };
+      console.log('userData', userData);
       return new User(userData).save();
     }
     return Promise.reject(err);
   })
-  .then( user => user.generateToken())
+  .then( user => {
+    console.log('a user was created');
+    return user.generateToken();
+  })
   .then(token => {
     res.redirect(`/#/join?token=${token}`);
   })
   .catch(err => {
-    console.err(err);
+    console.log('errrrrrrrrrr', err);
     console.log('user not found');
     res.redirect('/#/join');
   });
