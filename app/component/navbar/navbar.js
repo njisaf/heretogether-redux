@@ -46,10 +46,9 @@ function NavController($log, $location, $window, $rootScope, authService){
   this.logout = function() {
     $log.log('navbarCtrl.logout()');
     this.hideLogout = true;
-    this.hideLogin = false;
     authService.logout()
       .then(() => {
-        $location.url('/');
+        $location.url('/join');
       });
   };
 
