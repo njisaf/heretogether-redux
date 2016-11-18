@@ -13,7 +13,7 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
   //creating status with an attached file
   service.createFileStatus = function(status){
 
-    if(!status.hospitalID) status.hospitalID = $window.localStorage.getItem('hospitalID');
+    if(!status.hospitalID) status.hospitalID = hospitalService.hospitalID;
 
     $log.debug('statusService.createFileStatus hit');
 
@@ -48,15 +48,15 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
     $log.debug('statusService.createStatus()', status);
 
 
-    let fileData = null;
+    // let fileData = null;
+    //
+    if(!status.hospitalID) status.hospitalID = hospitalService.hospitalID;
+    //
+    // if(status.file) {
+    //   fileData = status.file;
+    // }
 
-    if(!status.hospitalID) status.hospitalID = $window.localStorage.getItem('hospitalID');
-
-    if(status.file) {
-      fileData = status.file;
-    }
-
-    console.log('FILEDATA:', fileData);
+    // console.log('FILEDATA:', fileData);
 
     return authService.getToken()
     .then(token => {
@@ -72,10 +72,10 @@ function statusService($q, $log, Upload, $http, $window, authService, hospitalSe
       return $http.post(url, status, config);
     })
     .then(res => {
-      // $log.log('Status successfully instantiated');
+      $log.debug('Status successfully instantiated');
       let status = res.data;
       service.statuses.unshift(status);
-      $log.log('HERES OUR STATUSES', service.statuses);
+      $log.debug('HERES OUR STATUSES', service.statuses);
       return status;
     })
     .catch(err => {

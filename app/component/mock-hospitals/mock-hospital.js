@@ -1,96 +1,39 @@
-  'use strict';
+'use strict';
 
-  module.exports = {
-    template: require('./mock-hospital.html'),
-    controller: ['$log', '$window', 'hospitalService', MockHospitalController],
-    controllerAs: 'mockHospitalCtrl',
+module.exports = {
+  template: require('./mock-hospital.html'),
+  controller: ['$log', 'hospitalService', 'profileService', MockHospitalController],
+  controllerAs: 'mockHospitalCtrl',
+};
+
+function MockHospitalController($log, hospitalService, profileService){
+  $log.debug('hahahahhah init MockHospitalController');
+
+  this.getHospitals = function(){
+    hospitalService.fetchHospitals()
+    .then((hospitals) => {
+      this.hospitals = hospitals.data;
+    });
   };
 
-  function MockHospitalController($log, $window, hospitalService){
-    $log.debug('init MockHospitalController');
+  this.setHospitalID = function(){
+    hospitalService.setHospitalID(this.hospitalID);
+    $log.debug('HospitalID set to: ', hospitalService.hospitalID);
 
-    this.mockHospitals = [{ _id: '582e77c3cbc996e7ecb5cc97',
-      name: 'Seattle Children\'s Hospital',
-    },
-    { _id: '582e77c3cbc996e7ecb5cc98',
-      name: 'Providence',
-    },
-    { _id: '582e77c3cbc996e7ecb5cc99',
-      name: 'Evergreen',
-    },
-    { _id: '582e77c3cbc996e7ecb5cc9a',
-      name: 'St. Francis',
-    },
-    { _id: '582e77c3cbc996e7ecb5cc9b',
-      name: 'UW Medical Center',
-    } ];
-
-    let exampleHospital1 = {
-      name: 'Seattle Children\'s Hospital',
-    };
-
-    let exampleHospital2 = {
-      name: 'Providence',
-    };
-
-    let exampleHospital3 = {
-      name: 'Evergreen',
-    };
-
-    let exampleHospital4 = {
-      name: 'St. Francis',
-    };
-
-    let exampleHospital5 = {
-      name: 'UW Medical Center',
-    };
-
-    this.createMockHospitals = function(){
-      hospitalService.createHospital(exampleHospital1)
-    .then((hospital) => {
-      console.log('hospitalID', hospital._id);
-      return hospital;
-    });
-      hospitalService.createHospital(exampleHospital2)
-    .then((hospital) => {
-      return hospital;
-    });
-      hospitalService.createHospital(exampleHospital3)
-    .then((hospital) => {
-      return hospital;
-    });
-      hospitalService.createHospital(exampleHospital4)
-    .then((hospital) => {
-      return hospital;
-    });
-      hospitalService.createHospital(exampleHospital5)
-    .then((hospital) => {
-      return hospital;
+    profileService.getOneProfileNoID()
+    .then(profile => {
+      $log.debug('Fetched profile: ', profile);
     })
-    .then(() => {
-      hospitalService.fetchHospitals()
-      .then((hospitals) => {
-        this.mockHospitals = hospitals.data;
-      });
+    .catch(() => {
+      let profile = {
+        hospitalID: hospitalService.hospitalID,
+      };
+      return profileService.createProfile(profile);
+    })
+    .then(res => {
+      $log.debug('Profile created: ', res);
     });
-    };
+  };
 
-    this.stopCreatingMockHospitals = function(){
-      console.log('hit stopCreatingMockHospitals?');
-      if(!this.mockHospitals.length){
-        hospitalService.fetchHospitals()
-      .then((hospitals) => {
-        this.mockHospitals = hospitals.data;
-      });
-      }
-    //else
-      hospitalService.fetchHospitals();
-    };
-
-  // this.createMockHospitals();
-  // this.stopCreatingMockHospitals();
-  // console.log('hahaha', this.hospital);
-
-
-
-  }
+  this.getHospitals();
+}

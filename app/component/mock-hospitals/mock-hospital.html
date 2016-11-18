@@ -1,8 +1,9 @@
-<select
-  ng-model="mockHospitalCtrl.hospital"
-  class="form-control">
+<div>
+  <select
+  ng-model="mockHospitalCtrl.hospitalID"
+  class="form-control" ng-change="mockHospitalCtrl.setHospitalID()">
     <option
-    ng-repeat="hospital in mockHospitalCtrl.mockHospitals"
-    ng-value="hospital._id"
-    ng-if="$index<5">{{hospital.name}}</option>
-</select>
+    ng-repeat="hospital in mockHospitalCtrl.hospitals"
+    ng-value="hospital._id" >{{hospital.name}}</option>
+  </select>
+</div>

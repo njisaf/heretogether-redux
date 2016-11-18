@@ -14,8 +14,9 @@ module.exports = {
 function StatusFeedProfileController($log){
   $log.debug('init StatusFeedProfileController()', this.profile);
 
-  this.profilePic = require('../../../assets/imgs/heretogether-mobile-logo.png');
-
-  if (this.profile.picID) this.profilePic = this.profile.picID.imageURI;
-
+  if (!this.profile.picID) {
+    this.profilePic = require('../../../assets/imgs/heretogether-mobile-logo.png');
+  } else {
+    this.profilePic = this.profile.picID.picURI;
+  }
 }
