@@ -3,7 +3,6 @@
     name="loginForm"
     ng-submit="loginCtrl.login(loginCtrl.user)"
     novalidate>
-
     <div ng-class="{
       'has-error': loginForm.username.$invalid,
       'has-success': loginForm.username.$valid,
@@ -62,12 +61,14 @@
       ng-minlength="8"
       placeholder="Password"
       ng-model="loginCtrl.user.password">
-
     <input
       type="submit"
       class="btn btn-primary"
       value="Submit">
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> d0fb71069587fae204c0e8815b55bf8735635780
   </form>
 </section>
