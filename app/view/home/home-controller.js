@@ -11,7 +11,7 @@ function HomeController($log, $rootScope, $window, statusService, hospitalServic
 
   this.statuses = [];
   this.profiles = [];
-  this.combinedData = null;
+  this.combinedData = [];
   this.currentStatus = null;
 
   this.fetchData = function() {
@@ -30,11 +30,16 @@ function HomeController($log, $rootScope, $window, statusService, hospitalServic
       return this.profiles;
     })
     .then(profiles => {
-      this.combinedData = this.statuses.forEach(function(value, index) {
-        return {
-          status: value,
-          profile: profiles[index],
-        };
+      this.statuses.forEach(status => {
+        for (var i = 0; i < profiles.length; ++i) {
+          if (profiles[i].userID === status.userID) {
+            let obj = {
+              status: status,
+              profile: profiles[i],
+            };
+            this.combinedData.push(obj);
+          }
+        }
       });
       $log.debug('COMBINED DATA', this.combinedData);
     });

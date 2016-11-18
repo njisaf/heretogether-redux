@@ -1,4 +1,4 @@
 <section class="status-feed-profile">
-  <img ng-src="{{statusFeedProfileCtrl.profilePic}}">
-  <p>{{statusFeedProfileCtrl.profile.profileName}}</p>
+  <img ng-click="statusFeedProfileCtrl.navigateToProfile()" ng-src="{{statusFeedProfileCtrl.profilePic}}">
+  <p ng-click="statusFeedProfileCtrl.navigateToProfile()">{{statusFeedProfileCtrl.profile.profileName}}</p>
 </section>
