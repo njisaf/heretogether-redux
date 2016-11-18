@@ -1,14 +1,21 @@
 <form novalidate
   ng-submit="makeStatusCtrl.handleSubmit()">
-  <input type="text"
-  placeholder="What's up?"
-  ng-model="makeStatusCtrl.status.text">
 
-  <div class="glyphicon glyphicon-camera"
+<div class="col-md-12">
+  <div class="input-group">
+    <input class="form-control" type="text"
+    placeholder="What's up?"
+    ng-model="makeStatusCtrl.status.text">
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="submit">Post</button>
+    </span>
+  </div>
+</div>
+
+
+  <!-- <div class="glyphicon glyphicon-camera"
     ngf-select
     ng-model="makeStatusCtrl.status.file">
-  </div>
+  </div> -->
 
-  <button type="submit"
-  class="glyphicon glyphicon-plus"></button>
 </form>
