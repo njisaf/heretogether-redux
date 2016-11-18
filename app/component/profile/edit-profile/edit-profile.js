@@ -7,7 +7,7 @@ module.exports = {
   controller: ['$log', 'profileService', 'picService', EditProfileController],
   controllerAs: 'editProfileCtrl',
   bindings: {
-    profile: '<',
+    profile: '=',
   },
 };
 
@@ -45,6 +45,8 @@ function EditProfileController($log, profileService, picService) {
     picService.uploadProfilePic(this.profile._id, this.pic)
     .then(res => {
       $log.debug('Pic uploaded', res);
+      this.profile.picID = res;
+      this.profilePic = res.imageURI;
       this.pic = {};
     });
 
