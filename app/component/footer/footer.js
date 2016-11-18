@@ -4,39 +4,27 @@ require('./_footer.scss');
 
 module.exports = {
   template: require('./footer.html'),
-  controller: ['$log', '$location', '$rootScope', 'authService', 'profileService', FooterController],
+  controller: ['$log', '$location', '$window', '$rootScope', 'profileService', FooterController],
   controllerAs: 'footerCtrl',
 };
 
-function FooterController($log, $location, $rootScope, authService, profileService){
+function FooterController($log, $location, $window, $rootScope, profileService){
   $log.debug('init FooterController');
 
-  this.checkPath = function(){
-    let path = $location.path;
+  this.pageLoadHandler = function(){
+    $log.debug('footerCtrl.pageLoadHandler()');
+    let path = $location.path();
 
-    if(path === '/join'){
+    if (path === '/join'){
       this.hideFooter = true;
     } else {
       this.hideFooter = false;
     }
-
-    if (path === '/join'){
-      this.hideFooter = true;
-      authService.getToken()
-      .then(() => {
-        $location.url('/join');
-      });
-    }
-    if(path !== '/join'){
-      this.hideFooter = false;
-      authService.getToken()
-      .catch( () => {
-        $location.url('/join#login');
-      });
-    }
   };
 
-  this.checkPath();
+  $window.onload = this.pageLoadHandler.bind(this);
+  $rootScope.$on('$stateChangeStart', this.pageLoadHandler.bind(this));
+
 
   //Judy and Nassir's additions
 
@@ -51,7 +39,4 @@ function FooterController($log, $location, $rootScope, authService, profileServi
     });
   };
 
-  $rootScope.$on('$locationChangeSuccess', () => {
-    this.checkPath();
-  });
 }

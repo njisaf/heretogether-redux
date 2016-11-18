@@ -1,1 +1,10 @@
 
+@import "theme";
+
+.signup-form {
+
+  .has-error {
+  background-color: $app-error;
+  }
+
+}

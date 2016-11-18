@@ -1,18 +1,52 @@
 <section class="signup">
   <form
+    name="signupForm"
     ng-submit="signupCtrl.signup(signupCtrl.user)"
     novalidate>
 
-    <input class="form-control"
-    ng-minlength="6" required
-    type="text" placeholder="Username" ng-model="signupCtrl.user.username">
+    <div ng-class="{
+      'has-error': signupForm.username.$invalid,
+      'has-success': signupForm.username.$valid,
+      'has-error': signupForm.email.$invalid,
+      'has-success': signupForm.email.$valid,
+      'has-error': signupForm.password.$invalid,
+      'has-success': signupForm.password.$valid,
+    }"
+    class="form-group">
 
-    <input class="form-control"
-    required type="email" placeholder="Email" ng-model="signupCtrl.user.email">
+    <input
+      class="form-control"
+      uib-tooltip="Username must have at least 5 characters"
+      tooltip-enable="signupForm.$submitted && signupForm.username.$invalid"
+      tooltip-is-open="signupForm.$submitted && signupForm.username.$invalid &&
+      signupForm.username.$focus"
+      tooltip-placement="top-left"
+      tooltip-trigger="'focus'"
+      ng-minlength="6"
+      required
+      type="text"
+      placeholder="Username"
+      ng-model="signupCtrl.user.username">
 
-    <input class="form-control"
-    required type="password" ng-minlength="8"
-    placeholder="Password" ng-model="signupCtrl.user.password">
+    <input
+      class="form-control"
+      required type="email"
+      placeholder="Email"
+      ng-model="signupCtrl.user.email">
+
+    <input
+      class="form-control"
+      uib-tooltip="Password must have at least 8 characters"
+      tooltip-enable="signupForm.$submitted && signupForm.password.$invalid"
+      tooltip-is-open="signupForm.$submitted && signupForm.password.$invalid &&
+      signupForm.password.$focus"
+      tooltip-placement="top-left"
+      tooltip-trigger="'focus'"
+      required
+      type="password"
+      ng-minlength="8"
+      placeholder="Password"
+      ng-model="signupCtrl.user.password">
 
     <!-- <select
     ng-model="signupCtrl.hospitalID"
