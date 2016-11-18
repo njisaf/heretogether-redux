@@ -10,44 +10,10 @@ body {
     text-align: center;
 }
 
-// form {
-//
-//     text-align: center;
-//
-//
-//   .btn-primary {
-//       background-color: white;
-//       border-color: white;
-//   }
-//
-//   .glyphicon-camera:before {
-//     content: "\E046";
-//     font-size: 2em;
-//   }
-//
-//   .glyphicon-plus:before {
-//     content: "+";
-//     font-size: 1.75em;
-//   }
-//
-//
-//   .form-control {
-//
-//   }
-// }
-//
-// .navbar {
-//   .btn-logout {
-//     display: none;
-//     @media (min-width: 500px){
-//       display: inline-block;
-//     }
-//   }
-// }
-//
-// @media (min-width: 768px) {
-//   .form-inline .form-control {
-//     display: inline-block;
-//     width: 35em;
-//   }
-// }
+.navbar-brand {
+    float: left;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 55px;
+    height: 90px;
+}
