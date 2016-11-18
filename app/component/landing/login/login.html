@@ -25,6 +25,7 @@
       placeholder="Username"
       ng-model="loginCtrl.user.username">
     </div>
+
     <div ng-class="{
       'has-error': loginForm.password.$invalid && loginForm.$submitted,
       'has-success': loginForm.password.$valid,
@@ -44,9 +45,20 @@
       ng-minlength="8"
       placeholder="Password"
       ng-model="loginCtrl.user.password">
+
+      <select
+      ng-model="loginCtrl.hospitalID"
+      class="form-control">
+        <option
+        ng-repeat="hospital in loginCtrl.hospitals"
+        ng-value="hospital._id" >{{hospital.name}}</option>
+      </select>
+
+
     <input
       type="submit"
       class="btn btn-primary"
       value="Submit">
+
   </form>
 </section>
