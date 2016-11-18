@@ -31,7 +31,6 @@ function MockHospitalController($log, hospitalService){
   };
 
   this.createMockHospitals = function(){
-    console.log('got this far?');
     hospitalService.createHospital(exampleHospital1)
     .then((hospital) => {
       return hospital;
@@ -56,12 +55,12 @@ function MockHospitalController($log, hospitalService){
       hospitalService.fetchHospitals()
       .then((hospitals) => {
         this.mockHospitals = hospitals.data;
-        console.log('hahahaha', this.mockHospitals);
       });
     });
   };
 
   this.createMockHospitals();
+  console.log('what', this.hospitalID);
 
 
 }
