@@ -74,11 +74,11 @@ authRouter.get('/api/auth/oauth_callback', googleOAUTH, function(req, res){
   })
   .then( user => user.generateToken())
   .then(token => {
-    res.redirect(`/?token=${token}`);
+    res.redirect(`/#/join?token=${token}`);
   })
   .catch(err => {
     console.err(err);
     console.log('user not found');
-    res.redirect('/#/home');
+    res.redirect('/#/join');
   });
 });
