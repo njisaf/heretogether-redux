@@ -47,7 +47,7 @@ authRouter.get('/api/auth/oauth_callback', googleOAUTH, function(req, res){
 
   // if googleError deal with google error
   if(req.googleError){
-    return res.redirect('/#/home');
+    return res.redirect('/#/join');
   }
   // check if user already exists
   User.findOne({email: req.googleOAUTH.email})
@@ -74,11 +74,11 @@ authRouter.get('/api/auth/oauth_callback', googleOAUTH, function(req, res){
   })
   .then( user => user.generateToken())
   .then(token => {
-    res.redirect(`/?token=${token}`);
+    res.redirect(`/#/join?token=${token}`);
   })
   .catch(err => {
     console.err(err);
     console.log('user not found');
-    res.redirect('/#/home');
+    res.redirect('/#/join');
   });
 });
