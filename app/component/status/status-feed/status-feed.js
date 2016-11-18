@@ -8,11 +8,12 @@ module.exports = {
   controllerAs: 'statusFeedCtrl',
   bindings: {
     status: '<',
+    profile: '<',
   },
 };
 
 function StatusFeedController($log) {
-  $log.debug('Initializing StatusFeedController');
+  $log.debug('Initializing StatusFeedController', this.status);
 
   this.showEditStatus = false;
 }
