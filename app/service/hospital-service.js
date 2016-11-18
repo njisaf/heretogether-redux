@@ -14,19 +14,15 @@ function hospitalService($q, $log, $http, $window, authService) {
   service.createHospital = function(hospital) {
     $log.debug('Hit hospitalService.createHospital()');
 
-    return authService.getToken()
-    .then(token => {
       let url = `${__API_URL__}/api/hospital`;
       let config = {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
         },
       };
 
-      return $http.post(url, hospital, config);
-    })
+    return $http.post(url, hospital, config)
     .then(res => {
       $log.log('Hospital created');
       let hospital = res.data;
@@ -65,8 +61,7 @@ function hospitalService($q, $log, $http, $window, authService) {
   };
 
   service.setHospitalID = function(hospitalID){
-    $log.log('hit setHospitalID()');
-
+    $log.debug('hit hospitalService.setHospitalID()');
     service.hospitalID = hospitalID;
   };
   return service;
