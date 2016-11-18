@@ -1,8 +1,8 @@
 'use strict';
 
-module.exports = ['$q', '$log', '$http', '$window', 'authService', hospitalService];
+module.exports = ['$q', '$log', '$http', '$window', hospitalService];
 
-function hospitalService($q, $log, $http, $window, authService) {
+function hospitalService($q, $log, $http, $window) {
   $log.debug('Initializing hospitalService');
 
   let service = {};
@@ -14,13 +14,13 @@ function hospitalService($q, $log, $http, $window, authService) {
   service.createHospital = function(hospital) {
     $log.debug('Hit hospitalService.createHospital()');
 
-      let url = `${__API_URL__}/api/hospital`;
-      let config = {
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      };
+    let url = `${__API_URL__}/api/hospital`;
+    let config = {
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+    };
 
     return $http.post(url, hospital, config)
     .then(res => {
