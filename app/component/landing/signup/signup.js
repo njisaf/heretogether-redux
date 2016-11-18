@@ -39,17 +39,13 @@ function SignupController($log, $location, authService, profileService, hospital
   };
 
   //TODO: Figure this out
-  this.getHospitalAtSignup = function(){
-    console.log('hello???');
-    return hospitalService.createHospital(exampleHospital)
-    .then((hospital) => {
-      $log.log(hospital, 'lalalalala');
-      hospitalService.fetchHospitals()
-      .then((hospitals) => {
-        this.hospitals = hospitals.data;
-        return this.hospitals;
-      });
+  this.getHospitalAtLogin = function(){
+    hospitalService.fetchHospitals()
+    .then((hospitals) => {
+      this.hospitals = hospitals.data;
+      return this.hospitals;
     });
   };
+  this.getHospitalAtLogin();
 
 }
