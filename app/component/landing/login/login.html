@@ -46,15 +46,7 @@
       placeholder="Password"
       ng-model="loginCtrl.user.password">
 
-      <select
-      ng-model="loginCtrl.hospitalID"
-      class="form-control">
-        <option
-        ng-repeat="hospital in loginCtrl.mockHospitals"
-        ng-value="hospital._id" >{{hospital.name}}</option>
-      </select>
-      <!-- <mock-hospital></mock-hospital> -->
-
+      <mock-hospital> </mock-hospital>
 
     <input
       type="submit"

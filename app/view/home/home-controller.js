@@ -7,7 +7,7 @@ module.exports = ['$log', '$rootScope', '$window', 'statusService', 'hospitalSer
 function HomeController($log, $rootScope, $window, statusService, hospitalService, profileService){
   $log.debug('init homeCtrl');
 
-  if(!hospitalService.hospitalID) hospitalService.hospitalID = $window.localStorage.getItem('hospitalID');
+  // if(!hospitalService.hospitalID) hospitalService.hospitalID = $window.localStorage.getItem('hospitalID');
 
   this.statuses = [];
   this.profiles = [];
@@ -30,7 +30,7 @@ function HomeController($log, $rootScope, $window, statusService, hospitalServic
       return this.profiles;
     })
     .then(profiles => {
-      this.combinedData = this.statuses.map(function(value, index) {
+      this.combinedData = this.statuses.forEach(function(value, index) {
         return {
           status: value,
           profile: profiles[index],
@@ -74,6 +74,6 @@ function HomeController($log, $rootScope, $window, statusService, hospitalServic
   this.fetchData();
 
   $rootScope.$on('$locationChangeSuccess', () => {
-    this.fetchStatuses();
+    this.fetchData();
   });
 }
