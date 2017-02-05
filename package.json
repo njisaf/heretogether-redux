@@ -14,7 +14,7 @@
     "test": "npm run test-front && npm run test-back",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
     "lint": "./node_modules/eslint/bin/eslint.js .",
-    "test-debug": "DEBUG='slug*' ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha",
+    "test-debug": "DEBUG='ht*' ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha",
     "build": "./node_modules/webpack/bin/webpack.js",
     "build-watch": "./node_modules/webpack/bin/webpack.js -w",
     "test-front": "./node_modules/karma/bin/karma start --single-run",
