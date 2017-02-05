@@ -15,8 +15,6 @@ function SignupController($log, $location, authService, profileService, hospital
     authService.signup(user)
     .then(() => {
       console.log('hospitalID', hospitalService.hospitalID);
-
-    }).then(() => {
       let profile = {
         profileName: user.username,
         hospitalID: hospitalService.hospitalID,

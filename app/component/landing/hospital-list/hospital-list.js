@@ -4,9 +4,6 @@ module.exports = {
   template: require('./hospital-list.html'),
   controller: ['$log', '$location', 'hospitalService', HospitalListController],
   controllerAs: 'hospitalListCtrl',
-  bindings: {
-    hospital: '=',
-  },
 };
 
 function HospitalListController($log, $location, hospitalService) {
@@ -14,11 +11,17 @@ function HospitalListController($log, $location, hospitalService) {
 
   this.allHospitals = [];
 
+  this.hospitalID = null;
+
   this.fetchHospitals = function() {
     hospitalService.fetchHospitals()
     .then(list => {
       console.log('hospitalListCtrl list: ', list);
       this.allHospitals = list.data;
     });
+  };
+
+  this.setID = function(id) {
+    hospitalService.hospitalID = id;
   };
 }
