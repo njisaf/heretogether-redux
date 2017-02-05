@@ -60,7 +60,6 @@ authRouter.get('/api/auth/oauth_callback', googleOAUTH, function(req, res){
       let userData = {
         username: req.googleOAUTH.email,
         email: req.googleOAUTH.email,
-        hospitalID: 
         google: {
           googleID: req.googleOAUTH.googleID,
           tokenTTL: req.googleOAUTH.tokenTimeToLive,

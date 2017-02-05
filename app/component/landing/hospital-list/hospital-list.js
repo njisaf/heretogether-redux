@@ -11,7 +11,7 @@ function HospitalListController($log, $location, hospitalService) {
 
   this.allHospitals = [];
 
-  this.hospitalID = null;
+  this.hospital = null;
 
   this.fetchHospitals = function() {
     hospitalService.fetchHospitals()
@@ -21,7 +21,7 @@ function HospitalListController($log, $location, hospitalService) {
     });
   };
 
-  this.setID = function(id) {
-    hospitalService.hospitalID = id;
+  this.setHospitalID = function() {
+    hospitalService.hospitalID = this.hospital._id;
   };
 }

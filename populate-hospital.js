@@ -10,18 +10,18 @@ Promise.all([
   new Hospital({
     name: 'Seattle Children\'s',
   }).save(),
-  // new Hospital({
-  //   name: 'Sweedish',
-  // }).save(),
-  // new Hospital({
-  //   name: 'Providence',
-  // }).save(),
-  // new Hospital({
-  //   name: 'Larys Lulwat',
-  // }).save(),
-  // new Hospital({
-  //   name: 'U DUB',
-  // }).save(),
+  new Hospital({
+    name: 'Sweedish',
+  }).save(),
+  new Hospital({
+    name: 'Providence',
+  }).save(),
+  new Hospital({
+    name: 'Larys Lulwat',
+  }).save(),
+  new Hospital({
+    name: 'U DUB',
+  }).save(),
 ])
 .then( hospitals => {
   console.log('hospitals\n', hospitals);
