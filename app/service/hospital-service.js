@@ -9,7 +9,7 @@ function hospitalService($q, $log, $http, $window) {
 
   service.hospitalID = null;
 
-  service.hospitals = [];
+  // service.hospitals = [];
 
   service.createHospital = function(hospital) {
     $log.debug('Hit hospitalService.createHospital()');

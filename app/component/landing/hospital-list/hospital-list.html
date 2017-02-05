@@ -1,0 +1,9 @@
+<div class="hospital-list">
+  <select
+  ng-model="hospitalListCtrl.hospital"
+  class="form-control" ng-change="hospitalListCtrl.setHospitalID()">
+    <option
+    ng-repeat="hospital in hospitalListCtrl.hospitals"
+    ng-value="hospital._id">{{hospital.name}}</option>
+  </select>
+</div>
