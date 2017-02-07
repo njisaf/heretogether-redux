@@ -1,25 +1,21 @@
 'use strict';
 
-module.exports = ['$q', '$log', '$http', '$window', 'authService', 'hospitalService', profileService];
+module.exports = ['$q', '$log', '$http', '$window', 'authService', profileService];
 
-function profileService($q, $log, $http, $window, authService, hospitalService) {
+function profileService($q, $log, $http, $window, authService) {
   $log.debug('Initializing profileService');
 
   let service = {};
 
   service.profiles = [];
 
-  if(!hospitalService.hospitalID) hospitalService.hospitalID = $window.localStorage.getItem('hospitalID');
-
   service.createProfile = function(profile) {
     $log.debug('Hit profileService.createProfile()');
-
-    if (!profile.hospitalID) profile.hospitalID = hospitalService.hospitalID;
 
     $log.debug('PROFILE', profile);
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile`;
+      // let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile`;
       let config = {
         headers: {
           Accept: 'application/json',

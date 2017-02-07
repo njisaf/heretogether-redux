@@ -30,7 +30,6 @@ function authService($q, $log, $http, $window){
   service.logout = function(){
     $log.debug('authService.logout()');
     $window.localStorage.removeItem('token');
-    $window.localStorage.removeItem('hospitalID');
     service.token = null;
     return $q.resolve();
   };

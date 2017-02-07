@@ -2,22 +2,18 @@
 
 module.exports = {
   template: require('./signup.html'),
-  controller: ['$log', '$location', 'authService', 'profileService', 'hospitalService', SignupController],
+  controller: ['$log', '$location', 'authService', 'profileService', SignupController],
   controllerAs: 'signupCtrl',
 };
 
-function SignupController($log, $location, authService, profileService, hospitalService){
+function SignupController($log, $location, authService, profileService){
   $log.debug('IN SIGNUPCONTROLLER');
-
-  this.hospitals = [];
-
+  
   this.signup = function(user){
     authService.signup(user)
     .then(() => {
-      console.log('hospitalID', hospitalService.hospitalID);
       let profile = {
         profileName: user.username,
-        hospitalID: hospitalService.hospitalID,
       };
 
       profileService.createProfile(profile);
