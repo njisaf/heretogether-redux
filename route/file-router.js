@@ -6,7 +6,7 @@ const path = require('path');
 const del = require('del');
 const AWS = require('aws-sdk');
 const multer = require('multer');
-const debug = require('debug')('ht:hospital-router');
+const debug = require('debug')('ht:file-router');
 const createError = require('http-errors');
 
 const File = require('../model/file');
@@ -102,7 +102,7 @@ fileRouter.post('/api/hospital/:hospitalID/statusfile', bearerAuth, upload.singl
   let tempFile = null;
   new Status({
     userID: req.user._id.toString(),
-    hospitalID: req.params.hospitalID,
+    // hospitalID: req.params.hospitalID,
     text: req.body.text,
   }).save()
   .catch(err => Promise.reject(createError(404, err.message)))

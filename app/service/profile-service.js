@@ -42,7 +42,7 @@ function profileService($q, $log, $http, $window, authService) {
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile/`;
+      // let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile/`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -68,7 +68,7 @@ function profileService($q, $log, $http, $window, authService) {
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile/${profileID}`;
+      // let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile/${profileID}`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -95,7 +95,7 @@ function profileService($q, $log, $http, $window, authService) {
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/all/profile/`;
+      // let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/all/profile/`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -121,7 +121,7 @@ function profileService($q, $log, $http, $window, authService) {
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/${profileID}`;
+      // let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/${profileID}`;
       let config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -147,7 +147,7 @@ function profileService($q, $log, $http, $window, authService) {
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile/${profile._id}`;
+      // let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/profile/${profile._id}`;
       let config = {
         headers: {
           Accept: 'application/json',

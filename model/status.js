@@ -10,7 +10,6 @@ const statusSchema = Schema({
   fileID: {type: mongoose.Schema.Types.ObjectId, ref: 'file'},
   picID: {type: mongoose.Schema.Types.ObjectId, ref: 'pic'},
   replyTo: {type: mongoose.Schema.Types.ObjectId},
-  hospitalID: {type: mongoose.Schema.Types.ObjectId, required: true},
   created: {type: Date, default: Date.now},
 });
 
