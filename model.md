@@ -45,3 +45,57 @@
 * **picIDs** (populate) <optional>
 * **replyTo:** (statusID) <optional>
 * **date**
+
+## Route Guide
+
+*The following is Nassir trying to work out how he's going to redo these routes without hospital*
+
+##auth-router
+
+/api/signup
+/api/login
+/api/auth/oauth_callback
+
+*keep the same*
+
+##file-router
+
+/api/status/:statusID/file
+/api/hospital/:hospitalID/statusfile
+/api/status/:statusID/file/:fileID
+
+*revise to:*
+
+/api/profile/file/:fileID -> stick the files on the status and fetch them from there.
+
+<!-- ##picRouter
+
+/api/profile/:profileID/pic
+/api/profile/:profileID/pic/:picID -->
+
+##profileRouter
+
+/api/hospital/:hospitalID/profile
+/api/hospital/:hospitalID/profile/:profileID
+/api/hospital/:hospitalID/all/profile
+/api/hospital/:hospitalID/profile/
+/api/hospital/:hospitalID/profile/:profileID
+/api/hospital/:hospitalID/profile/:profileID
+
+*revise to:*
+/api/profile/:profileID
+/api/profile/all
+
+##statusRouter
+
+/api/hospital/:hospitalID/status
+/api/hospital/:hospitalID/status/:statusID
+/api/hospital/:hospitalID/all/status/
+/api/hospital/:hospitalID/all/status/:userID
+/api/hospital/:hospitalID/status/:statusID
+/api/hospital/:hospitalID/status/:statusID
+
+*revise to:*
+
+/api/status/:statusID
+/api/status/all
