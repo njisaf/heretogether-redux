@@ -16,7 +16,6 @@ const userSchema = Schema({
   password: {type: String},
   findHash: {type: String, unique: true},
   created: {type: Date, default: Date.now},
-  hospitalID: {type: mongoose.Schema.Types.ObjectId},
   google: {
     googleID: {type: String},
     refreshToken: {type: String},

@@ -2,12 +2,10 @@
 
 require('./_home.scss');
 
-module.exports = ['$log', '$rootScope', '$window', 'statusService', 'hospitalService', 'profileService', HomeController];
+module.exports = ['$log', '$rootScope', '$window', 'statusService', 'profileService', HomeController];
 
-function HomeController($log, $rootScope, $window, statusService, hospitalService, profileService){
+function HomeController($log, $rootScope, $window, statusService, profileService){
   $log.debug('init homeCtrl');
-
-  // if(!hospitalService.hospitalID) hospitalService.hospitalID = $window.localStorage.getItem('hospitalID');
 
   this.statuses = [];
   this.profiles = [];
