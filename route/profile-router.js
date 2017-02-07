@@ -10,7 +10,7 @@ AWS.config.setPromisesDependency(require('bluebird'));
 
 const bearerAuth = require('../lib/bearer-auth-middleware');
 const Profile = require('../model/profile');
-const Hospital = require('../model/hospital');
+// const Hospital = require('../model/hospital');
 const Pic = require('../model/pic');
 
 const s3 = new AWS.S3();

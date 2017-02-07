@@ -9,7 +9,7 @@ describe('testing authService methods', function(){
 
   beforeEach(() => {
     angular.mock.module(camelcase(__TITLE__));
-    angular.mock.inject((authService, profileService, hospitalService, $httpBackend, $window, $rootScope) => {
+    angular.mock.inject((authService, profileService, $httpBackend, $window, $rootScope) => {
       this.authService = authService;
       authService.setToken('1234');
 
