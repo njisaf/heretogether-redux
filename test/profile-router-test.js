@@ -9,10 +9,10 @@ const mongoose = require('mongoose');
 
 const serverCtrl = require('./lib/server-ctrl');
 const cleanDB = require('./lib/clean-db');
-const mockProfile = require('./lib/profile-mock');
+// const mockProfile = require('./lib/profile-mock');
 const mockUser = require('./lib/user-mock');
 // const mockHospital = require('./lib/hospital-mock');
-const mockProfilePic = require('./lib/profile-pic-mock');
+// const mockProfilePic = require('./lib/profile-pic-mock');
 // const mockFakeHospital = require('./lib/fake-hospital-mock');
 
 mongoose.Promise = Promise;
@@ -39,7 +39,7 @@ describe('Testing Profile routes', function() {
       before(done => mockUser.call(this, done));
 
       it('Should return a 200 STATUS and a PROFILE', done => {
-        request.post(`${url}/api/profile/`)
+        request.post(`${url}/api/profile`)
         .send({
           profileName: exampleProfile.profileName,
           bio: exampleProfile.bio,
@@ -52,6 +52,7 @@ describe('Testing Profile routes', function() {
           expect(res.body.bio).to.equal(exampleProfile.bio);
           done();
         });
+      });
     });
   });
 
