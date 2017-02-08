@@ -54,6 +54,43 @@ describe('Testing Profile routes', function() {
         });
       });
     });
+
+    describe('Testing POST with INVALID BODY', function() {
+
+      before(done => mockUser.call(this, done));
+
+      it('Should return a 400 STATUS and an error message', done => {
+        request.post(`${url}/api/profile`)
+        .set('Content-type', 'application/json')
+        .send('This is a string and will not work')
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('SyntaxError');
+          done();
+        });
+      });
+    });
+
+    describe('Testing POST with VALID BODY but NO AUTHORIZATION', function() {
+
+      before(done => mockUser.call(this, done));
+
+      it('Should return a 400 STATUS and an error message', done => {
+        request.post(`${url}/api/profile`)
+        .send({
+          profileName: exampleProfile.profileName,
+          userID: `${this.tempUser._id}`,
+          bio: exampleProfile.bio,
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+      });
+    });
+
   });
 
 });
