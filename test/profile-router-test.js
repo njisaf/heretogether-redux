@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 
 const serverCtrl = require('./lib/server-ctrl');
 const cleanDB = require('./lib/clean-db');
-// const mockProfile = require('./lib/profile-mock');
+const mockProfile = require('./lib/profile-mock');
 const mockUser = require('./lib/user-mock');
 // const mockHospital = require('./lib/hospital-mock');
 // const mockProfilePic = require('./lib/profile-pic-mock');
@@ -101,7 +101,11 @@ describe('Testing Profile routes', function() {
 
     describe('Testing GET with VALID profileID', function() {
 
-      before(done => )
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a 200 STATUS and a PROFILE', done => {
+
+      });
 
     });
 

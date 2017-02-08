@@ -4,7 +4,6 @@ const debug = require('debug')('ht: profile-mock');
 const lorem = require('lorem-ipsum');
 
 const Profile = require('../../model/profile');
-const hospitalMock = require('./hospital-mock');
 const userMock = require('./user-mock');
 
 
@@ -23,16 +22,12 @@ module.exports = function(done){
     if (err) return done (err);
     exampleProfile.userID = this.tempUser._id.toString();
 
-    hospitalMock.call(this, err => {
-      if (err) return done (err);
-      exampleProfile.hospitalID = this.tempHospital._id.toString();
+    new Profile(exampleProfile).save()
+    .then( profile => {
+      this.tempProfile = profile;
+      done();
+    })
+    .catch(done);
 
-      new Profile(exampleProfile).save()
-      .then( profile => {
-        this.tempProfile = profile;
-        done();
-      })
-      .catch(done);
-    });
   });
 };
