@@ -31,8 +31,8 @@ profileRouter.get('/api/profile/:profileID', bearerAuth, jsonParser, function(re
   debug('hit /api/profile/:profileID GET');
 
   Profile.findById(req.params.profileID)
-    .populate('picID')
-    .catch(err => Promise.reject(createError(400, err.message)))
+    // .populate('fileID')
+    .catch(err => Promise.reject(createError(404, err.message)))
     .then( profile => {
       if(profile.userID.toString() !== req.user._id.toString()) return Promise.reject(createError(401, 'invalid userid'));
       res.json(profile);

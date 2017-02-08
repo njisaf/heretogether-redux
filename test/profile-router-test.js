@@ -97,6 +97,9 @@ describe('Testing Profile routes', function() {
 
   });
 
+  //'Testing /api/profile/:profileID GET'
+  //  'Testing GET with VALID profileID'
+
   describe('Testing /api/profile/:profileID GET', function() {
 
     describe('Testing GET with VALID profileID', function() {
@@ -117,6 +120,25 @@ describe('Testing Profile routes', function() {
       });
 
     });
+
+    describe('Testing GET with INVALID profileID', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      let invalidID = 'this id is no id at all dagnabbit!';
+
+      it('Should return a 404 STATUS and an error message', done => {
+        request.get(`${url}/api/profile/${invalidID}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+
+    });
+
 
   });
 
