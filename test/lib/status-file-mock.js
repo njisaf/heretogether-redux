@@ -6,8 +6,6 @@ const lorem = require('lorem-ipsum');
 const Status = require('../../model/status');
 const File = require('../../model/file');
 const userMock = require('./user-mock');
-const hospitalMock = require('./hospital-mock');
-
 
 module.exports = function(done){
   debug('Creating mock profile with pic associated');
@@ -30,10 +28,7 @@ module.exports = function(done){
     if (err) return done (err);
     exampleStatus.userID = this.tempUser._id.toString();
     exampleFileData.userID = this.tempUser._id.toString();
-    hospitalMock.call(this, err => {
-      if (err) return done (err);
-      exampleStatus.hospitalID = this.tempHospital._id.toString();
-      return new File(exampleFileData).save()
+    new File(exampleFileData).save()
       .then(file => {
         this.tempFile = file;
         exampleStatus.fileID = this.tempFile._id.toString();
@@ -44,6 +39,5 @@ module.exports = function(done){
         done();
       })
       .catch(done);
-    });
   });
 };
