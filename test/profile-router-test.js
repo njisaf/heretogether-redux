@@ -99,6 +99,8 @@ describe('Testing Profile routes', function() {
 
   //'Testing /api/profile/:profileID GET'
   //  'Testing GET with VALID profileID'
+  //  'Testing GET with INVALID profileID'
+  //  'Testing GET with VALID profileID but NO AUTHORIZATION'
 
   describe('Testing /api/profile/:profileID GET', function() {
 
@@ -118,7 +120,6 @@ describe('Testing Profile routes', function() {
           done();
         });
       });
-
     });
 
     describe('Testing GET with INVALID profileID', function() {
@@ -136,35 +137,51 @@ describe('Testing Profile routes', function() {
           done();
         });
       });
-
     });
 
+    describe('Testing GET with VALID profileID but NO AUTHORIZATION', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a 400 STATUS and an error message', done => {
+        request.get(`${url}/api/profile/${this.tempProfile._id}`)
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('BadRequestError');
+          done();
+        });
+      });
+    });
+
+  });
+
+  //'Testing /api/profile/all GET ALL PROFILES'
+
+  describe('Testing /api/profile/all GET ALL PROFILES', function() {
+
+    describe('Testing GET ALL PROFILES', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a status of 200 and an array of statuses', done => {
+        request.get(`${url}/api/profile/all`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body[0].profileName).to.equal(this.tempProfile.profileName);
+          expect(res.body[0].bio).to.equal(this.tempProfile.bio);
+          expect(!!res.body.length).to.equal(true);
+          done();
+        });
+      });
+    });
 
   });
 
 });
 
-//   describe('Testing GET /api/hospital/:hospitalID/profile/:profileID', function() {
-//
-//     describe('Testing GET with VALID hospitalID and VALID profileID', function() {
-//
-//       before(done => mockProfile.call(this, done));
-//
-//       it('Should return a status of 200 and a profile', done => {
-//         request.get(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
-//         .set({Authorization: `Bearer ${this.tempToken}`})
-//         .end((err, res) => {
-//           if(err) return done(err);
-//           expect(res.status).to.equal(200);
-//           expect(res.body.profileName).to.equal(this.tempProfile.profileName);
-//           expect(res.body.bio).to.equal(this.tempProfile.bio);
-//           expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
-//           expect(res.body.userID).to.equal(this.tempUser._id.toString());
-//           done();
-//         });
-//       });
-//     });
-//
+
 //     describe('Testing GET with VALID hospitalID, VALID profileID and POPULATE PIC', function() {
 //
 //       before(done => mockProfilePic.call(this, done));
@@ -185,21 +202,7 @@ describe('Testing Profile routes', function() {
 //       });
 //     });
 //
-//     describe('Testing GET with VALID hospitalID and INVALID profileID', function() {
-//
-//       before(done => mockProfile.call(this, done));
-//
-//       it('Should return a status of 400 and an error message', done => {
-//         request.get(`${url}/api/hospital/${this.tempHospital._id}/profile/1234`)
-//         .set({Authorization: `Bearer ${this.tempToken}`})
-//         .end((err, res) => {
-//           expect(res.status).to.equal(400);
-//           expect(res.text).to.equal('BadRequestError');
-//           done();
-//         });
-//       });
-//     });
-//
+
 //     describe('Testing GET with INVALID hospitalID and VALID profileID', function() {
 //
 //       before(done => mockProfile.call(this, done));
@@ -286,21 +289,6 @@ describe('Testing Profile routes', function() {
 //         });
 //       });
 //     });
-//
-//     describe('Testing GET with VALID IDs but NO AUTHORIZATION', function() {
-//
-//       before(done => mockProfile.call(this, done));
-//
-//       it('Should return a status of 400 and an error message', done => {
-//         request.get(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
-//         .end((err, res) => {
-//           expect(res.status).to.equal(400);
-//           expect(res.text).to.equal('BadRequestError');
-//           done();
-//         });
-//       });
-//     });
-//
 //
 //   });
 //

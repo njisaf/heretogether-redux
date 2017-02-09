@@ -1,7 +1,7 @@
 'use strict';
 
 const Router = require('express').Router;
-const debug = require('debug')('ht:hospital-router');
+const debug = require('debug')('ht:profile-router');
 const AWS = require('aws-sdk');
 const jsonParser = require('body-parser').json();
 const createError = require('http-errors');
@@ -30,6 +30,18 @@ profileRouter.post('/api/profile', bearerAuth, jsonParser, function(req, res, ne
 profileRouter.get('/api/profile/:profileID', bearerAuth, jsonParser, function(req, res, next) {
   debug('hit /api/profile/:profileID GET');
 
+  if (req.params.profileID === 'all') {
+    debug('GETTING ALL PROFILES');
+    Profile.find()
+    // .populate('fileID')
+    .then(profArr => {
+      debug('profArrrrrr: ' + profArr);
+      res.json(profArr);
+    })
+    .catch(next);
+    return;
+  }
+
   Profile.findById(req.params.profileID)
     // .populate('fileID')
     .catch(err => Promise.reject(createError(404, err.message)))
@@ -39,6 +51,19 @@ profileRouter.get('/api/profile/:profileID', bearerAuth, jsonParser, function(re
     })
     .catch(next);
 });
+
+// profileRouter.get('/api/all/profile', bearerAuth, jsonParser, function(req, res, next) {
+//   debug('hit /api/all/profile GET ALL PROFILES');
+//
+//   Profile.find()
+//   // .populate('fileID')
+//   .then(profArr => {
+//     debug('profArrrrrr: ' + profArr);
+//     res.json(profArr);
+//   })
+//   .catch(next);
+//
+// });
 
 // profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, function(req, res, next){
 //   debug('hit GET route /api/hospital/:hospitalID/profile/:profileID');
