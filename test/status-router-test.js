@@ -365,6 +365,8 @@ describe('Testing Status routes', function() {
 
   //'Testing Status PUT routes'
   //  'Testing PUT with VALID IDs and VALID BODY'
+  //  'Testing PUT with VALID IDs and INCORRECT BODY'
+  //  'Testing PUT with VALID IDs and INVALID BODY'
   //  'Testing PUT with INVALID STATUS ID'
   //  'Testing PUT with INVALID TOKEN'
   //  'Testing PUT with NO TOKEN'
@@ -387,6 +389,43 @@ describe('Testing Status routes', function() {
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body.text).to.equal('This is updated text');
+          done();
+        });
+      });
+    });
+
+    describe('Testing PUT with VALID IDs and INCORRECT BODY', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 200 and no updates made', done => {
+        request.put(`${url}/api/status/${this.tempStatus._id}`)
+        .send({
+          userIdentification: this.tempUser._id,
+          newText: 'This is updated text',
+        })
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.text).to.equal(this.tempStatus.text);
+          done();
+        });
+      });
+    });
+
+    describe('Testing PUT with VALID IDs and INVALID BODY', function() {
+
+      before(done => mockStatus.call(this, done));
+
+      it('Should return a status of 400 and an error message', done => {
+        request.put(`${url}/api/status/${this.tempStatus._id}`)
+        .set('Content-type', 'application/json')
+        .send('hack test beggining')
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(err.message).to.equal('Bad Request');
           done();
         });
       });

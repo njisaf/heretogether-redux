@@ -84,7 +84,7 @@ statusRouter.put('/api/status/:statusID', bearerAuth, jsonParser, function(req, 
   .then(status => {
     if(status.userID.toString() === req.user._id.toString()) {
       Status.findByIdAndUpdate(req.params.statusID, req.body, {new: true})
-      .then((status) => {
+      .then(status => {
         return Status.findById(status._id)
         .populate('fileID');
       })
