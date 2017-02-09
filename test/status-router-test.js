@@ -29,45 +29,29 @@ describe('Testing Status routes', function() {
   after(done => serverCtrl.serverDown(server, done));
   afterEach(done => cleanDB(done));
 
+  //'Testing Status POST routes'
+  //  'Testing POST with VALID IDs and VALID BODY'
+  //  'Testing POST with INVALID TOKEN'
+  //  'Testing POST with NO TOKEN'
+  //  'Testing POST with VALID IDs and REPLYTO field'
+
   describe('Testing Status POST routes', function() {
     describe('Testing POST with VALID IDs and VALID BODY', function() {
 
       before(done => mockProfile.call(this, done));
 
       it('Should return a status of 200 and a status post', done => {
-        request.post(`${url}/api/hospital/${this.tempHospital._id}/status`)
+        request.post(`${url}/api/status`)
         .send({
           userID: this.tempUser._id,
           text: exampleStatus.text,
-          hospitalID: this.tempHospital._id,
         })
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body.userID).to.equal(this.tempUser._id.toString());
-          expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
           expect(res.body.text).to.equal(exampleStatus.text);
-          done();
-        });
-      });
-    });
-
-    describe('Testing POST with INVALID HOSPITAL ID', function() {
-
-      before(done => mockProfile.call(this, done));
-
-      it('Should return a status of 404 for bad hospital ID ', done => {
-        request.post(`${url}/api/hospital/${this.tempHospital._id}BADID/status`)
-        .send({
-          userID: this.tempUser._id,
-          text: exampleStatus.text,
-          hospitalID: this.tempHospital._id,
-        })
-        .set({Authorization: `Bearer ${this.tempToken}`})
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(err.message).to.equal('Not Found');
           done();
         });
       });
@@ -78,11 +62,10 @@ describe('Testing Status routes', function() {
       before(done => mockProfile.call(this, done));
 
       it('Should return a status of 401 for invalid token ', done => {
-        request.post(`${url}/api/hospital/${this.tempHospital._id}/status`)
+        request.post(`${url}/api/status`)
         .send({
           userID: this.tempUser._id,
           text: exampleStatus.text,
-          hospitalID: this.tempHospital._id,
         })
         .set({Authorization: `Bearer ${this.tempToken}BADTOKEN`})
         .end((err, res) => {
@@ -98,11 +81,10 @@ describe('Testing Status routes', function() {
       before(done => mockProfile.call(this, done));
 
       it('Should return a status of 400 for no token ', done => {
-        request.post(`${url}/api/hospital/${this.tempHospital._id}/status`)
+        request.post(`${url}/api/status`)
         .send({
           userID: this.tempUser._id,
           text: exampleStatus.text,
-          hospitalID: this.tempHospital._id,
         })
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -122,7 +104,6 @@ describe('Testing Status routes', function() {
           userID: this.tempUser._id,
           text: exampleStatus.text,
           replyTo: this.tempStatus._id,
-          hospitalID: this.tempHospital._id,
         })
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
@@ -137,28 +118,18 @@ describe('Testing Status routes', function() {
       });
     });
 
-    describe('Testing POST with VALID IDs but FAKE HOSPITAL', function() {
-
-      before(done => mockUser.call(this, done));
-      before(done => mockFakeHospital.call(this, done));
-
-      it('Should return a status of 404 and an error message', done => {
-        request.post(`${url}/api/hospital/${this.tempHospital._id}/status`)
-        .send({
-          userID: this.tempUser._id,
-          text: exampleStatus.text,
-          hospitalID: this.tempHospital._id,
-        })
-        .set({Authorization: `Bearer ${this.tempToken}`})
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(res.text).to.equal('NotFoundError');
-          done();
-        });
-      });
-    });
-
   });
+
+  //'Testing Status GET routes'
+  //  'Testing GET with VALID IDs'
+  //  'Testing GET with VALID IDs and POPULATE FILE'
+  //  'Testing GET with userID not matching'
+  //  'Testing GET ALL STATUSES'
+  //  'Testing GET ALL STATUSES and POPULATED FILES'
+  //  'Testing GET ALL STATUSES but there are no statuses'
+  //  'Testing GET with INVALID STATUS ID'
+  //  'Testing GET with INVALID TOKEN'
+  //  'Testing GET with NO TOKEN'
 
   describe('Testing Status GET routes', function() {
     describe('Testing GET with VALID IDs', function() {
@@ -166,13 +137,12 @@ describe('Testing Status routes', function() {
       before(done => mockStatus.call(this, done));
 
       it('Should return a status of 200 and a status post', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        request.get(`${url}/api/status/${this.tempStatus._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body.userID).to.equal(this.tempUser._id.toString());
-          expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
           done();
         });
       });
@@ -183,13 +153,12 @@ describe('Testing Status routes', function() {
       before(done => mockStatusFile.call(this, done));
 
       it('Should return a status of 200 and a status post w/ a file populated into fileID', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        request.get(`${url}/api/status/${this.tempStatus._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
           expect(res.status).to.equal(200);
           expect(res.body.userID).to.equal(this.tempUser._id.toString());
-          expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
           expect(res.body.fileID.fileURI).to.equal(this.tempFile.fileURI);
           done();
         });
@@ -212,12 +181,12 @@ describe('Testing Status routes', function() {
       });
     });
 
-    describe('Testing GET ALL (NO STATUS ID)', function() {
+    describe('Testing GET ALL STATUSES', function() {
 
       before(done => mockStatus.call(this, done));
 
       it('Should return a status of 200 and an array of statuses', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}/all/status/`)
+        request.get(`${url}/api/status/all`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
@@ -229,12 +198,12 @@ describe('Testing Status routes', function() {
       });
     });
 
-    describe('Testing GET ALL (NO STATUS ID) and POPULATED FILES', function() {
+    describe('Testing GET ALL STATUSES and POPULATED FILES', function() {
 
       before(done => mockStatusFile.call(this, done));
 
       it('Should return a status of 200 and an array of statuses', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}/all/status/`)
+        request.get(`${url}/api/status/all`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
@@ -248,13 +217,12 @@ describe('Testing Status routes', function() {
     });
 
 
-    describe('Testing GET ALL with VALID HOSPITAL but NO STATUS POSTS', function() {
+    describe('Testing GET ALL STATUSES but there are no statuses', function() {
 
       before(done => mockUser.call(this, done));
-      before(done => mockHospital.call(this, done));
 
       it('Should return a status of 200 and an empty array', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}/all/status/`)
+        request.get(`${url}/api/status/all`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
@@ -265,28 +233,12 @@ describe('Testing Status routes', function() {
       });
     });
 
-    describe('Testing GET ALL with INVALID HOSPITALID', function() {
-
-      before(done => mockStatus.call(this, done));
-
-      it('Should return a status of 404 and an error message', done => {
-        request.get(`${url}/api/hospital/1234/all/status/`)
-        .set({Authorization: `Bearer ${this.tempToken}`})
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(res.text).to.equal('NotFoundError');
-          done();
-        });
-      });
-    });
-
-
     describe('Testing GET with INVALID STATUS ID', function() {
 
       before(done => mockStatus.call(this, done));
 
-      it('Should return a status of 400 and a status post', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}BADID/`)
+      it('Should return a status of 400 and an error message', done => {
+        request.get(`${url}/api/status/${this.tempStatus._id}BadID/`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           expect(res.status).to.equal(400);
@@ -301,7 +253,7 @@ describe('Testing Status routes', function() {
       before(done => mockStatus.call(this, done));
 
       it('Should return a status of 401 for invalid token', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        request.get(`${url}/api/status/${this.tempStatus._id}`)
         .set({Authorization: `Bearer ${this.tempToken}badTOKEN`})
         .end((err, res) => {
           expect(res.status).to.equal(401);
@@ -316,7 +268,7 @@ describe('Testing Status routes', function() {
       before(done => mockStatus.call(this, done));
 
       it('Should return a status of 400 for no token', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        request.get(`${url}/api/status/${this.tempStatus._id}`)
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(err.message).to.equal('Bad Request');
@@ -325,22 +277,14 @@ describe('Testing Status routes', function() {
       });
     });
 
-    describe('Testing GET with HOSPITAL ID MISMATCH', function() {
-
-      before(done => mockStatus.call(this, done));
-
-      it('Should return a status of 404 for hospital ID mismatch', done => {
-        request.get(`${url}/api/hospital/${this.tempHospital._id}misMatchedID/status/${this.tempStatus._id}`)
-        .set({Authorization: `Bearer ${this.tempToken}`})
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(err.message).to.equal('Not Found');
-          done();
-        });
-      });
-    });
-
   });
+
+  //'Testing Status DELETE routes'
+  //  'Testing DELETE with VALID IDs'
+  //  'Testing DELETE with VALID IDs and FILEID'
+  //  'Testing DELETE with userID not matching'
+  //  'Testing DELETE with NO TOKEN'
+  //  'Testing DELETE with INVALID TOKEN'
 
   describe('Testing Status DELETE routes', function() {
     describe('Testing DELETE with VALID IDs', function() {
@@ -348,7 +292,7 @@ describe('Testing Status routes', function() {
       before(done => mockStatus.call(this, done));
 
       it('Should return a status of 204', done => {
-        request.delete(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        request.delete(`${url}/api/status/${this.tempStatus._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
@@ -363,7 +307,7 @@ describe('Testing Status routes', function() {
       before(done => mockStatusFile.call(this, done));
 
       it('Should return a status of 204', done => {
-        request.delete(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        request.delete(`${url}/api/status/${this.tempStatus._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           if(err) return done(err);
@@ -374,28 +318,13 @@ describe('Testing Status routes', function() {
     });
 
 
-    describe('Testing DELETE with HOSPITAL ID MISMATCH', function() {
-
-      before(done => mockStatus.call(this, done));
-
-      it('Should return a status of 404 for hospital ID mismatch', done => {
-        request.delete(`${url}/api/hospital/${this.tempHospital._id}misMatchedID/status/${this.tempStatus._id}`)
-        .set({Authorization: `Bearer ${this.tempToken}`})
-        .end((err, res) => {
-          expect(res.status).to.equal(404);
-          expect(err.message).to.equal('Not Found');
-          done();
-        });
-      });
-    });
-
     describe('Testing DELETE with userID not matching', function() {
 
       before(done => mockStatus.call(this, done));
       before(done => mockUser.call(this, done));
 
       it('Should return a status of 401', done => {
-        request.delete(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        request.delete(`${url}/api/status/${this.tempStatus._id}`)
         .set({Authorization: `Bearer ${this.tempToken}`})
         .end((err, res) => {
           expect(res.status).to.equal(401);
@@ -409,7 +338,7 @@ describe('Testing Status routes', function() {
       before(done => mockStatus.call(this, done));
 
       it('Should return a status of 400 for no token given', done => {
-        request.delete(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        request.delete(`${url}/api/status/${this.tempStatus._id}`)
         .end((err, res) => {
           expect(res.status).to.equal(400);
           expect(err.message).to.equal('Bad Request');
@@ -423,7 +352,7 @@ describe('Testing Status routes', function() {
       before(done => mockStatus.call(this, done));
 
       it('Should return a status of 401 for invalid token', done => {
-        request.delete(`${url}/api/hospital/${this.tempHospital._id}/status/${this.tempStatus._id}`)
+        request.delete(`${url}/api/status/${this.tempStatus._id}`)
         .set({Authorization: `Bearer ${this.tempToken}badTOKEN`})
         .end((err, res) => {
           expect(res.status).to.equal(401);
