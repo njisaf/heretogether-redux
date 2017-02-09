@@ -196,9 +196,15 @@ describe('Testing Profile routes', function() {
 
   });
 
+  //'Testing /api/profile/:profileID DELETE'
+  //  'Testing DELETE with VALID profileID'
+  //  'Testing DELETE with VALID IDs but USER NOT AUTHORIZED'
+  //  'Testing DELETE with INVALID profileID'
+
+
   describe('Testing /api/profile/:profileID DELETE', function() {
 
-    describe('Testing DELETE with and VALID profileID', function() {
+    describe('Testing DELETE with VALID profileID', function() {
 
       before(done => mockProfile.call(this, done));
 
@@ -208,6 +214,127 @@ describe('Testing Profile routes', function() {
         .end((err, res) => {
           if(err) return done(err);
           expect(res.status).to.equal(204);
+          done();
+        });
+      });
+    });
+
+    describe('Testing DELETE with VALID IDS but USER NOT AUTHORIZED', function() {
+
+      before(done => mockProfile.call(this, done));
+      before(done => mockUser.call(this, done));
+
+      it('Should return a status of 401 and an error message', done => {
+        request.delete(`${url}/api/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.text).to.equal('UnauthorizedError');
+          done();
+        });
+      });
+    });
+
+    describe('Testing DELETE with INVALID profileID', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      let badId = 'this id aint got no parsimony boi';
+      it('Should return a status of 404 and an error message', done => {
+        request.delete(`${url}/api/profile/${badId}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.text).to.equal('NotFoundError');
+          done();
+        });
+      });
+    });
+
+  });
+
+  describe('Testing /api/profile/:profileID PUT', function() {
+
+    describe('Testing PUT with VALID profileID and VALID BODY', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a 200 STATUS and a profile', done => {
+        request.put(`${url}/api/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .send({
+          profileName: 'Alice IsLittle',
+          userID: `${this.tempUser._id}`,
+          bio: 'My name is Alice and I love being little AND NOBODY CAN TELL ME NOT TO SAY IT LOUD AND SAY IT PROUD!',
+        })
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.profileName).to.equal('Alice IsLittle');
+          expect(res.body.bio).to.equal('My name is Alice and I love being little AND NOBODY CAN TELL ME NOT TO SAY IT LOUD AND SAY IT PROUD!');
+          expect(res.body.userID).to.equal(this.tempUser._id.toString());
+          done();
+        });
+      });
+    });
+
+    describe('Testing PUT with VALID EVERYTHING but USER NOT AUTHORIZED', function() {
+
+      before(done => mockProfile.call(this, done));
+      before(done => mockUser.call(this, done));
+
+      it('Should return a 401 STATUS and an error message', done => {
+        request.put(`${url}/api/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .send({
+          profileName: 'Heckin Fineboye',
+          userID: `${this.tempUser._id}`,
+          bio: 'Woof is heckin hard',
+        })
+        .end((err, res) => {
+          expect(res.status).to.equal(401);
+          expect(res.text).to.equal('UnauthorizedError');
+          done();
+        });
+      });
+    });
+
+    describe('Testing PUT with VALID profileID and INCORRECT BODY', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a 200 STATUS and a profile with no updates made', done => {
+        request.put(`${url}/api/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .set('Content-type', 'application/json')
+        .send({
+          userName: 'Derivative Userthing',
+          userID: `${this.tempUser._id}`,
+          biography: 'Call me a man, but do I bleed?',
+        })
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.profileName).to.equal(this.tempProfile.profileName);
+          expect(res.body.bio).to.equal(this.tempProfile.bio);
+          expect(res.body.userID).to.equal(this.tempUser._id.toString());
+          done();
+        });
+      });
+    });
+
+    describe('Testing PUT with VALID profileID and INVALID BODY', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a 400 STATUS and an error message', done => {
+        request.put(`${url}/api/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .set('Content-type', 'application/json')
+        .send('Please update my profileName to Testname!')
+        .end((err, res) => {
+          expect(res.status).to.equal(400);
+          expect(res.text).to.equal('SyntaxError');
           done();
         });
       });
@@ -275,42 +402,8 @@ describe('Testing Profile routes', function() {
 //     });
 //
 //   });
-//
-//   describe('Testing DELETE /api/hospital/:hospitalID/profile/:profileID', function() {
-//
-//     describe('Testing DELETE with VALID hospitalID and VALID profileID', function() {
-//
-//       before(done => mockProfile.call(this, done));
-//
-//       it('Should return a status of 204', done => {
-//         request.delete(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
-//         .set({Authorization: `Bearer ${this.tempToken}`})
-//         .end((err, res) => {
-//           if(err) return done(err);
-//           expect(res.status).to.equal(204);
-//           done();
-//         });
-//       });
-//     });
-//
-//     describe('Testing DELETE with VALID IDS but USER NOT AUTHORIZED', function() {
-//
-//       before(done => mockProfile.call(this, done));
-//       before(done => mockUser.call(this, done));
-//
-//       it('Should return a status of 401 and an error message', done => {
-//         request.delete(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
-//         .set({Authorization: `Bearer ${this.tempToken}`})
-//         .end((err, res) => {
-//           expect(res.status).to.equal(401);
-//           expect(res.text).to.equal('UnauthorizedError');
-//           done();
-//         });
-//       });
-//     });
-//
-//   });
-//
+
+
 //
 //   describe('Testing DELETE /api/hospital/:hospitalID/profile/:profileID', function() {
 //
@@ -329,65 +422,13 @@ describe('Testing Profile routes', function() {
 //       });
 //     });
 //
-//     describe('Testing DELETE with VALID hospitalID and INVALID profileID', function() {
-//
-//       before(done => mockProfile.call(this, done));
-//
-//       it('Should return a status of 404 and an error message', done => {
-//         request.delete(`${url}/api/hospital/${this.tempHospital._id}/profile/1234`)
-//         .set({Authorization: `Bearer ${this.tempToken}`})
-//         .end((err, res) => {
-//           expect(res.status).to.equal(404);
-//           expect(res.text).to.equal('NotFoundError');
-//           done();
-//         });
-//       });
-//     });
-//
-//     describe('Testing DELETE with INVALID hospitalID and VALID profileID', function() {
-//
-//       before(done => mockProfile.call(this, done));
-//
-//       it('Should return a status of 404 and an error message', done => {
-//         request.delete(`${url}/api/hospital/1234/profile/${this.tempProfile._id}`)
-//         .set({Authorization: `Bearer ${this.tempToken}`})
-//         .end((err, res) => {
-//           expect(res.status).to.equal(404);
-//           expect(res.text).to.equal('NotFoundError');
-//           done();
-//         });
-//       });
-//     });
-//
-//   });
+
+
 //
 //
 //   describe('Testing PUT /api/hospital/:hospitalID/profile/:profileID', function() {
 //
-//     describe('Testing PUT with VALID hospitalID, VALID profileID and VALID BODY', function() {
-//
-//       before(done => mockProfile.call(this, done));
-//
-//       it('Should return a status of 200 and a profile', done => {
-//         request.put(`${url}/api/hospital/${this.tempHospital._id}/profile/${this.tempProfile._id}`)
-//         .set({Authorization: `Bearer ${this.tempToken}`})
-//         .send({
-//           profileName: 'Alice Islittle',
-//           userID: `${this.tempUser._id}`,
-//           bio: 'My name is Alice and I love being little!',
-//           hospitalID: `${this.tempHospital._id}`,
-//         })
-//         .end((err, res) => {
-//           if(err) return done(err);
-//           expect(res.status).to.equal(200);
-//           expect(res.body.profileName).to.equal('Alice Islittle');
-//           expect(res.body.bio).to.equal('My name is Alice and I love being little!');
-//           expect(res.body.hospitalID).to.equal(this.tempHospital._id.toString());
-//           expect(res.body.userID).to.equal(this.tempUser._id.toString());
-//           done();
-//         });
-//       });
-//     });
+
 //
 //     describe('Testing PUT with VALID EVERYTHING but USER NOT AUTHORIZED to put this profile', function() {
 //

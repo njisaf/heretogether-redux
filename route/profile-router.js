@@ -83,6 +83,20 @@ profileRouter.delete('/api/profile/:profileID', bearerAuth, function(req, res, n
   .catch(err => err.status ? next(err) : next(createError(404, err.message)));
 });
 
+profileRouter.put('/api/profile/:profileID', bearerAuth, jsonParser, function(req, res, next) {
+  debug('Hit /api/profile/:profileID');
+  Profile.findById(req.params.profileID)
+  .then(profile => {
+    if(profile.userID.toString() === req.user._id.toString()) {
+      Profile.findByIdAndUpdate(req.params.profileID, req.body, {new:true})
+      .then(profile => res.json(profile))
+      .catch(next);
+    } else {
+      return Promise.reject(createError(401, 'Invalid user'));
+    }
+  })
+.catch(err => err.status ? next(err) : next(createError(404, err.message)));
+});
 
 
 // profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, function(req, res, next){
