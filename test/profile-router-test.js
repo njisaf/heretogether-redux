@@ -177,6 +177,22 @@ describe('Testing Profile routes', function() {
       });
     });
 
+    describe('Testing GET ALL with VALID HOSPITAL but NO PROFILE POSTS', function() {
+
+      before(done => mockUser.call(this, done));
+
+      it('Should return a status of 200 and an empty array', done => {
+        request.get(`${url}/api/profile/all`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(200);
+          expect(res.body.length).to.equal(0);
+          done();
+        });
+      });
+    });
+
   });
 
 });
