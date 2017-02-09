@@ -11,9 +11,6 @@ const serverCtrl = require('./lib/server-ctrl');
 const cleanDB = require('./lib/clean-db');
 const mockProfile = require('./lib/profile-mock');
 const mockUser = require('./lib/user-mock');
-// const mockHospital = require('./lib/hospital-mock');
-// const mockProfilePic = require('./lib/profile-pic-mock');
-// const mockFakeHospital = require('./lib/fake-hospital-mock');
 
 mongoose.Promise = Promise;
 

@@ -8,7 +8,6 @@ const statusSchema = Schema({
   userID: {type: mongoose.Schema.Types.ObjectId, required:true},
   text: {type: String},
   fileID: {type: mongoose.Schema.Types.ObjectId, ref: 'file'},
-  picID: {type: mongoose.Schema.Types.ObjectId, ref: 'pic'},
   replyTo: {type: mongoose.Schema.Types.ObjectId},
   created: {type: Date, default: Date.now},
 });
