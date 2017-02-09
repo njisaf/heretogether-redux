@@ -52,18 +52,38 @@ profileRouter.get('/api/profile/:profileID', bearerAuth, jsonParser, function(re
     .catch(next);
 });
 
-// profileRouter.get('/api/all/profile', bearerAuth, jsonParser, function(req, res, next) {
-//   debug('hit /api/all/profile GET ALL PROFILES');
-//
-//   Profile.find()
-//   // .populate('fileID')
-//   .then(profArr => {
-//     debug('profArrrrrr: ' + profArr);
-//     res.json(profArr);
-//   })
-//   .catch(next);
-//
-// });
+profileRouter.delete('/api/profile/:profileID', bearerAuth, function(req, res, next) {
+  debug('Hit /api/profile/:profileID DELETE');
+  // let tempProfile = null;
+  Profile.findById(req.params.profileID)
+  .then(profile => {
+    // tempProfile = profile;
+    if(profile.userID.toString() === req.user._id.toString()) {
+      Profile.findByIdAndRemove(req.params.profileID)
+      .then(() => res.sendStatus(204))
+      .catch(next);
+    } else {
+      return Promise.reject(createError(401, 'Invalid user ID'));
+    }
+    // if (profile.picID) {
+    //   return Pic.findById(profile.picID)
+    //   .then(pic => {
+    //
+    //     let params = {
+    //       Bucket: 'heretogether-assets',
+    //       Key: pic.objectKey,
+    //     };
+    //     return s3.deleteObject(params).promise();
+    //   })
+    //   .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
+    //   .then(() => Pic.findByIdAndRemove(tempProfile.picID))
+    //   .catch(next);
+    // }
+  })
+  .catch(err => err.status ? next(err) : next(createError(404, err.message)));
+});
+
+
 
 // profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, function(req, res, next){
 //   debug('hit GET route /api/hospital/:hospitalID/profile/:profileID');

@@ -156,6 +156,7 @@ describe('Testing Profile routes', function() {
   });
 
   //'Testing /api/profile/all GET ALL PROFILES'
+  //  'Testing GET ALL with NO PROFILE POSTS'
 
   describe('Testing /api/profile/all GET ALL PROFILES', function() {
 
@@ -177,7 +178,7 @@ describe('Testing Profile routes', function() {
       });
     });
 
-    describe('Testing GET ALL with VALID HOSPITAL but NO PROFILE POSTS', function() {
+    describe('Testing GET ALL with NO PROFILE POSTS', function() {
 
       before(done => mockUser.call(this, done));
 
@@ -192,6 +193,26 @@ describe('Testing Profile routes', function() {
         });
       });
     });
+
+  });
+
+  describe('Testing /api/profile/:profileID DELETE', function() {
+
+    describe('Testing DELETE with and VALID profileID', function() {
+
+      before(done => mockProfile.call(this, done));
+
+      it('Should return a status of 204', done => {
+        request.delete(`${url}/api/profile/${this.tempProfile._id}`)
+        .set({Authorization: `Bearer ${this.tempToken}`})
+        .end((err, res) => {
+          if(err) return done(err);
+          expect(res.status).to.equal(204);
+          done();
+        });
+      });
+    });
+
 
   });
 
@@ -234,26 +255,6 @@ describe('Testing Profile routes', function() {
 //       });
 //     });
 //
-//
-//
-//     describe('Testing GET ALL (NO STATUS ID)', function() {
-//
-//       before(done => mockProfile.call(this, done));
-//
-//       it('Should return a status of 200 and an array of statuses', done => {
-//         request.get(`${url}/api/hospital/${this.tempHospital._id}/all/profile/`)
-//         .set({Authorization: `Bearer ${this.tempToken}`})
-//         .end((err, res) => {
-//           if(err) return done(err);
-//           expect(res.status).to.equal(200);
-//           expect(res.body[0].profileName).to.equal(this.tempProfile.profileName);
-//           expect(res.body[0].bio).to.equal(this.tempProfile.bio);
-//           expect(!!res.body.length).to.equal(true);
-//           done();
-//         });
-//       });
-//     });
-//
 //     describe('Testing GET ALL (NO STATUS ID) with POPULATE PICID', function() {
 //
 //       before(done => mockProfilePic.call(this, done));
@@ -268,39 +269,6 @@ describe('Testing Profile routes', function() {
 //           expect(res.body[0].bio).to.equal(this.tempProfile.bio);
 //           expect(res.body[0].picID._id).to.equal(this.tempPic._id.toString());
 //           expect(!!res.body.length).to.equal(true);
-//           done();
-//         });
-//       });
-//     });
-//
-//
-//     describe('Testing GET ALL with VALID HOSPITAL but NO PROFILE POSTS', function() {
-//
-//       before(done => mockUser.call(this, done));
-//       before(done => mockHospital.call(this, done));
-//
-//       it('Should return a status of 200 and an empty array', done => {
-//         request.get(`${url}/api/hospital/${this.tempHospital._id}/all/profile/`)
-//         .set({Authorization: `Bearer ${this.tempToken}`})
-//         .end((err, res) => {
-//           if(err) return done(err);
-//           expect(res.status).to.equal(200);
-//           expect(res.body.length).to.equal(0);
-//           done();
-//         });
-//       });
-//     });
-//
-//     describe('Testing GET ALL with INVALID HOSPITALID', function() {
-//
-//       before(done => mockProfile.call(this, done));
-//
-//       it('Should return a status of 404 and an error message', done => {
-//         request.get(`${url}/api/hospital/1243/all/profile/`)
-//         .set({Authorization: `Bearer ${this.tempToken}`})
-//         .end((err, res) => {
-//           expect(res.status).to.equal(404);
-//           expect(res.text).to.equal('NotFoundError');
 //           done();
 //         });
 //       });
