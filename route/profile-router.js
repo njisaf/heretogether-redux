@@ -1,10 +1,10 @@
 'use strict';
 
 const Router = require('express').Router;
-const debug = require('debug')('ht:hospital-router');
+const debug = require('debug')('ht:profile-router');
 const AWS = require('aws-sdk');
 const jsonParser = require('body-parser').json();
-// const createError = require('http-errors');
+const createError = require('http-errors');
 
 AWS.config.setPromisesDependency(require('bluebird'));
 
@@ -27,22 +27,78 @@ profileRouter.post('/api/profile', bearerAuth, jsonParser, function(req, res, ne
   .catch(next);
 });
 
-// profileRouter.post('/api/hospital/:hospitalID/profile', bearerAuth, jsonParser, function(req, res, next){
-//   debug('hit POST route /api/hospital/:hospitalID/profile');
-//   if(req.body.hospitalID !== req.params.hospitalID) return next(createError(404, 'Hospital not found.'));
-//   if(!req.body.profileName) req.body.profileName = req.user.username;
-//   if(!req.body.userID) req.body.userID = req.user._id;
-//
-//   Hospital.findById(req.params.hospitalID)
-//   .catch(err => Promise.reject(createError(404, err.message)))
-//   .then(hospital => {
-//     if(!hospital) return Promise.reject(createError(404, 'Hospital does not exist'));
-//     return new Profile(req.body).save();
-//   })
-//   .then(profile => res.json(profile))
-//   .catch(next);
-// });
-//
+profileRouter.get('/api/profile/:profileID', bearerAuth, jsonParser, function(req, res, next) {
+  debug('hit /api/profile/:profileID GET');
+
+  if (req.params.profileID === 'all') {
+    debug('GETTING ALL PROFILES');
+    Profile.find()
+    // .populate('fileID')
+    .then(profArr => {
+      debug('profArrrrrr: ' + profArr);
+      res.json(profArr);
+    })
+    .catch(next);
+    return;
+  }
+
+  Profile.findById(req.params.profileID)
+    // .populate('fileID')
+    .catch(err => Promise.reject(createError(404, err.message)))
+    .then( profile => {
+      if(profile.userID.toString() !== req.user._id.toString()) return Promise.reject(createError(401, 'invalid userid'));
+      res.json(profile);
+    })
+    .catch(next);
+});
+
+profileRouter.delete('/api/profile/:profileID', bearerAuth, function(req, res, next) {
+  debug('Hit /api/profile/:profileID DELETE');
+  // let tempProfile = null;
+  Profile.findById(req.params.profileID)
+  .then(profile => {
+    // tempProfile = profile;
+    if(profile.userID.toString() === req.user._id.toString()) {
+      Profile.findByIdAndRemove(req.params.profileID)
+      .then(() => res.sendStatus(204))
+      .catch(next);
+    } else {
+      return Promise.reject(createError(401, 'Invalid user ID'));
+    }
+    // if (profile.picID) {
+    //   return Pic.findById(profile.picID)
+    //   .then(pic => {
+    //
+    //     let params = {
+    //       Bucket: 'heretogether-assets',
+    //       Key: pic.objectKey,
+    //     };
+    //     return s3.deleteObject(params).promise();
+    //   })
+    //   .catch(err => err.status ? Promise.reject(err) : Promise.reject(createError(500, err.message)))
+    //   .then(() => Pic.findByIdAndRemove(tempProfile.picID))
+    //   .catch(next);
+    // }
+  })
+  .catch(err => err.status ? next(err) : next(createError(404, err.message)));
+});
+
+profileRouter.put('/api/profile/:profileID', bearerAuth, jsonParser, function(req, res, next) {
+  debug('Hit /api/profile/:profileID');
+  Profile.findById(req.params.profileID)
+  .then(profile => {
+    if(profile.userID.toString() === req.user._id.toString()) {
+      Profile.findByIdAndUpdate(req.params.profileID, req.body, {new:true})
+      .then(profile => res.json(profile))
+      .catch(next);
+    } else {
+      return Promise.reject(createError(401, 'Invalid user'));
+    }
+  })
+.catch(err => err.status ? next(err) : next(createError(404, err.message)));
+});
+
+
 // profileRouter.get('/api/hospital/:hospitalID/profile/:profileID', bearerAuth, function(req, res, next){
 //   debug('hit GET route /api/hospital/:hospitalID/profile/:profileID');
 //
