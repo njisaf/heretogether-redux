@@ -31,7 +31,7 @@ function fileService($q, $log, $http, Upload, authService){
       });
     })
     .then((res) => {
-      $log.log('File upoladed successfully', res);
+      $log.log('File uploaded successfully', res);
       let file = res.data;
       return file;
     })

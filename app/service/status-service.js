@@ -11,54 +11,43 @@ function statusService($q, $log, Upload, $http, $window, authService) {
   // service.fileURI = null;
 
   //creating status with an attached file
-  service.createFileStatus = function(status){
-
-    $log.debug('statusService.createFileStatus hit');
-
-    return authService.getToken()
-    .then((token) => {
-      // let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/statusfile`;
-      let headers = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      return Upload.upload({
-        url,
-        method: 'POST',
-        data: {
-          text: status.text,
-          file: status.file,
-        },
-        headers,
-      });
-    })
-    .then((res) => {
-      service.statuses.unshift(res.data);
-      return res.data;
-    })
-    .catch(err => {
-      $log.error(err.message);
-      return $q.reject(err);
-    });
-  };
+  // service.createFileStatus = function(status){
+  //
+  //   $log.debug('statusService.createFileStatus hit');
+  //
+  //   return authService.getToken()
+  //   .then((token) => {
+  //     let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/statusfile`;
+  //     let headers = {
+  //       Authorization: `Bearer ${token}`,
+  //     };
+  //
+  //     return Upload.upload({
+  //       url,
+  //       method: 'POST',
+  //       data: {
+  //         text: status.text,
+  //         file: status.file,
+  //       },
+  //       headers,
+  //     });
+  //   })
+  //   .then((res) => {
+  //     service.statuses.unshift(res.data);
+  //     return res.data;
+  //   })
+  //   .catch(err => {
+  //     $log.error(err.message);
+  //     return $q.reject(err);
+  //   });
+  // };
 
   service.createStatus = function(status) {
     $log.debug('statusService.createStatus()', status);
 
-
-    // let fileData = null;
-    //
-    if(!status.hospitalID) status.hospitalID = hospitalService.hospitalID;
-    //
-    // if(status.file) {
-    //   fileData = status.file;
-    // }
-
-    // console.log('FILEDATA:', fileData);
-
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status`;
+      let url = `${__API_URL__}/api/status`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -87,7 +76,7 @@ function statusService($q, $log, Upload, $http, $window, authService) {
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/${statusID}`;
+      let url = `${__API_URL__}/api/status/${statusID}`;
       let config = {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -112,7 +101,7 @@ function statusService($q, $log, Upload, $http, $window, authService) {
 
     return authService.getToken()
     .then(token => {
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/status/${statusID}`;
+      let url = `${__API_URL__}/api/status/${statusID}`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -141,7 +130,7 @@ function statusService($q, $log, Upload, $http, $window, authService) {
     return authService.getToken()
     .then(token => {
       console.log('did we get token?');
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/all/status/${userID}`;
+      let url = `${__API_URL__}/api/status/all`;
       let config = {
         headers: {
           Accept: 'application/json',
@@ -170,11 +159,8 @@ function statusService($q, $log, Upload, $http, $window, authService) {
 
     return authService.getToken()
     .then(token => {
-      // if(!hospitalService.hopsitalID){
-      //   hospitalService.hospitalID = $window.localStorage.getItem('hospitalID');
-      // }
       console.log('did we get token?');
-      let url = `${__API_URL__}/api/hospital/${hospitalService.hospitalID}/all/status/`;
+      let url = `${__API_URL__}/api/status/all`;
       let config = {
         headers: {
           Accept: 'application/json',

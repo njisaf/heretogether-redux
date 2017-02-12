@@ -29,8 +29,8 @@ function s3UploadPromise(params){
   });
 }
 
-fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'), function(req, res, next){
-  debug('hit POST /api/status/:statusID/file');
+fileRouter.post('/api/profile/file', bearerAuth, upload.single('file'), function(req, res, next){
+  debug('hit POST /api/profile/file');
   if(!req.file)
     return next(createError(400, 'no file found'));
 
@@ -80,8 +80,8 @@ fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'),
 });
 
 
-fileRouter.post('/api/hospital/:hospitalID/statusfile', bearerAuth, upload.single('file'), function(req, res, next){
-  debug('hit POST /api/hospital/:hospitalID/statusfile');
+fileRouter.post('/api/status/:statusID/file', bearerAuth, upload.single('file'), function(req, res, next){
+  debug('hit POST /api/status/:statusID/file');
 
   // create a status
   // with UserID and HospitalID and text
