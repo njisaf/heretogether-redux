@@ -43,6 +43,7 @@ function mergeSort(array) {
 }
 
 function quickSort(array) {
+
   return quick(array, 0, array.length-1);
 
   function quick(array, left, right) {
@@ -53,6 +54,18 @@ function quickSort(array) {
     }
     if (index < right) {
       quick(array, left, right);
+    }
+  }
+
+  function partition(array, left, right) {
+    let pivot = array[Math.floor((left + right) / 2)];
+    let i = left;
+    let j = right;
+
+    while (i <= j) {
+      while (array[i] < pivot) {
+        
+      }
     }
   }
 }
